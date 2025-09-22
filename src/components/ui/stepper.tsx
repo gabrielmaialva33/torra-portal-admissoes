@@ -33,7 +33,7 @@ export function Stepper({
     <div
       className={cn(
         "flex",
-        orientation === "horizontal" ? "flex-row" : "flex-col"
+        orientation === "horizontal" ? "flex-row" : "flex-col",
       )}
     >
       {steps.map((step, index) => {
@@ -47,7 +47,7 @@ export function Stepper({
             key={step.id}
             className={cn(
               "flex items-center",
-              orientation === "horizontal" ? "flex-1" : "w-full"
+              orientation === "horizontal" ? "flex-1" : "w-full",
             )}
           >
             <button
@@ -55,7 +55,7 @@ export function Stepper({
               disabled={!canAccess}
               className={cn(
                 "relative flex items-center",
-                canAccess ? "cursor-pointer" : "cursor-not-allowed"
+                canAccess ? "cursor-pointer" : "cursor-not-allowed",
               )}
             >
               <div
@@ -64,10 +64,10 @@ export function Stepper({
                   isComplete
                     ? "border-primary bg-primary text-primary-foreground"
                     : isCurrent
-                    ? "border-primary bg-background text-primary"
-                    : canAccess
-                    ? "border-muted-foreground bg-background text-muted-foreground"
-                    : "border-muted bg-muted text-muted-foreground"
+                      ? "border-primary bg-background text-primary"
+                      : canAccess
+                        ? "border-muted-foreground bg-background text-muted-foreground"
+                        : "border-muted bg-muted text-muted-foreground",
                 )}
               >
                 {isComplete ? (
@@ -80,7 +80,7 @@ export function Stepper({
               <div
                 className={cn(
                   "ml-3",
-                  orientation === "horizontal" ? "hidden sm:block" : ""
+                  orientation === "horizontal" ? "hidden sm:block" : "",
                 )}
               >
                 <p
@@ -89,8 +89,8 @@ export function Stepper({
                     isCurrent
                       ? "text-foreground"
                       : canAccess
-                      ? "text-muted-foreground"
-                      : "text-muted-foreground/50"
+                        ? "text-muted-foreground"
+                        : "text-muted-foreground/50",
                   )}
                 >
                   {step.title}
@@ -109,13 +109,13 @@ export function Stepper({
                   "flex-1",
                   orientation === "horizontal"
                     ? "mx-4 h-0.5"
-                    : "mx-auto my-2 w-0.5 h-8"
+                    : "mx-auto my-2 w-0.5 h-8",
                 )}
               >
                 <div
                   className={cn(
                     "h-full w-full transition-all",
-                    isComplete ? "bg-primary" : "bg-muted"
+                    isComplete ? "bg-primary" : "bg-muted",
                   )}
                 />
               </div>

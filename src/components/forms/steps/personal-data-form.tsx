@@ -18,19 +18,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Camera, Calendar } from "lucide-react";
+import { DocumentUpload } from "@/components/ui/document-upload";
 
 type PersonalDataFormValues = z.infer<typeof personalDataSchema>;
 
@@ -50,7 +45,7 @@ export function PersonalDataForm() {
       phone: "",
       maritalStatus: undefined,
       gender: undefined,
-      nationality: "Brazilian",
+      nationality: "Brasileiro",
     },
   });
 
@@ -59,6 +54,11 @@ export function PersonalDataForm() {
     markStepComplete(1);
     setCurrentStep(2);
     router.push("/onboarding/2");
+  };
+
+  const onSave = (data: PersonalDataFormValues) => {
+    updateFormData("personalData", data);
+    alert("Dados salvos com sucesso!");
   };
 
   const formatCPF = (value: string) => {
@@ -83,220 +83,328 @@ export function PersonalDataForm() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Personal Information</CardTitle>
-        <CardDescription>
-          Please provide your personal details. All fields are required.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Full Name */}
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="John Doe" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Enter your complete legal name
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {/* CPF */}
-              <FormField
-                control={form.control}
-                name="cpf"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>CPF</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="000.000.000-00"
-                        {...field}
-                        onChange={(e) => {
-                          const formatted = formatCPF(e.target.value);
-                          field.onChange(formatted);
-                        }}
-                        maxLength={14}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* RG */}
-              <FormField
-                control={form.control}
-                name="rg"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>RG</FormLabel>
-                    <FormControl>
-                      <Input placeholder="00.000.000-0" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {/* Birth Date */}
-              <FormField
-                control={form.control}
-                name="birthDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Birth Date</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Phone */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="(00) 00000-0000"
-                        {...field}
-                        onChange={(e) => {
-                          const formatted = formatPhone(e.target.value);
-                          field.onChange(formatted);
-                        }}
-                        maxLength={15}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {/* Email */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="john.doe@example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {/* Marital Status */}
-              <FormField
-                control={form.control}
-                name="maritalStatus"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Marital Status</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+    <div className="space-y-8">
+      {/* Main Form Section */}
+      <div className="bg-white rounded-lg shadow-sm">
+        <div className="p-8">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {/* Photo and Main Form Row */}
+              <div className="flex gap-12">
+                {/* Photo Upload */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="relative">
+                    <div className="w-40 h-40 rounded-full bg-gray-300 flex items-center justify-center">
+                      <Camera className="w-16 h-16 text-gray-500" />
+                    </div>
+                    <button
+                      type="button"
+                      className="absolute bottom-2 right-2 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white"
                     >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select marital status" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="single">Single</SelectItem>
-                        <SelectItem value="married">Married</SelectItem>
-                        <SelectItem value="divorced">Divorced</SelectItem>
-                        <SelectItem value="widowed">Widowed</SelectItem>
-                        <SelectItem value="stable_union">
-                          Stable Union
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <Camera className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <span className="text-sm text-gray-600">Foto*</span>
+                </div>
 
-              {/* Gender */}
-              <FormField
-                control={form.control}
-                name="gender"
-                render={({ field }) => (
+                {/* Main Form Fields */}
+                <div className="flex-1 grid grid-cols-2 gap-6">
+                  {/* Nome completo */}
+                  <FormField
+                    control={form.control}
+                    name="fullName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600">
+                          Nome completo*
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            className="border-gray-300"
+                            placeholder=""
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Nome social */}
                   <FormItem>
-                    <FormLabel>Gender</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select gender" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                        <SelectItem value="prefer_not_say">
-                          Prefer not to say
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                    <FormLabel className="text-gray-600">Nome social</FormLabel>
+                    <FormControl>
+                      <Input className="border-gray-300" placeholder="" />
+                    </FormControl>
                   </FormItem>
-                )}
-              />
-            </div>
 
-            {/* Nationality */}
-            <FormField
-              control={form.control}
-              name="nationality"
-              render={({ field }) => (
+                  {/* Data de nascimento */}
+                  <FormField
+                    control={form.control}
+                    name="birthDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600">
+                          Data de nascimento*
+                        </FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              type="date"
+                              className="border-gray-300"
+                              {...field}
+                            />
+                            <Calendar className="absolute right-3 top-3 h-4 w-4 text-gray-400 pointer-events-none" />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Celular com DDD */}
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600">
+                          Número de celular com DDD*
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            className="border-gray-300"
+                            placeholder=""
+                            {...field}
+                            onChange={(e) => {
+                              const formatted = formatPhone(e.target.value);
+                              field.onChange(formatted);
+                            }}
+                            maxLength={15}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Nome do pai */}
+                  <FormItem>
+                    <FormLabel className="text-gray-600">Nome do pai</FormLabel>
+                    <FormControl>
+                      <Input className="border-gray-300" placeholder="" />
+                    </FormControl>
+                  </FormItem>
+
+                  {/* Nome da mãe */}
+                  <FormItem>
+                    <FormLabel className="text-gray-600">Nome da mãe</FormLabel>
+                    <FormControl>
+                      <Input className="border-gray-300" placeholder="" />
+                    </FormControl>
+                  </FormItem>
+                </div>
+              </div>
+
+              {/* Second Section */}
+              <div className="grid grid-cols-2 gap-6">
+                {/* Número do RG */}
+                <FormField
+                  control={form.control}
+                  name="rg"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">
+                        Número do RG*
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="border-gray-300"
+                          placeholder=""
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Data de emissão */}
                 <FormItem>
-                  <FormLabel>Nationality</FormLabel>
+                  <FormLabel className="text-gray-600">
+                    Data de emissão*
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Brazilian" {...field} />
+                    <Input type="date" className="border-gray-300" />
                   </FormControl>
-                  <FormDescription>
-                    Enter your nationality (e.g., Brazilian, American, etc.)
-                  </FormDescription>
-                  <FormMessage />
                 </FormItem>
-              )}
-            />
 
-            <div className="flex justify-end gap-4">
-              <Button type="submit">Save and Continue</Button>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+                {/* Órgão emissor */}
+                <FormItem>
+                  <FormLabel className="text-gray-600">
+                    Órgão emissor*
+                  </FormLabel>
+                  <FormControl>
+                    <Input className="border-gray-300" placeholder="" />
+                  </FormControl>
+                </FormItem>
+
+                {/* CPF */}
+                <FormField
+                  control={form.control}
+                  name="cpf"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">CPF*</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="border-gray-300"
+                          placeholder=""
+                          {...field}
+                          onChange={(e) => {
+                            const formatted = formatCPF(e.target.value);
+                            field.onChange(formatted);
+                          }}
+                          maxLength={14}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Estado civil */}
+                <FormField
+                  control={form.control}
+                  name="maritalStatus"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600">
+                        Estado civil
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="border-gray-300">
+                            <SelectValue placeholder="Selecione" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="single">Solteiro(a)</SelectItem>
+                          <SelectItem value="married">Casado(a)</SelectItem>
+                          <SelectItem value="divorced">
+                            Divorciado(a)
+                          </SelectItem>
+                          <SelectItem value="widowed">Viúvo(a)</SelectItem>
+                          <SelectItem value="stable_union">
+                            União Estável
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Grau de escolaridade */}
+                <FormItem>
+                  <FormLabel className="text-gray-600">
+                    Grau de escolaridade
+                  </FormLabel>
+                  <Select>
+                    <FormControl>
+                      <SelectTrigger className="border-gray-300">
+                        <SelectValue placeholder="Selecione" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="fundamental_incomplete">
+                        Fundamental Incompleto
+                      </SelectItem>
+                      <SelectItem value="fundamental_complete">
+                        Fundamental Completo
+                      </SelectItem>
+                      <SelectItem value="medio_incomplete">
+                        Médio Incompleto
+                      </SelectItem>
+                      <SelectItem value="medio_complete">
+                        Médio Completo
+                      </SelectItem>
+                      <SelectItem value="superior_incomplete">
+                        Superior Incompleto
+                      </SelectItem>
+                      <SelectItem value="superior_complete">
+                        Superior Completo
+                      </SelectItem>
+                      <SelectItem value="pos_graduacao">
+                        Pós-Graduação
+                      </SelectItem>
+                      <SelectItem value="mestrado">Mestrado</SelectItem>
+                      <SelectItem value="doutorado">Doutorado</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t my-8"></div>
+
+              {/* Document Upload Section */}
+              <div>
+                <p className="text-gray-600 text-center mb-6">
+                  Agora, faça o envio dos documentos abaixo.
+                </p>
+
+                <div className="space-y-4">
+                  <DocumentUpload
+                    title="RG"
+                    onUpload={(file) => console.log("RG uploaded:", file)}
+                  />
+                  <DocumentUpload
+                    title="CPF"
+                    onUpload={(file) => console.log("CPF uploaded:", file)}
+                  />
+                  <DocumentUpload
+                    title="Certidão de casamento"
+                    onUpload={(file) => console.log("Certidão uploaded:", file)}
+                  />
+                  <DocumentUpload
+                    title="Reservista"
+                    onUpload={(file) =>
+                      console.log("Reservista uploaded:", file)
+                    }
+                  />
+                  <DocumentUpload
+                    title="Diploma ou certificado de escolaridade"
+                    onUpload={(file) => console.log("Diploma uploaded:", file)}
+                  />
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-end gap-4 pt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={form.handleSubmit(onSave)}
+                  className="bg-[#37375B] text-white hover:bg-[#37375B]/90 px-8 py-2"
+                >
+                  Salvar
+                </Button>
+                <Button
+                  type="submit"
+                  disabled
+                  className="bg-gray-400 text-white hover:bg-gray-500 px-8 py-2"
+                >
+                  Próximo
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+      </div>
+    </div>
   );
 }

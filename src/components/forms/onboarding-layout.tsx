@@ -1,23 +1,26 @@
 "use client";
 
 import { useOnboardingStore } from "@/stores/onboarding-store";
-import { Stepper } from "@/components/ui/stepper";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Header } from "@/components/ui/header";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 
 const ONBOARDING_STEPS = [
-  { id: 1, title: "Personal Data", description: "Basic information" },
-  { id: 2, title: "Dependents", description: "Family members" },
-  { id: 3, title: "Address", description: "Residential information" },
-  { id: 4, title: "Contract", description: "Employment details" },
-  { id: 5, title: "Disability", description: "PCD information" },
-  { id: 6, title: "Transport", description: "Transport voucher" },
-  { id: 7, title: "Foreigner", description: "Immigration data" },
-  { id: 8, title: "Apprentice", description: "Education info" },
-  { id: 9, title: "Bank", description: "Banking details" },
-  { id: 10, title: "Finish", description: "Review and submit" },
+  { id: 1, title: "Dados Gerais", description: "Informações básicas" },
+  { id: 2, title: "Dependentes", description: "Membros da família" },
+  { id: 3, title: "Endereço", description: "Informações residenciais" },
+  { id: 4, title: "Dados Contratuais", description: "Detalhes do contrato" },
+  { id: 5, title: "Dados PCD", description: "Informações sobre deficiência" },
+  { id: 6, title: "Vale Transporte", description: "Benefício de transporte" },
+  {
+    id: 7,
+    title: "Dados Estrangeiro",
+    description: "Informações de imigração",
+  },
+  { id: 8, title: "Dados Aprendiz", description: "Informações educacionais" },
+  { id: 9, title: "Dados Bancários", description: "Informações bancárias" },
+  { id: 10, title: "Finalização", description: "Revisar e enviar" },
 ];
 
 interface OnboardingLayoutProps {
@@ -40,13 +43,6 @@ export function OnboardingLayout({
   const router = useRouter();
   const { completedSteps, setCurrentStep } = useOnboardingStore();
 
-  const progress = (completedSteps.length / ONBOARDING_STEPS.length) * 100;
-
-  const handleStepClick = (stepId: number) => {
-    setCurrentStep(stepId);
-    router.push(`/onboarding/${stepId}`);
-  };
-
   const handleNext = () => {
     if (onNext) {
       onNext();
@@ -67,85 +63,65 @@ export function OnboardingLayout({
     }
   };
 
+  const currentStepData = ONBOARDING_STEPS[currentStep - 1];
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#F8F8F8]">
       {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-primary">
-                Portal Torra Admissions
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                Employee Onboarding System
-              </p>
+      <Header />
+
+      {/* Breadcrumb */}
+      <Breadcrumb currentPage="Admissão" />
+
+      {/* Step Indicator */}
+      <div className="bg-[#F8F8F8] py-6">
+        <div className="container mx-auto px-8">
+          <div className="flex flex-col items-center">
+            {/* Steps Bar */}
+            <div className="flex items-center gap-2">
+              {ONBOARDING_STEPS.map((step, index) => (
+                <div key={step.id} className="flex items-center">
+                  <div
+                    className={`w-8 h-8 rounded flex items-center justify-center text-xs font-semibold transition-all
+                      ${
+                        currentStep === step.id
+                          ? "bg-primary text-white ring-4 ring-primary/20"
+                          : completedSteps.includes(step.id)
+                            ? "bg-green-500 text-white"
+                            : "bg-white border border-gray-300 text-gray-400"
+                      }
+                    `}
+                  >
+                    {completedSteps.includes(step.id) ? "✓" : ""}
+                  </div>
+                  {index < ONBOARDING_STEPS.length - 1 && (
+                    <div
+                      className={`w-16 h-0.5 ${
+                        completedSteps.includes(step.id)
+                          ? "bg-green-500"
+                          : "bg-gray-300"
+                      }`}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">
-                Step {currentStep} of {ONBOARDING_STEPS.length}
-              </span>
+
+            {/* Step Title */}
+            <div className="mt-4 text-center">
+              <p className="text-xs text-gray-500">Passo {currentStep}</p>
+              <h2 className="text-sm font-medium text-gray-700 mt-1">
+                {currentStepData?.title}
+              </h2>
             </div>
           </div>
-        </div>
-      </header>
-
-      {/* Progress Bar */}
-      <div className="border-b bg-card/50">
-        <div className="container mx-auto px-4 py-2">
-          <Progress value={progress} className="h-2" />
-        </div>
-      </div>
-
-      {/* Stepper */}
-      <div className="border-b bg-card/30">
-        <div className="container mx-auto px-4 py-6">
-          <Stepper
-            steps={ONBOARDING_STEPS}
-            currentStep={currentStep}
-            completedSteps={completedSteps}
-            onStepClick={handleStepClick}
-            orientation="horizontal"
-          />
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="mx-auto max-w-4xl">{children}</div>
+      <main className="container mx-auto px-8 pb-8">
+        <div className="max-w-6xl mx-auto">{children}</div>
       </main>
-
-      {/* Navigation Footer */}
-      <footer className="sticky bottom-0 border-t bg-card">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentStep === 1 || isPreviousDisabled}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Previous
-            </Button>
-
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                {completedSteps.length} of {ONBOARDING_STEPS.length} completed
-              </span>
-            </div>
-
-            <Button
-              onClick={handleNext}
-              disabled={currentStep === ONBOARDING_STEPS.length || isNextDisabled}
-            >
-              {currentStep === ONBOARDING_STEPS.length ? "Submit" : "Next"}
-              {currentStep !== ONBOARDING_STEPS.length && (
-                <ArrowRight className="ml-2 h-4 w-4" />
-              )}
-            </Button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

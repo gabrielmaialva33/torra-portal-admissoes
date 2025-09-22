@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface PersonalData {
   fullName: string;
@@ -77,7 +77,7 @@ export interface BankData {
   bankCode: string;
   agency: string;
   accountNumber: string;
-  accountType: 'checking' | 'savings';
+  accountType: "checking" | "savings";
   pixKey?: string;
 }
 
@@ -87,7 +87,7 @@ export interface OnboardingDocument {
   name: string;
   type: string;
   url?: string;
-  status: 'pending' | 'uploaded' | 'approved' | 'rejected';
+  status: "pending" | "uploaded" | "approved" | "rejected";
   rejectionReason?: string;
   uploadedAt?: string;
 }
@@ -110,7 +110,7 @@ interface OnboardingState {
 
   // Actions
   setCurrentStep: (step: number) => void;
-  updateFormData: (step: keyof OnboardingState['formData'], data: any) => void;
+  updateFormData: (step: keyof OnboardingState["formData"], data: any) => void;
   addDependent: (dependent: Dependent) => void;
   removeDependent: (id: string) => void;
   addDocument: (document: OnboardingDocument) => void;
@@ -176,7 +176,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       updateDocument: (id, updates) =>
         set((state) => ({
           documents: state.documents.map((doc) =>
-            doc.id === id ? { ...doc, ...updates } : doc
+            doc.id === id ? { ...doc, ...updates } : doc,
           ),
         })),
 
@@ -196,8 +196,8 @@ export const useOnboardingStore = create<OnboardingState>()(
       },
     }),
     {
-      name: 'torra-onboarding',
+      name: "torra-onboarding",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );

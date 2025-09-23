@@ -42,7 +42,6 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
-          # Automatically inject basePath in your Next.js configuration file
           static_site_generator: next
 
       - name: Restore cache
@@ -61,8 +60,9 @@ jobs:
 
       - name: Build with Next.js
         run: pnpm build
-        env:
-          NODE_ENV: production
+
+      - name: Add .nojekyll file
+        run: touch ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

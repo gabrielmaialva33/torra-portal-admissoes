@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import InputMask from "react-input-mask";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Header } from "@/components/ui/header";
 import { Stepper } from "@/components/ui/stepper";
@@ -59,7 +60,7 @@ export default function OnboardingStep1() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
+    <div className="min-h-screen bg-[#F8F8F8] animate-fade-in">
       <Header />
       <Breadcrumb currentPage="Admissão" />
 
@@ -120,7 +121,7 @@ export default function OnboardingStep1() {
                 type="button"
                 aria-label="Enviar ou alterar foto"
                 onClick={() => handleFileUpload("foto")}
-                className="absolute bottom-2 right-2 w-[45px] h-[45px] bg-[#37375B] rounded-full flex items-center justify-center hover:bg-[#2a2a4a] transition-colors"
+                className="absolute bottom-2 right-2 w-[45px] h-[45px] bg-[#37375B] rounded-full flex items-center justify-center hover:bg-[#2a2a4a] transition-all duration-200 hover:scale-110 active:scale-95"
               >
                 <svg
                   width="24"
@@ -153,7 +154,8 @@ export default function OnboardingStep1() {
                   name="nomeCompleto"
                   value={formData.nomeCompleto}
                   onChange={handleInputChange}
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+                  placeholder="Digite seu nome completo"
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
                   required
                 />
               </div>
@@ -166,7 +168,8 @@ export default function OnboardingStep1() {
                   name="nomeSocial"
                   value={formData.nomeSocial}
                   onChange={handleInputChange}
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+                  placeholder="Digite seu nome social (opcional)"
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
                 />
               </div>
             </div>
@@ -177,42 +180,35 @@ export default function OnboardingStep1() {
                 <label className="block text-[#5F5F5F] text-base mb-2">
                   Data de nascimento*
                 </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    name="dataNascimento"
-                    value={formData.dataNascimento}
-                    onChange={handleInputChange}
-                    className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
-                    required
-                  />
-                  <svg
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#AAAAAA] pointer-events-none"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
+                <input
+                  type="date"
+                  name="dataNascimento"
+                  value={formData.dataNascimento}
+                  onChange={handleInputChange}
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  required
+                />
               </div>
               <div className="flex-1">
                 <label className="block text-[#5F5F5F] text-base mb-2">
                   Número de celular com DDD*
                 </label>
-                <input
-                  type="tel"
-                  name="celular"
+                <InputMask
+                  mask="(99) 99999-9999"
                   value={formData.celular}
                   onChange={handleInputChange}
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
-                  required
-                />
+                >
+                  {(inputProps: any) => (
+                    <input
+                      {...inputProps}
+                      type="tel"
+                      name="celular"
+                      placeholder="(00) 00000-0000"
+                      className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                      required
+                    />
+                  )}
+                </InputMask>
               </div>
             </div>
 
@@ -227,7 +223,8 @@ export default function OnboardingStep1() {
                   name="nomePai"
                   value={formData.nomePai}
                   onChange={handleInputChange}
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+                  placeholder="Digite o nome do pai"
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
                 />
               </div>
               <div className="flex-1">
@@ -239,7 +236,8 @@ export default function OnboardingStep1() {
                   name="nomeMae"
                   value={formData.nomeMae}
                   onChange={handleInputChange}
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+                  placeholder="Digite o nome da mãe"
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
                 />
               </div>
             </div>
@@ -257,7 +255,8 @@ export default function OnboardingStep1() {
               name="numeroRG"
               value={formData.numeroRG}
               onChange={handleInputChange}
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+              placeholder="Digite o número do RG"
+              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
               required
             />
           </div>
@@ -270,7 +269,7 @@ export default function OnboardingStep1() {
               name="dataEmissaoRG"
               value={formData.dataEmissaoRG}
               onChange={handleInputChange}
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
               required
             />
           </div>
@@ -287,20 +286,29 @@ export default function OnboardingStep1() {
               name="orgaoEmissor"
               value={formData.orgaoEmissor}
               onChange={handleInputChange}
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
+              placeholder="Ex: SSP-SP"
+              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
               required
             />
           </div>
           <div className="flex-1 max-w-[552px]">
             <label className="block text-[#5F5F5F] text-base mb-2">CPF*</label>
-            <input
-              type="text"
-              name="cpf"
+            <InputMask
+              mask="999.999.999-99"
               value={formData.cpf}
               onChange={handleInputChange}
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange"
-              required
-            />
+            >
+              {(inputProps: any) => (
+                <input
+                  {...inputProps}
+                  type="text"
+                  name="cpf"
+                  placeholder="000.000.000-00"
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  required
+                />
+              )}
+            </InputMask>
           </div>
         </div>
 
@@ -315,7 +323,7 @@ export default function OnboardingStep1() {
                 name="estadoCivil"
                 value={formData.estadoCivil}
                 onChange={handleInputChange}
-                className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange appearance-none"
+                className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange appearance-none transition-all duration-200 hover:border-[#999999] cursor-pointer"
               >
                 <option value="">Selecione</option>
                 <option value="solteiro">Solteiro(a)</option>
@@ -348,7 +356,7 @@ export default function OnboardingStep1() {
                 name="grauEscolaridade"
                 value={formData.grauEscolaridade}
                 onChange={handleInputChange}
-                className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange appearance-none"
+                className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange appearance-none transition-all duration-200 hover:border-[#999999] cursor-pointer"
               >
                 <option value="">Selecione</option>
                 <option value="fundamental_incompleto">
@@ -399,7 +407,7 @@ export default function OnboardingStep1() {
             {/* RG Upload */}
             <button
               onClick={() => handleFileUpload("rg")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-colors bg-white min-h-[56px]"
+              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
@@ -456,7 +464,7 @@ export default function OnboardingStep1() {
             {/* CPF Upload */}
             <button
               onClick={() => handleFileUpload("cpf")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-colors bg-white min-h-[56px]"
+              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
@@ -513,7 +521,7 @@ export default function OnboardingStep1() {
             {/* Certidão de Casamento Upload */}
             <button
               onClick={() => handleFileUpload("certidaoCasamento")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-colors bg-white min-h-[56px]"
+              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
@@ -570,7 +578,7 @@ export default function OnboardingStep1() {
             {/* Reservista Upload */}
             <button
               onClick={() => handleFileUpload("reservista")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-colors bg-white min-h-[56px]"
+              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
@@ -627,7 +635,7 @@ export default function OnboardingStep1() {
             {/* Diploma Upload */}
             <button
               onClick={() => handleFileUpload("diploma")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-colors bg-white min-h-[56px]"
+              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
@@ -685,12 +693,12 @@ export default function OnboardingStep1() {
 
         {/* Action Buttons */}
         <div className="flex gap-3 justify-end mb-10">
-          <button className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-colors min-w-[107px]">
+          <button className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]">
             Salvar
           </button>
           <Link
             href="/onboarding/2"
-            className="px-6 py-4 bg-[#AAAAAA] text-white text-sm rounded hover:bg-[#999999] transition-colors text-center min-w-[107px] flex items-center justify-center"
+            className="px-6 py-4 bg-[#AAAAAA] text-white text-sm rounded hover:bg-[#999999] transition-all duration-200 text-center min-w-[107px] flex items-center justify-center hover:shadow-lg active:scale-[0.98]"
           >
             Próximo
           </Link>

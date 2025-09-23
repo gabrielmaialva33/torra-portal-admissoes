@@ -75,10 +75,13 @@ export default function OnboardingStep1() {
             <div className="relative">
               <div className="w-[232px] h-[232px] rounded-full bg-[#999999] flex items-center justify-center overflow-hidden">
                 {uploadedFiles.foto ? (
-                  <img
+                  <Image
                     src={URL.createObjectURL(uploadedFiles.foto)}
-                    alt="Profile"
+                    alt="Profile photo"
+                    width={232}
+                    height={232}
                     className="w-full h-full object-cover"
+                    unoptimized
                   />
                 ) : (
                   <svg
@@ -88,6 +91,7 @@ export default function OnboardingStep1() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
+                    <title>Avatar placeholder</title>
                     <path
                       d="M3 20.9998C3 20.9998 3 20.4851 3.75 19.0952C4.63494 17.4587 6.31964 15.9998 9 15.9998C10.0256 15.9998 10.9264 16.1298 11.7223 16.35"
                       stroke="#FFFFFF"
@@ -113,6 +117,8 @@ export default function OnboardingStep1() {
                 )}
               </div>
               <button
+                type="button"
+                aria-label="Enviar ou alterar foto"
                 onClick={() => handleFileUpload("foto")}
                 className="absolute bottom-2 right-2 w-[45px] h-[45px] bg-[#37375B] rounded-full flex items-center justify-center hover:bg-[#2a2a4a] transition-colors"
               >

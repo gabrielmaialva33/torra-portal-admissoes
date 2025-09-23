@@ -21,7 +21,6 @@ export default function OnboardingStep2() {
     updateDependent,
     removeDependent,
     clearDependents,
-    isAllValid,
     getEmptyDependent,
   } = useDependents();
 
@@ -88,12 +87,11 @@ export default function OnboardingStep2() {
     if (hasDependents === "sim") {
       // Precisa ter pelo menos um dependente salvo OU o atual preenchido corretamente
       const hasValidCurrent =
-        currentDependentData &&
-        currentDependentData.nomeCompleto.trim() &&
-        currentDependentData.grauParentesco &&
-        currentDependentData.dataNascimento &&
-        currentDependentData.cpf.trim() &&
-        currentDependentData.documentos.cpfFile;
+        currentDependentData?.nomeCompleto.trim() &&
+        currentDependentData?.grauParentesco &&
+        currentDependentData?.dataNascimento &&
+        currentDependentData?.cpf.trim() &&
+        currentDependentData?.documentos.cpfFile;
 
       return dependents.length > 0 || hasValidCurrent;
     }

@@ -68,18 +68,6 @@ export function DependentForm({
     }
   };
 
-  const handleDocumentUpload =
-    (documentType: keyof DependentFormData["documentos"]) =>
-    (file: File | null) => {
-      setFormData((prev) => ({
-        ...prev,
-        documentos: {
-          ...prev.documentos,
-          [documentType]: file,
-        },
-      }));
-    };
-
   return (
     <div className={className}>
       {/* Header with remove button */}

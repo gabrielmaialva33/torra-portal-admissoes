@@ -42,7 +42,7 @@ export function PCDForm({ onUpdate, className = "" }: PCDFormProps) {
   return (
     <div className={className}>
       {/* Pergunta Principal */}
-      <div className="flex justify-center mb-6">
+      <div className="mb-6">
         <div className="w-[552px]">
           <label
             htmlFor="isPCD"

@@ -35,16 +35,16 @@ export function PersonalDataForm() {
 
   const form = useForm<PersonalDataFormValues>({
     resolver: zodResolver(personalDataSchema),
-    defaultValues: formData.personalData || {
-      fullName: "",
-      cpf: "",
-      rg: "",
-      birthDate: "",
-      email: "",
-      phone: "",
-      maritalStatus: undefined,
-      gender: undefined,
-      nationality: "Brasileiro",
+    defaultValues: {
+      fullName: formData.personalData?.fullName || "",
+      cpf: formData.personalData?.cpf || "",
+      rg: formData.personalData?.rg || "",
+      birthDate: formData.personalData?.birthDate || "",
+      email: formData.personalData?.email || "",
+      phone: formData.personalData?.phone || "",
+      maritalStatus: formData.personalData?.maritalStatus as PersonalDataFormValues["maritalStatus"] || undefined,
+      gender: formData.personalData?.gender as PersonalDataFormValues["gender"] || undefined,
+      nationality: formData.personalData?.nationality || "Brasileiro",
     },
   });
 

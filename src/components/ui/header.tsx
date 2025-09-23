@@ -1,42 +1,36 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 export function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <header className="w-full bg-neutral-01 border-b border-neutral-02">
-      <div className="flex items-center justify-between px-8 h-[80px]">
-        {/* Logo Torra */}
+      <div className="flex items-center justify-between px-4 md:px-8 h-[60px] md:h-[80px]">
+        {/* Logo Torra - Always visible */}
         <div className="flex items-center">
           <Image
             src="/logo.png"
             alt="Torra"
             width={84}
             height={38}
-            className="h-[38px] w-auto"
+            className="h-[30px] md:h-[38px] w-auto"
             priority
           />
         </div>
 
-        {/* User Info */}
-        <div className="flex items-center gap-4">
+        {/* Desktop User Info */}
+        <div className="hidden md:flex items-center gap-4">
           {/* Info Button */}
           <button
             type="button"
             className="relative w-8 h-8 rounded-full bg-[#37375B] flex items-center justify-center hover:opacity-90 transition-opacity"
             aria-label="Informações"
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-3.5 h-3.5"
-            >
-              <circle cx="7" cy="3" r="1" fill="white"/>
-              <rect x="6" y="5" width="2" height="6" rx="0.5" fill="white"/>
-            </svg>
+            <span className="text-neutral-01 text-sm font-medium">i</span>
           </button>
 
           {/* User Section */}
@@ -62,7 +56,48 @@ export function Header() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          type="button"
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Menu"
+        >
+          {isMobileMenuOpen ? (
+            <X className="w-6 h-6 text-torra-dark-blue" />
+          ) : (
+            <Menu className="w-6 h-6 text-torra-dark-blue" />
+          )}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-neutral-02 bg-neutral-01 px-4 py-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-b from-orange-100 to-orange-200">
+                <Image
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=LoremIpsum&backgroundColor=ffdfbf&skinColor=f8b788&hairColor=4a312c&clothesColor=ff5101&accessoriesType=blank&facialHairType=blank&topType=longHairCurly&eyeType=happy"
+                  alt="User Avatar"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                  unoptimized
+                />
+              </div>
+              <span className="text-[#5F5F5F] text-sm">Olá, Lorem Ipsum</span>
+            </div>
+            <button
+              type="button"
+              className="text-[#FF5101] text-sm font-semibold"
+            >
+              Sair
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

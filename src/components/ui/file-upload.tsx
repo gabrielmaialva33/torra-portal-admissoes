@@ -3,7 +3,7 @@
 import { RotateCcw, Trash2, X } from "lucide-react";
 import Image from "next/image";
 import type React from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface FileUploadProps {
   label: string;
@@ -25,6 +25,14 @@ export function FileUpload({
   const [uploadState, setUploadState] = useState<UploadState>("idle");
   const [progress, setProgress] = useState(0);
   const [fileName, setFileName] = useState<string>("");
+  const [currentFile, setCurrentFile] = useState<File | null>(null);
+
+  // Handle onFileSelect callback when upload succeeds
+  useEffect(() => {
+    if (uploadState === "success" && currentFile && onFileSelect) {
+      onFileSelect(currentFile);
+    }
+  }, [uploadState, currentFile, onFileSelect]);
 
   const handleFileSelect = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +40,7 @@ export function FileUpload({
       if (!file) return;
 
       setFileName(file.name);
+      setCurrentFile(file);
       setUploadState("uploading");
       setProgress(0);
 
@@ -43,22 +52,20 @@ export function FileUpload({
             // Simular sucesso ou erro aleatoriamente para demonstração
             const success = Math.random() > 0.3; // 70% chance de sucesso
             setUploadState(success ? "success" : "error");
-            if (success && onFileSelect) {
-              onFileSelect(file);
-            }
             return 100;
           }
           return prev + Math.random() * 15;
         });
       }, 100);
     },
-    [onFileSelect],
+    [],
   );
 
   const handleCancel = () => {
     setUploadState("idle");
     setProgress(0);
     setFileName("");
+    setCurrentFile(null);
     if (onFileSelect) {
       onFileSelect(null);
     }
@@ -85,6 +92,7 @@ export function FileUpload({
     setUploadState("idle");
     setProgress(0);
     setFileName("");
+    setCurrentFile(null);
     if (onFileSelect) {
       onFileSelect(null);
     }

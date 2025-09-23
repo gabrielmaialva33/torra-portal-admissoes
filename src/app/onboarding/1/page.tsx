@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { FileUpload } from "@/components/ui/file-upload";
 import { Header } from "@/components/ui/header";
 import { Stepper } from "@/components/ui/stepper";
-import { FileUpload } from "@/components/ui/file-upload";
 import { maskCPF, maskPhone } from "@/lib/masks";
 
 export default function OnboardingStep1() {
@@ -44,12 +44,13 @@ export default function OnboardingStep1() {
     }));
   };
 
-  const handleFileSelect = (fileType: keyof typeof uploadedFiles) => (file: File | null) => {
-    setUploadedFiles((prev) => ({
-      ...prev,
-      [fileType]: file,
-    }));
-  };
+  const handleFileSelect =
+    (fileType: keyof typeof uploadedFiles) => (file: File | null) => {
+      setUploadedFiles((prev) => ({
+        ...prev,
+        [fileType]: file,
+      }));
+    };
 
   return (
     <div className="min-h-screen bg-[#F8F8F8] animate-fade-in">

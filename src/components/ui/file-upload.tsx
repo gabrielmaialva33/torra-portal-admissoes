@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import { X, RotateCcw, Trash2 } from "lucide-react";
+import { RotateCcw, Trash2, X } from "lucide-react";
 import Image from "next/image";
+import type React from "react";
+import { useCallback, useState } from "react";
 
 interface FileUploadProps {
   label: string;
@@ -19,37 +20,40 @@ export function FileUpload({
   required = false,
   accept = "*",
   onFileSelect,
-  className = ""
+  className = "",
 }: FileUploadProps) {
   const [uploadState, setUploadState] = useState<UploadState>("idle");
   const [progress, setProgress] = useState(0);
   const [fileName, setFileName] = useState<string>("");
 
-  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  const handleFileSelect = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
 
-    setFileName(file.name);
-    setUploadState("uploading");
-    setProgress(0);
+      setFileName(file.name);
+      setUploadState("uploading");
+      setProgress(0);
 
-    // Simular upload com progresso
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          // Simular sucesso ou erro aleatoriamente para demonstração
-          const success = Math.random() > 0.3; // 70% chance de sucesso
-          setUploadState(success ? "success" : "error");
-          if (success && onFileSelect) {
-            onFileSelect(file);
+      // Simular upload com progresso
+      const interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            // Simular sucesso ou erro aleatoriamente para demonstração
+            const success = Math.random() > 0.3; // 70% chance de sucesso
+            setUploadState(success ? "success" : "error");
+            if (success && onFileSelect) {
+              onFileSelect(file);
+            }
+            return 100;
           }
-          return 100;
-        }
-        return prev + Math.random() * 15;
-      });
-    }, 100);
-  }, [onFileSelect]);
+          return prev + Math.random() * 15;
+        });
+      }, 100);
+    },
+    [onFileSelect],
+  );
 
   const handleCancel = () => {
     setUploadState("idle");
@@ -66,7 +70,7 @@ export function FileUpload({
 
     // Simular retry
     const interval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           setUploadState("success");

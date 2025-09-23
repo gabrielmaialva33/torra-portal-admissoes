@@ -24,6 +24,15 @@ export function maskCPF(value: string): string {
   return match[4] ? `${cpf}-${match[4]}` : cpf;
 }
 
+export function maskCEP(value: string): string {
+  const numbers = value.replace(/\D/g, "");
+  const match = numbers.match(/^(\d{0,5})(\d{0,3})$/);
+
+  if (!match) return value;
+
+  return !match[2] ? match[1] : `${match[1]}-${match[2]}`;
+}
+
 export function unmaskValue(value: string): string {
   return value.replace(/\D/g, "");
 }

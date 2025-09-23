@@ -228,20 +228,29 @@ export function FileUpload({
 
   return (
     <div className={`relative ${className}`}>
-      <button
-        type="button"
-        className={`
-          w-full border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300 text-left
-          ${uploadState === "error" ? "border-red-300 bg-red-50" : ""}
-          ${uploadState === "success" ? "border-[#D6D6D6] bg-white" : ""}
-          ${uploadState === "idle" ? "hover:border-[#FF5101] hover:bg-[#FBE2D7]/30 cursor-pointer" : ""}
-          ${uploadState === "uploading" ? "border-[#FF5101] bg-[#FBE2D7]/30" : ""}
-        `}
-        onClick={triggerFileSelect}
-        disabled={uploadState !== "idle"}
-      >
-        {renderContent()}
-      </button>
+      {uploadState === "idle" ? (
+        <button
+          type="button"
+          className={`
+            w-full border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300 text-left
+            hover:border-[#FF5101] hover:bg-[#FBE2D7]/30 cursor-pointer
+          `}
+          onClick={triggerFileSelect}
+        >
+          {renderContent()}
+        </button>
+      ) : (
+        <div
+          className={`
+            w-full border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300
+            ${uploadState === "error" ? "border-red-300 bg-red-50" : ""}
+            ${uploadState === "success" ? "border-[#D6D6D6] bg-white" : ""}
+            ${uploadState === "uploading" ? "border-[#FF5101] bg-[#FBE2D7]/30" : ""}
+          `}
+        >
+          {renderContent()}
+        </div>
+      )}
     </div>
   );
 }

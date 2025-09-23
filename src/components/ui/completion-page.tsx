@@ -23,7 +23,7 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
     <div className="relative min-h-screen bg-[#F8F8F8] overflow-hidden">
       {/* Elementos decorativos de fundo */}
       <div className="absolute inset-0 opacity-50 pointer-events-none">
-        {/* Forma decorativa 1 - superior esquerda */}
+        {/* Forma decorativa 1 - linha diagonal com círculos */}
         <svg
           className="absolute top-20 left-[500px]"
           width="930"
@@ -42,15 +42,16 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
         </svg>
       </div>
 
-      {/* Conteúdo principal */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-8">
+      {/* Layout principal - dois colunas */}
+      <div className="relative z-10 flex items-center justify-between min-h-screen px-8">
         <div className="flex items-center gap-16 max-w-6xl w-full">
-          {/* Conteúdo de texto */}
-          <div className="w-[424px] flex flex-col gap-6">
+          {/* Coluna esquerda - Conteúdo de texto */}
+          <div className="w-[424px] flex flex-col gap-12">
             {/* Título */}
             <h1 className="text-[32px] font-normal leading-[38px] text-[#37375B] font-sofia">
               Obrigada!{"\n"}
-              Que ótimo, você finalizou{"\n"}o cadastro! 🎉
+              Que ótimo, você finalizou{"\n"}
+              o cadastro! 🎉
             </h1>
 
             {/* Texto explicativo */}
@@ -68,7 +69,7 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
             </p>
 
             {/* Checkbox de confirmação */}
-            <div className="flex items-center gap-2 mt-6">
+            <div className="flex items-center gap-2">
               <div className="relative">
                 <input
                   id="confirmation"
@@ -129,7 +130,7 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
             </button>
           </div>
 
-          {/* Ícone decorativo */}
+          {/* Coluna direita - Ícone do foguete */}
           <div className="relative ml-auto">
             <div className="relative w-[100px] h-[100px]">
               {/* Círculo externo com borda */}
@@ -139,29 +140,23 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
               />
               {/* Círculo interno */}
               <div
-                className="absolute inset-[7px] rounded-full"
+                className="absolute inset-[6.9px] rounded-full"
                 style={{ backgroundColor: "#FBE2D7" }}
               />
-              {/* Ícone do foguete */}
+              {/* Ícone do foguete - exato do Figma */}
               <div className="absolute inset-[25px] flex items-center justify-center">
                 <svg
-                  width="42"
-                  height="42"
-                  viewBox="0 0 42 42"
+                  width="50"
+                  height="50"
+                  viewBox="0 0 50 50"
                   fill="none"
                   role="img"
                   aria-label="Rocket icon"
                 >
                   <path
-                    d="M21 4L15 10V18L9 24V32L13 28H17V24L21 20L25 24V28H29L33 32V24L27 18V10L21 4Z"
+                    d="M25 4.24L21.04 8.27L21.04 16.27L15.16 22.24L15.16 30.24L19.12 26.27L23.08 26.27L23.08 22.24L25 20.24L26.92 22.24L26.92 26.27L30.88 26.27L34.84 30.24L34.84 22.24L28.96 16.27L28.96 8.27L25 4.24Z"
                     fill="#FF5101"
                   />
-                  <path
-                    d="M19 12C19 13.1 18.1 14 17 14C15.9 14 15 13.1 15 12C15 10.9 15.9 10 17 10C18.1 10 19 10.9 19 12Z"
-                    fill="white"
-                  />
-                  <path d="M9 32L5 36L6 38L8 37L9 32Z" fill="#FF5101" />
-                  <path d="M33 32L34 37L36 38L37 36L33 32Z" fill="#FF5101" />
                 </svg>
               </div>
             </div>

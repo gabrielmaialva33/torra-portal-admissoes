@@ -42,8 +42,13 @@ export function PersonalDataForm() {
       birthDate: formData.personalData?.birthDate || "",
       email: formData.personalData?.email || "",
       phone: formData.personalData?.phone || "",
-      maritalStatus: formData.personalData?.maritalStatus as PersonalDataFormValues["maritalStatus"] || undefined,
-      gender: formData.personalData?.gender as PersonalDataFormValues["gender"] || undefined,
+      maritalStatus:
+        (formData.personalData
+          ?.maritalStatus as PersonalDataFormValues["maritalStatus"]) ||
+        undefined,
+      gender:
+        (formData.personalData?.gender as PersonalDataFormValues["gender"]) ||
+        undefined,
       nationality: formData.personalData?.nationality || "Brasileiro",
     },
   });

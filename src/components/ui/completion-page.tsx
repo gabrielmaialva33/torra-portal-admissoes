@@ -51,14 +51,14 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
 
       {/* Conteúdo principal - posicionamento absoluto exato do Figma */}
       <div className="relative z-10">
-        {/* Conteúdo de texto - posição exata do Figma */}
+        {/* Conteúdo de texto - posição centralizada */}
         <div
           className="absolute flex flex-col"
           style={{
             left: "536px",
-            top: "289px",
+            top: "350px",
             width: "424px",
-            gap: "24px",
+            gap: "48px",
           }}
         >
           {/* Título */}
@@ -143,12 +143,12 @@ export function CompletionPage({ onFinalize }: CompletionPageProps) {
           </button>
         </div>
 
-        {/* Ícone do foguete - posição exata do Figma */}
+        {/* Ícone do foguete - posição ajustada */}
         <div
           className="absolute"
           style={{
             left: "1236px",
-            top: "430px",
+            top: "480px",
             width: "100px",
             height: "100px",
           }}

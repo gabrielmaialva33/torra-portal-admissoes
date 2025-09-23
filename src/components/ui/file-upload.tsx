@@ -94,21 +94,19 @@ export function FileUpload({
     switch (uploadState) {
       case "idle":
         return (
-          <>
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/figma/icon-upload.svg"
-                alt="Upload icon"
-                width={20}
-                height={24}
-                className="flex-shrink-0"
-              />
-              <span className="text-sm text-[#5F5F5F]">
-                Clique aqui para anexar seu {label}
-                {required && <span className="text-[#FF5101]">*</span>}
-              </span>
-            </div>
-          </>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/figma/icon-upload.svg"
+              alt="Upload icon"
+              width={20}
+              height={24}
+              className="flex-shrink-0"
+            />
+            <span className="text-sm text-[#5F5F5F]">
+              Clique aqui para anexar seu {label}
+              {required && <span className="text-[#FF5101]">*</span>}
+            </span>
+          </div>
         );
 
       case "uploading":
@@ -219,7 +217,10 @@ export function FileUpload({
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
-        handleFileSelect(e as any);
+        const syntheticEvent = {
+          target: { files: [file] },
+        } as React.ChangeEvent<HTMLInputElement>;
+        handleFileSelect(syntheticEvent);
       }
     };
     input.click();
@@ -227,18 +228,20 @@ export function FileUpload({
 
   return (
     <div className={`relative ${className}`}>
-      <div
+      <button
+        type="button"
         className={`
-          border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300
+          w-full border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300 text-left
           ${uploadState === "error" ? "border-red-300 bg-red-50" : ""}
           ${uploadState === "success" ? "border-[#D6D6D6] bg-white" : ""}
           ${uploadState === "idle" ? "hover:border-[#FF5101] hover:bg-[#FBE2D7]/30 cursor-pointer" : ""}
           ${uploadState === "uploading" ? "border-[#FF5101] bg-[#FBE2D7]/30" : ""}
         `}
         onClick={triggerFileSelect}
+        disabled={uploadState !== "idle"}
       >
         {renderContent()}
-      </div>
+      </button>
     </div>
   );
 }

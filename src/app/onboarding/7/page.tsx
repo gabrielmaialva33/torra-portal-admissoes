@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useCallback, useState } from "react";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { ForeignerForm } from "@/components/ui/foreigner-form";
 import { ForeignerUpload } from "@/components/ui/foreigner-upload";
-import { PageLayout } from "@/components/ui/page-layout";
+import { Header } from "@/components/ui/header";
+import { Stepper } from "@/components/ui/stepper";
 import type { ForeignerFormData } from "@/types/foreigner";
 
-export default function Step7Page() {
+export default function OnboardingStep7() {
   const [formData, setFormData] = useState<ForeignerFormData>({
     isForeigner: "",
     dataChegada: "",
@@ -16,55 +19,71 @@ export default function Step7Page() {
     documentoRNE: null,
   });
 
-  const handleFormUpdate = (data: ForeignerFormData) => {
+  const handleFormUpdate = useCallback((data: ForeignerFormData) => {
     setFormData(data);
-  };
+  }, []);
 
-  const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = useCallback((file: File | null) => {
     setFormData((prev) => ({
       ...prev,
       documentoRNE: file,
     }));
+  }, []);
+
+  const handleSave = () => {
+    console.log("Saving foreigner data:", formData);
   };
 
-  const isFormValid = () => {
-    if (formData.isForeigner === "nao") {
-      return true;
-    }
-
-    if (formData.isForeigner === "sim") {
-      return (
-        formData.numeroRNE.trim() !== "" &&
-        formData.nacionalidade !== "" &&
-        formData.dataExpedicao !== "" &&
-        formData.documentoRNE !== null
-      );
-    }
-
-    return false;
+  const canProceed = () => {
+    return true; // Temporarily enabled for dev
   };
 
   const showUpload = formData.isForeigner === "sim";
 
   return (
-    <PageLayout
-      currentStep={7}
-      title="Dados de Estrangeiro"
-      subtitle="Informe se você é estrangeiro e preencha os dados necessários."
-      onNext={() => console.log("Next step")}
-      onPrevious={() => console.log("Previous step")}
-      isValid={isFormValid()}
-    >
-      <div className="space-y-8">
-        <ForeignerForm onUpdate={handleFormUpdate} />
+    <div className="min-h-screen bg-[#F8F8F8] animate-fade-in">
+      <Header />
+      <Breadcrumb currentPage="Admissão" />
 
-        {showUpload && (
-          <>
-            <div className="w-full h-px bg-[#EEEEEE]" />
-            <ForeignerUpload onFileSelect={handleFileSelect} />
-          </>
-        )}
-      </div>
-    </PageLayout>
+      {/* Stepper */}
+      <Stepper currentStep={7} totalSteps={10} />
+
+      {/* Main Content */}
+      <main className="w-full max-w-[1144px] mx-auto px-8 mt-6">
+        {/* Form Section */}
+        <div className="mb-6">
+          <ForeignerForm onUpdate={handleFormUpdate} />
+
+          {showUpload && (
+            <>
+              <div className="w-full h-px bg-[#EEEEEE] my-8" />
+              <ForeignerUpload onFileSelect={handleFileSelect} />
+            </>
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-3 justify-end mb-10">
+          <button
+            type="button"
+            onClick={handleSave}
+            className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]"
+          >
+            Salvar
+          </button>
+
+          <Link
+            href="/onboarding/8"
+            className={`px-6 py-4 text-white text-sm rounded transition-all duration-200 text-center min-w-[107px] flex items-center justify-center hover:shadow-lg active:scale-[0.98] ${
+              canProceed()
+                ? "bg-[#FF5101] hover:bg-[#e8450a]"
+                : "bg-[#AAAAAA] pointer-events-none"
+            }`}
+          >
+            Próximo
+          </Link>
+        </div>
+      </main>
+    </div>
   );
 }

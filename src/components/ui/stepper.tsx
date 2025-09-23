@@ -24,8 +24,8 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
   return (
     <div className="bg-[#F8F8F8] py-7">
       <div className="max-w-[948px] mx-auto">
-        <div className="flex items-center justify-center">
-          <div className="flex items-center gap-2">
+        <div className="flex items-start justify-center">
+          <div className="flex items-start gap-2">
             {Array.from({ length: totalSteps }, (_, index) => {
               const stepNumber = index + 1;
               const isActive = stepNumber === currentStep;
@@ -33,33 +33,46 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
 
               return (
                 <React.Fragment key={stepNumber}>
-                  {/* Step Box with border for active state */}
-                  <div className="relative">
-                    {isActive && (
-                      <div className="absolute -inset-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)] z-0" />
-                    )}
-                    <div
-                      className={`
-                        relative w-[30px] h-[30px] rounded-[4px] flex items-center justify-center z-10
-                        ${
-                          isActive || isPast
-                            ? "bg-[#FF5101]"
-                            : "border border-[#D6D6D6] bg-white"
-                        }
-                      `}
-                    >
+                  {/* Step with title below */}
+                  <div className="flex flex-col items-center">
+                    {/* Step Box with border for active state */}
+                    <div className="relative">
+                      {isActive && (
+                        <div className="absolute -inset-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)] z-0" />
+                      )}
                       <div
                         className={`
-                          w-[10px] h-[10px] rounded-[2px]
-                          ${isActive || isPast ? "bg-white" : "bg-[#D6D6D6]"}
+                          relative w-[30px] h-[30px] rounded-[4px] flex items-center justify-center z-10
+                          ${
+                            isActive || isPast
+                              ? "bg-[#FF5101]"
+                              : "border border-[#D6D6D6] bg-white"
+                          }
                         `}
-                      />
+                      >
+                        <div
+                          className={`
+                            w-[10px] h-[10px] rounded-[2px]
+                            ${isActive || isPast ? "bg-white" : "bg-[#D6D6D6]"}
+                          `}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Step Info below each step */}
+                    <div className="text-center mt-3 w-[80px]">
+                      <p className="text-[10px] text-[#5F5F5F] leading-[14px]">
+                        Passo {stepNumber}
+                      </p>
+                      <p className="text-[12px] text-[#5F5F5F] leading-[14px] break-words">
+                        {stepTitles[stepNumber - 1]}
+                      </p>
                     </div>
                   </div>
 
                   {/* Connecting Line */}
                   {stepNumber < totalSteps && (
-                    <div className="w-[60px] h-[2px]">
+                    <div className="w-[60px] h-[2px] mt-[14px]">
                       {isPast || isActive ? (
                         <div className="w-full h-full bg-[#FF5101]" />
                       ) : (
@@ -71,16 +84,6 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
               );
             })}
           </div>
-        </div>
-
-        {/* Step Info */}
-        <div className="text-center mt-5">
-          <p className="text-[10px] text-[#5F5F5F] leading-[14px]">
-            Passo {currentStep}
-          </p>
-          <p className="text-[14px] text-[#5F5F5F] leading-[16px]">
-            {stepTitles[currentStep - 1]}
-          </p>
         </div>
       </div>
     </div>

@@ -110,9 +110,9 @@ export function FileUpload({
               height={24}
               className="flex-shrink-0"
             />
-            <span className="text-sm text-[#5F5F5F]">
+            <span className="text-sm text-neutral-05">
               Clique aqui para anexar seu {label}
-              {required && <span className="text-[#FF5101]">*</span>}
+              {required && <span className="text-torra-orange">*</span>}
             </span>
           </div>
         );
@@ -129,9 +129,9 @@ export function FileUpload({
                   height={24}
                   className="flex-shrink-0"
                 />
-                <span className="text-sm text-[#5F5F5F]">
+                <span className="text-sm text-neutral-05">
                   Anexando seu {label}
-                  {required && <span className="text-[#FF5101]">*</span>}
+                  {required && <span className="text-torra-orange">*</span>}
                 </span>
               </div>
               <button
@@ -139,15 +139,15 @@ export function FileUpload({
                 className="p-1 hover:bg-gray-100 rounded transition-colors"
                 type="button"
               >
-                <X className="w-4 h-4 text-[#5F5F5F]" />
+                <X className="w-4 h-4 text-neutral-05" />
               </button>
             </div>
-            <div className="text-xs text-[#5F5F5F] mb-2">
+            <div className="text-xs text-neutral-05 mb-2">
               {fileName} - {Math.round(progress)}%
             </div>
-            <div className="w-full bg-[#E0E0E0] rounded-full h-1">
+            <div className="w-full bg-neutral-02 rounded-full h-1">
               <div
-                className="bg-[#FF5101] h-1 rounded-full transition-all duration-300 ease-out"
+                className="bg-torra-orange h-1 rounded-full transition-all duration-300 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -168,7 +168,7 @@ export function FileUpload({
                 />
                 <span className="text-sm text-red-500">
                   Clique aqui para anexar seu {label}
-                  {required && <span className="text-[#FF5101]">*</span>}
+                  {required && <span className="text-torra-orange">*</span>}
                 </span>
                 <span className="text-sm text-red-500 font-medium">Erro</span>
               </div>
@@ -177,7 +177,7 @@ export function FileUpload({
                 className="p-1 hover:bg-gray-100 rounded transition-colors"
                 type="button"
               >
-                <RotateCcw className="w-4 h-4 text-[#5F5F5F]" />
+                <RotateCcw className="w-4 h-4 text-neutral-05" />
               </button>
             </div>
           </div>
@@ -195,9 +195,9 @@ export function FileUpload({
                   height={24}
                   className="flex-shrink-0"
                 />
-                <span className="text-sm text-[#5F5F5F]">
+                <span className="text-sm text-neutral-05">
                   Upload do seu {label} Completo
-                  {required && <span className="text-[#FF5101]">*</span>}
+                  {required && <span className="text-torra-orange">*</span>}
                 </span>
               </div>
               <button
@@ -205,7 +205,7 @@ export function FileUpload({
                 className="p-1 hover:bg-gray-100 rounded transition-colors"
                 type="button"
               >
-                <Trash2 className="w-4 h-4 text-[#5F5F5F]" />
+                <Trash2 className="w-4 h-4 text-neutral-05" />
               </button>
             </div>
           </div>
@@ -240,8 +240,8 @@ export function FileUpload({
         <button
           type="button"
           className={`
-            w-full border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300 text-left
-            hover:border-[#FF5101] hover:bg-[#FBE2D7]/30 cursor-pointer
+            w-full border border-neutral-03 rounded p-4 transition-all duration-300 text-left
+            hover:border-torra-orange hover:bg-orange-50 cursor-pointer
           `}
           onClick={triggerFileSelect}
         >
@@ -250,10 +250,10 @@ export function FileUpload({
       ) : (
         <div
           className={`
-            w-full border border-[#D6D6D6] rounded-[4px] p-4 transition-all duration-300
+            w-full border border-neutral-03 rounded p-4 transition-all duration-300
             ${uploadState === "error" ? "border-red-300 bg-red-50" : ""}
-            ${uploadState === "success" ? "border-[#D6D6D6] bg-white" : ""}
-            ${uploadState === "uploading" ? "border-[#FF5101] bg-[#FBE2D7]/30" : ""}
+            ${uploadState === "success" ? "border-neutral-03 bg-white" : ""}
+            ${uploadState === "uploading" ? "border-torra-orange bg-orange-50" : ""}
           `}
         >
           {renderContent()}

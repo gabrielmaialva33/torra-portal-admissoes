@@ -53,7 +53,7 @@ export default function OnboardingStep1() {
     };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] animate-fade-in">
+    <div className="min-h-screen bg-neutral-bg animate-fade-in">
       <Header />
       <Breadcrumb currentPage="Admissão" />
 
@@ -142,7 +142,7 @@ export default function OnboardingStep1() {
                 </svg>
               </button>
             </div>
-            <span className="text-[#5F5F5F] text-base">Foto*</span>
+            <span className="text-neutral-05 text-base">Foto*</span>
           </div>
 
           {/* Right side - Form Fields */}
@@ -152,7 +152,7 @@ export default function OnboardingStep1() {
               <div className="flex-1">
                 <label
                   htmlFor="nomeCompleto"
-                  className="block text-[#5F5F5F] text-base mb-2"
+                  className="block text-neutral-05 text-base mb-2"
                 >
                   Nome completo*
                 </label>
@@ -163,14 +163,14 @@ export default function OnboardingStep1() {
                   value={formData.nomeCompleto}
                   onChange={handleInputChange}
                   placeholder="Digite seu nome completo"
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
                   required
                 />
               </div>
               <div className="flex-1">
                 <label
                   htmlFor="nomeSocial"
-                  className="block text-[#5F5F5F] text-base mb-2"
+                  className="block text-neutral-05 text-base mb-2"
                 >
                   Nome social
                 </label>
@@ -181,7 +181,7 @@ export default function OnboardingStep1() {
                   value={formData.nomeSocial}
                   onChange={handleInputChange}
                   placeholder="Digite seu nome social (opcional)"
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
                 />
               </div>
             </div>
@@ -191,7 +191,7 @@ export default function OnboardingStep1() {
               <div className="flex-1">
                 <label
                   htmlFor="dataNascimento"
-                  className="block text-[#5F5F5F] text-base mb-2"
+                  className="block text-neutral-05 text-base mb-2"
                 >
                   Data de nascimento*
                 </label>
@@ -201,14 +201,14 @@ export default function OnboardingStep1() {
                   name="dataNascimento"
                   value={formData.dataNascimento}
                   onChange={handleInputChange}
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
                   required
                 />
               </div>
               <div className="flex-1">
                 <label
                   htmlFor="celular"
-                  className="block text-[#5F5F5F] text-base mb-2"
+                  className="block text-neutral-05 text-base mb-2"
                 >
                   Número de celular com DDD*
                 </label>
@@ -231,7 +231,7 @@ export default function OnboardingStep1() {
                     }
                   }}
                   placeholder="(00) 00000-0000"
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
                   required
                 />
               </div>
@@ -242,7 +242,7 @@ export default function OnboardingStep1() {
               <div className="flex-1">
                 <label
                   htmlFor="nomePai"
-                  className="block text-[#5F5F5F] text-base mb-2"
+                  className="block text-neutral-05 text-base mb-2"
                 >
                   Nome do pai
                 </label>
@@ -253,13 +253,13 @@ export default function OnboardingStep1() {
                   value={formData.nomePai}
                   onChange={handleInputChange}
                   placeholder="Digite o nome do pai"
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
                 />
               </div>
               <div className="flex-1">
                 <label
                   htmlFor="nomeMae"
-                  className="block text-[#5F5F5F] text-base mb-2"
+                  className="block text-neutral-05 text-base mb-2"
                 >
                   Nome da mãe
                 </label>
@@ -270,7 +270,7 @@ export default function OnboardingStep1() {
                   value={formData.nomeMae}
                   onChange={handleInputChange}
                   placeholder="Digite o nome da mãe"
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
                 />
               </div>
             </div>
@@ -282,7 +282,7 @@ export default function OnboardingStep1() {
           <div className="flex-1 max-w-[552px]">
             <label
               htmlFor="numeroRG"
-              className="block text-[#5F5F5F] text-base mb-2"
+              className="block text-neutral-05 text-base mb-2"
             >
               Número do RG*
             </label>
@@ -293,14 +293,14 @@ export default function OnboardingStep1() {
               value={formData.numeroRG}
               onChange={handleInputChange}
               placeholder="Digite o número do RG"
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+              className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
               required
             />
           </div>
           <div className="flex-1 max-w-[552px]">
             <label
               htmlFor="dataEmissaoRG"
-              className="block text-[#5F5F5F] text-base mb-2"
+              className="block text-neutral-05 text-base mb-2"
             >
               Data de emissão*
             </label>
@@ -310,7 +310,7 @@ export default function OnboardingStep1() {
               name="dataEmissaoRG"
               value={formData.dataEmissaoRG}
               onChange={handleInputChange}
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+              className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
               required
             />
           </div>
@@ -321,7 +321,7 @@ export default function OnboardingStep1() {
           <div className="flex-1 max-w-[552px]">
             <label
               htmlFor="orgaoEmissor"
-              className="block text-[#5F5F5F] text-base mb-2"
+              className="block text-neutral-05 text-base mb-2"
             >
               Órgão emissor*
             </label>
@@ -332,14 +332,14 @@ export default function OnboardingStep1() {
               value={formData.orgaoEmissor}
               onChange={handleInputChange}
               placeholder="Ex: SSP-SP"
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+              className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
               required
             />
           </div>
           <div className="flex-1 max-w-[552px]">
             <label
               htmlFor="cpf"
-              className="block text-[#5F5F5F] text-base mb-2"
+              className="block text-neutral-05 text-base mb-2"
             >
               CPF*
             </label>
@@ -358,7 +358,7 @@ export default function OnboardingStep1() {
                 }
               }}
               placeholder="000.000.000-00"
-              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+              className="w-full h-12 px-4 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-gray-400"
               required
             />
           </div>
@@ -369,7 +369,7 @@ export default function OnboardingStep1() {
           <div className="flex-1 max-w-[552px]">
             <label
               htmlFor="estadoCivil"
-              className="block text-[#5F5F5F] text-base mb-2"
+              className="block text-neutral-05 text-base mb-2"
             >
               Estado civil
             </label>
@@ -379,7 +379,7 @@ export default function OnboardingStep1() {
                 name="estadoCivil"
                 value={formData.estadoCivil}
                 onChange={handleInputChange}
-                className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange appearance-none transition-all duration-200 hover:border-[#999999] cursor-pointer"
+                className="w-full h-12 px-4 pr-10 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange appearance-none transition-all duration-200 hover:border-gray-400 cursor-pointer"
               >
                 <option value="">Selecione</option>
                 <option value="solteiro">Solteiro(a)</option>
@@ -391,7 +391,7 @@ export default function OnboardingStep1() {
               <svg
                 role="img"
                 aria-label="Dropdown arrow"
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-3 text-[#AAAAAA] pointer-events-none"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-3 text-neutral-04 pointer-events-none"
                 fill="none"
                 viewBox="0 0 12 7"
               >
@@ -408,7 +408,7 @@ export default function OnboardingStep1() {
           <div className="flex-1 max-w-[552px]">
             <label
               htmlFor="grauEscolaridade"
-              className="block text-[#5F5F5F] text-base mb-2"
+              className="block text-neutral-05 text-base mb-2"
             >
               Grau de escolaridade
             </label>
@@ -418,7 +418,7 @@ export default function OnboardingStep1() {
                 name="grauEscolaridade"
                 value={formData.grauEscolaridade}
                 onChange={handleInputChange}
-                className="w-full h-12 px-4 pr-10 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange appearance-none transition-all duration-200 hover:border-[#999999] cursor-pointer"
+                className="w-full h-12 px-4 pr-10 border border-neutral-03 rounded bg-white text-neutral-900 placeholder:text-neutral-04 text-base focus:outline-none focus:border-torra-orange appearance-none transition-all duration-200 hover:border-gray-400 cursor-pointer"
               >
                 <option value="">Selecione</option>
                 <option value="fundamental_incompleto">
@@ -442,7 +442,7 @@ export default function OnboardingStep1() {
               <svg
                 role="img"
                 aria-label="Dropdown arrow"
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-3 text-[#AAAAAA] pointer-events-none"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-3 text-neutral-04 pointer-events-none"
                 fill="none"
                 viewBox="0 0 12 7"
               >
@@ -459,11 +459,11 @@ export default function OnboardingStep1() {
         </div>
 
         {/* Divider */}
-        <div className="w-[600px] h-[2px] bg-[#D9D9D9] mx-auto mb-10"></div>
+        <div className="w-[600px] h-[2px] bg-gray-300 mx-auto mb-10"></div>
 
         {/* Document Upload Section */}
         <div className="mb-10">
-          <p className="text-[#5F5F5F] text-base mb-10 text-center">
+          <p className="text-neutral-05 text-base mb-10 text-center">
             Agora, faça o upload dos documentos necessários para continuar.
           </p>
 
@@ -509,13 +509,13 @@ export default function OnboardingStep1() {
         <div className="flex gap-3 justify-end mb-10">
           <button
             type="button"
-            className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]"
+            className="px-6 py-4 bg-torra-dark-blue text-white text-sm rounded hover:bg-blue-800 transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]"
           >
             Salvar
           </button>
           <Link
             href="/onboarding/2"
-            className="px-6 py-4 bg-[#AAAAAA] text-white text-sm rounded hover:bg-[#999999] transition-all duration-200 text-center min-w-[107px] flex items-center justify-center hover:shadow-lg active:scale-[0.98]"
+            className="px-6 py-4 bg-neutral-04 text-white text-sm rounded hover:bg-gray-500 transition-all duration-200 text-center min-w-[107px] flex items-center justify-center hover:shadow-lg active:scale-[0.98]"
           >
             Próximo
           </Link>

@@ -64,7 +64,7 @@ export function OnboardingLayout({
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
+    <div className="min-h-screen bg-neutral-bg">
       {/* Header */}
       <Header />
 

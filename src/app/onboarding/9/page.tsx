@@ -42,7 +42,7 @@ export default function OnboardingStep9() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] animate-fade-in">
+    <div className="min-h-screen bg-neutral-bg animate-fade-in">
       <Header />
       <Breadcrumb currentPage="Admissão" />
 
@@ -61,7 +61,7 @@ export default function OnboardingStep9() {
           <button
             type="button"
             onClick={handleSave}
-            className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]"
+            className="px-6 py-4 bg-torra-dark-blue text-white text-sm rounded hover:bg-blue-800 transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]"
           >
             Salvar
           </button>
@@ -70,8 +70,8 @@ export default function OnboardingStep9() {
             href="/onboarding/10"
             className={`px-6 py-4 text-white text-sm rounded transition-all duration-200 text-center min-w-[107px] flex items-center justify-center hover:shadow-lg active:scale-[0.98] ${
               canProceed()
-                ? "bg-[#FF5101] hover:bg-[#e8450a]"
-                : "bg-[#AAAAAA] pointer-events-none"
+                ? "bg-torra-orange hover:bg-orange-600"
+                : "bg-neutral-04 pointer-events-none"
             }`}
           >
             Próximo

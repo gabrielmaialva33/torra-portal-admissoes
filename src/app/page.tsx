@@ -17,7 +17,7 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="relative flex items-center justify-center min-h-[calc(100vh-200px)] px-4 md:px-8">
         {/* Central Content */}
-        <div className="relative flex flex-col items-center text-center max-w-[720px] animate-slide-up"
+        <div className="relative flex flex-col items-center text-center max-w-[720px] animate-slide-up">
           {/* Rocket Icon with Circle and decorative arc */}
           <div className="mb-6 md:mb-10 relative animate-float">
             {/* Decorative dashed arc behind the rocket icon */}

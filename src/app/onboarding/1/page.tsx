@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import InputMask from "react-input-mask";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Header } from "@/components/ui/header";
 import { Stepper } from "@/components/ui/stepper";
+import { maskCPF, maskPhone } from "@/lib/masks";
 
 export default function OnboardingStep1() {
   const [formData, setFormData] = useState({
@@ -193,22 +193,27 @@ export default function OnboardingStep1() {
                 <label className="block text-[#5F5F5F] text-base mb-2">
                   Número de celular com DDD*
                 </label>
-                <InputMask
-                  mask="(99) 99999-9999"
-                  value={formData.celular}
-                  onChange={handleInputChange}
-                >
-                  {(inputProps: any) => (
-                    <input
-                      {...inputProps}
-                      type="tel"
-                      name="celular"
-                      placeholder="(00) 00000-0000"
-                      className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
-                      required
-                    />
-                  )}
-                </InputMask>
+                <input
+                  type="tel"
+                  name="celular"
+                  value={maskPhone(formData.celular)}
+                  onChange={(e) => {
+                    const rawValue = e.target.value.replace(/\D/g, "");
+                    if (rawValue.length <= 11) {
+                      handleInputChange({
+                        ...e,
+                        target: {
+                          ...e.target,
+                          name: "celular",
+                          value: rawValue,
+                        },
+                      } as React.ChangeEvent<HTMLInputElement>);
+                    }
+                  }}
+                  placeholder="(00) 00000-0000"
+                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+                  required
+                />
               </div>
             </div>
 
@@ -293,22 +298,23 @@ export default function OnboardingStep1() {
           </div>
           <div className="flex-1 max-w-[552px]">
             <label className="block text-[#5F5F5F] text-base mb-2">CPF*</label>
-            <InputMask
-              mask="999.999.999-99"
-              value={formData.cpf}
-              onChange={handleInputChange}
-            >
-              {(inputProps: any) => (
-                <input
-                  {...inputProps}
-                  type="text"
-                  name="cpf"
-                  placeholder="000.000.000-00"
-                  className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
-                  required
-                />
-              )}
-            </InputMask>
+            <input
+              type="text"
+              name="cpf"
+              value={maskCPF(formData.cpf)}
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/\D/g, "");
+                if (rawValue.length <= 11) {
+                  handleInputChange({
+                    ...e,
+                    target: { ...e.target, name: "cpf", value: rawValue },
+                  } as React.ChangeEvent<HTMLInputElement>);
+                }
+              }}
+              placeholder="000.000.000-00"
+              className="w-full h-12 px-4 border border-[#D6D6D6] rounded bg-white text-neutral-900 placeholder:text-[#AAAAAA] text-base focus:outline-none focus:border-torra-orange transition-all duration-200 hover:border-[#999999]"
+              required
+            />
           </div>
         </div>
 

@@ -204,7 +204,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -213,7 +214,8 @@
 }
 
 @keyframes pulse-soft {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -263,7 +265,7 @@
 
 /* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid #FF5101;
+  outline: 2px solid #ff5101;
   outline-offset: 2px;
 }
 

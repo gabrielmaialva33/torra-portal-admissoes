@@ -4,6 +4,13 @@ import { PersonalDataForm } from "@/components/forms/steps/personal-data-form";
 
 const TOTAL_STEPS = 10;
 
+// Generate static params for all steps (required for static export)
+export async function generateStaticParams() {
+  return Array.from({ length: TOTAL_STEPS }, (_, i) => ({
+    step: (i + 1).toString(),
+  }));
+}
+
 export default async function OnboardingStepPage({
   params,
 }: {

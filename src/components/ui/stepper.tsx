@@ -9,10 +9,10 @@ interface StepperProps {
 
 const stepTitles = [
   "Dados Gerais",
+  "Dependentes",
   "Endereço",
   "Contatos de Emergência",
   "Dados Bancários",
-  "Dependentes",
   "Benefícios",
   "Documentação",
   "Experiência Profissional",

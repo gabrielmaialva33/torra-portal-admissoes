@@ -9,7 +9,10 @@ interface ForeignerFormProps {
   className?: string;
 }
 
-export function ForeignerForm({ onUpdate, className = "" }: ForeignerFormProps) {
+export function ForeignerForm({
+  onUpdate,
+  className = "",
+}: ForeignerFormProps) {
   const [formData, setFormData] = useState<ForeignerFormData>({
     isForeigner: "",
     dataChegada: "",

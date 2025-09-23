@@ -12,7 +12,7 @@ export default async function OnboardingStepPage({
   const { step } = await params;
   const stepNumber = parseInt(step, 10);
 
-  if (isNaN(stepNumber) || stepNumber < 1 || stepNumber > TOTAL_STEPS) {
+  if (Number.isNaN(stepNumber) || stepNumber < 1 || stepNumber > TOTAL_STEPS) {
     notFound();
   }
 

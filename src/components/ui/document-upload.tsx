@@ -40,14 +40,14 @@ export function DocumentUpload({
     e.stopPropagation();
     setDragActive(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files?.[0]) {
       handleFile(e.dataTransfer.files[0]);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       handleFile(e.target.files[0]);
     }
   };
@@ -62,7 +62,7 @@ export function DocumentUpload({
     }
 
     // Validate file type
-    const fileType = "." + file.name.split(".").pop()?.toLowerCase();
+    const fileType = `.${file.name.split(".").pop()?.toLowerCase()}`;
     if (accept && !accept.includes(fileType)) {
       setError("Tipo de arquivo não permitido");
       return;

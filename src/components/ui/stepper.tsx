@@ -36,11 +36,11 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
                   {/* Step Box with border for active state */}
                   <div className="relative">
                     {isActive && (
-                      <div className="absolute -inset-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)]" />
+                      <div className="absolute -inset-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)] z-0" />
                     )}
                     <div
                       className={`
-                        relative w-[30px] h-[30px] rounded-[4px] flex items-center justify-center
+                        relative w-[30px] h-[30px] rounded-[4px] flex items-center justify-center z-10
                         ${
                           isActive || isPast
                             ? "bg-[#FF5101]"
@@ -60,13 +60,8 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
                   {/* Connecting Line */}
                   {stepNumber < totalSteps && (
                     <div className="w-[60px] h-[2px]">
-                      {isPast ? (
+                      {isPast || isActive ? (
                         <div className="w-full h-full bg-[#FF5101]" />
-                      ) : stepNumber === currentStep ? (
-                        <div className="flex">
-                          <div className="w-[30px] h-full bg-[#FF5101]" />
-                          <div className="w-[30px] h-full bg-[#D6D6D6]" />
-                        </div>
                       ) : (
                         <div className="w-full h-full bg-[#D6D6D6]" />
                       )}

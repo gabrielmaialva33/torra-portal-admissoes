@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Header } from "@/components/ui/header";
 import { Stepper } from "@/components/ui/stepper";
+import { FileUpload } from "@/components/ui/file-upload";
 import { maskCPF, maskPhone } from "@/lib/masks";
 
 export default function OnboardingStep1() {
@@ -43,20 +44,11 @@ export default function OnboardingStep1() {
     }));
   };
 
-  const handleFileUpload = (fileType: keyof typeof uploadedFiles) => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = fileType === "foto" ? "image/*" : ".pdf,.jpg,.jpeg,.png";
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        setUploadedFiles((prev) => ({
-          ...prev,
-          [fileType]: file,
-        }));
-      }
-    };
-    input.click();
+  const handleFileSelect = (fileType: keyof typeof uploadedFiles) => (file: File | null) => {
+    setUploadedFiles((prev) => ({
+      ...prev,
+      [fileType]: file,
+    }));
   };
 
   return (
@@ -120,7 +112,18 @@ export default function OnboardingStep1() {
               <button
                 type="button"
                 aria-label="Enviar ou alterar foto"
-                onClick={() => handleFileUpload("foto")}
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = (e) => {
+                    const file = (e.target as HTMLInputElement).files?.[0];
+                    if (file) {
+                      handleFileSelect("foto")(file);
+                    }
+                  };
+                  input.click();
+                }}
                 className="absolute bottom-2 right-2 w-[45px] h-[45px] bg-[#37375B] rounded-full flex items-center justify-center hover:bg-[#2a2a4a] transition-all duration-200 hover:scale-110 active:scale-95"
               >
                 <svg
@@ -460,309 +463,44 @@ export default function OnboardingStep1() {
         {/* Document Upload Section */}
         <div className="mb-10">
           <p className="text-[#5F5F5F] text-base mb-10 text-center">
-            Agora, faça o envio dos documentos abaixo.
+            Agora, faça o upload dos documentos necessários para continuar.
           </p>
 
           <div className="grid grid-cols-1 gap-4 max-w-[1144px] mx-auto">
-            {/* RG Upload */}
-            <button
-              type="button"
-              onClick={() => handleFileUpload("rg")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
-            >
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
-                <svg
-                  role="img"
-                  aria-label="Document icon"
-                  width="20"
-                  height="24"
-                  viewBox="0 0 20 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 2H4C2.9 2 2 2.9 2 4V20C2 21.1 2.9 22 4 22H16C17.1 22 18 21.1 18 20V9L11 2Z"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11 2V9H18"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 12H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 16H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 8H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span className="text-[#5F5F5F] text-sm text-center flex-1">
-                {uploadedFiles.rg
-                  ? uploadedFiles.rg.name
-                  : "Clique aqui para anexar seu RG*"}
-              </span>
-            </button>
+            <FileUpload
+              label="RG"
+              required={true}
+              accept=".pdf,.jpg,.jpeg,.png"
+              onFileSelect={handleFileSelect("rg")}
+            />
 
-            {/* CPF Upload */}
-            <button
-              type="button"
-              onClick={() => handleFileUpload("cpf")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
-            >
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
-                <svg
-                  role="img"
-                  aria-label="Document icon"
-                  width="20"
-                  height="24"
-                  viewBox="0 0 20 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 2H4C2.9 2 2 2.9 2 4V20C2 21.1 2.9 22 4 22H16C17.1 22 18 21.1 18 20V9L11 2Z"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11 2V9H18"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 12H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 16H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 8H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span className="text-[#5F5F5F] text-sm text-center flex-1">
-                {uploadedFiles.cpf
-                  ? uploadedFiles.cpf.name
-                  : "Clique aqui para anexar seu CPF*"}
-              </span>
-            </button>
+            <FileUpload
+              label="CPF"
+              required={true}
+              accept=".pdf,.jpg,.jpeg,.png"
+              onFileSelect={handleFileSelect("cpf")}
+            />
 
-            {/* Certidão de Casamento Upload */}
-            <button
-              type="button"
-              onClick={() => handleFileUpload("certidaoCasamento")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
-            >
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
-                <svg
-                  role="img"
-                  aria-label="Document icon"
-                  width="20"
-                  height="24"
-                  viewBox="0 0 20 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 2H4C2.9 2 2 2.9 2 4V20C2 21.1 2.9 22 4 22H16C17.1 22 18 21.1 18 20V9L11 2Z"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11 2V9H18"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 12H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 16H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 8H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span className="text-[#5F5F5F] text-sm text-center flex-1">
-                {uploadedFiles.certidaoCasamento
-                  ? uploadedFiles.certidaoCasamento.name
-                  : "Clique aqui para anexar sua Certidão de casamento"}
-              </span>
-            </button>
+            <FileUpload
+              label="Certidão de casamento"
+              required={false}
+              accept=".pdf,.jpg,.jpeg,.png"
+              onFileSelect={handleFileSelect("certidaoCasamento")}
+            />
 
-            {/* Reservista Upload */}
-            <button
-              type="button"
-              onClick={() => handleFileUpload("reservista")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
-            >
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
-                <svg
-                  role="img"
-                  aria-label="Document icon"
-                  width="20"
-                  height="24"
-                  viewBox="0 0 20 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 2H4C2.9 2 2 2.9 2 4V20C2 21.1 2.9 22 4 22H16C17.1 22 18 21.1 18 20V9L11 2Z"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11 2V9H18"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 12H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 16H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 8H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span className="text-[#5F5F5F] text-sm text-center flex-1">
-                {uploadedFiles.reservista
-                  ? uploadedFiles.reservista.name
-                  : "Clique aqui para anexar sua Reservista"}
-              </span>
-            </button>
+            <FileUpload
+              label="Reservista"
+              required={false}
+              accept=".pdf,.jpg,.jpeg,.png"
+              onFileSelect={handleFileSelect("reservista")}
+            />
 
-            {/* Diploma Upload */}
-            <button
-              type="button"
-              onClick={() => handleFileUpload("diploma")}
-              className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
-            >
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
-                <svg
-                  role="img"
-                  aria-label="Document icon"
-                  width="20"
-                  height="24"
-                  viewBox="0 0 20 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 2H4C2.9 2 2 2.9 2 4V20C2 21.1 2.9 22 4 22H16C17.1 22 18 21.1 18 20V9L11 2Z"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11 2V9H18"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 12H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 16H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 8H6"
-                    stroke="#D6D6D6"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span className="text-[#5F5F5F] text-sm text-center flex-1">
-                {uploadedFiles.diploma
-                  ? uploadedFiles.diploma.name
-                  : "Clique aqui para anexar seu Diploma ou certificado de escolaridade"}
-              </span>
-            </button>
+            <FileUpload
+              label="Diploma ou certificado de escolaridade"
+              required={false}
+              accept=".pdf,.jpg,.jpeg,.png"
+              onFileSelect={handleFileSelect("diploma")}
+            />
           </div>
         </div>
 

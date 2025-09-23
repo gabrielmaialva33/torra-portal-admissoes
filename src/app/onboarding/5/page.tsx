@@ -38,28 +38,7 @@ export default function OnboardingStep5() {
 
   // Lógica de validação condicional
   const canProceed = () => {
-    // Se não respondeu a pergunta principal, não pode prosseguir
-    if (!formData.isPCD) return false;
-
-    // Se respondeu "não", pode prosseguir imediatamente
-    if (formData.isPCD === "nao") return true;
-
-    // Se respondeu "sim", precisa:
-    // 1. Pelo menos um tipo de deficiência selecionado (e diferente de vazio)
-    // 2. Upload do laudo médico
-    if (formData.isPCD === "sim") {
-      const hasDeficiencia =
-        (formData.deficienciaVisual && formData.deficienciaVisual !== "") ||
-        (formData.deficienciaAuditiva && formData.deficienciaAuditiva !== "") ||
-        (formData.deficienciaMental && formData.deficienciaMental !== "") ||
-        (formData.deficienciaIntelectual &&
-          formData.deficienciaIntelectual !== "") ||
-        (formData.deficienciaFisica && formData.deficienciaFisica !== "");
-
-      return hasDeficiencia && formData.laudoMedico !== null;
-    }
-
-    return false;
+    return true; // Temporarily enabled for dev
   };
 
   const showUploadSection = formData.isPCD === "sim";

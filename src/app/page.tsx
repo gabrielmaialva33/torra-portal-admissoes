@@ -7,7 +7,7 @@ import { Header } from "@/components/ui/header";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-neutral-bg">
+    <div className="min-h-screen bg-neutral-bg animate-fade-in">
       {/* Header */}
       <Header />
 
@@ -17,9 +17,9 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="relative flex items-center justify-center min-h-[calc(100vh-200px)] px-4 md:px-8">
         {/* Central Content */}
-        <div className="relative flex flex-col items-center text-center max-w-[720px]">
+        <div className="relative flex flex-col items-center text-center max-w-[720px] animate-slide-up"
           {/* Rocket Icon with Circle and decorative arc */}
-          <div className="mb-6 md:mb-10 relative">
+          <div className="mb-6 md:mb-10 relative animate-float">
             {/* Decorative dashed arc behind the rocket icon */}
             <svg
               className="absolute -inset-x-[100px] md:-inset-x-[150px] -inset-y-[30px] md:-inset-y-[50px] w-[280px] md:w-[400px] h-[140px] md:h-[200px] pointer-events-none"
@@ -36,9 +36,10 @@ export default function HomePage() {
                 strokeLinecap="round"
                 fill="none"
                 opacity="0.5"
+                className="animate-pulse-soft"
               />
             </svg>
-            <div className="relative w-[80px] h-[80px] md:w-[100px] md:h-[100px] z-10">
+            <div className="relative w-[80px] h-[80px] md:w-[100px] md:h-[100px] z-10 group">
               {/* Orange ring */}
               <div className="absolute inset-0 rounded-full border-[4px] md:border-[5px] border-torra-orange"></div>
               {/* Light orange background circle */}
@@ -50,7 +51,7 @@ export default function HomePage() {
                   alt="Rocket"
                   width={42}
                   height={42}
-                  className="relative z-10 w-8 h-8 md:w-[42px] md:h-[42px]"
+                  className="relative z-10 w-8 h-8 md:w-[42px] md:h-[42px] group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
             </div>
@@ -82,7 +83,7 @@ export default function HomePage() {
           {/* Start Button */}
           <Link
             href="/onboarding/1"
-            className="inline-flex items-center justify-center bg-torra-orange text-neutral-01 hover:bg-torra-orange/90 px-6 md:px-8 py-3 md:py-4 text-sm md:text-base font-medium rounded-sm transition-colors w-full md:w-auto min-w-[160px]"
+            className="inline-flex items-center justify-center bg-torra-orange text-neutral-01 hover:bg-torra-orange/90 px-6 md:px-8 py-3 md:py-4 text-sm md:text-base font-medium rounded-sm transition-all duration-300 w-full md:w-auto min-w-[160px] hover:shadow-lg hover:scale-105 active:scale-95"
           >
             Começar
           </Link>

@@ -24,28 +24,7 @@ export default function OnboardingStep6() {
 
   // Lógica de validação condicional
   const canProceed = () => {
-    // Se não respondeu a pergunta principal, não pode prosseguir
-    if (!formData.useTransport) return false;
-
-    // Se respondeu "não", pode prosseguir imediatamente
-    if (formData.useTransport === "nao") return true;
-
-    // Se respondeu "sim", precisa ter pelo menos um transporte válido
-    if (formData.useTransport === "sim") {
-      return (
-        formData.transports.length > 0 &&
-        formData.transports.every((transport) => {
-          return !!(
-            transport.meioTransporte.trim() &&
-            transport.quantidadePassagem.trim() &&
-            transport.operadora.trim() &&
-            transport.valorPassagem.trim()
-          );
-        })
-      );
-    }
-
-    return false;
+    return true; // Temporarily enabled for dev
   };
 
   return (

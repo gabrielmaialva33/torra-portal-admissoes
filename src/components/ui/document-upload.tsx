@@ -93,6 +93,9 @@ export function DocumentUpload({
               : "border-gray-300 hover:border-gray-400",
             error && "border-red-500",
           )}
+          role="button"
+          tabIndex={0}
+          aria-label={`Área para enviar ${title}. Clique ou arraste e solte um arquivo`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}

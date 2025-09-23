@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
 import { Header } from "@/components/ui/header";
 import { StepIndicator } from "@/components/ui/step-indicator";
 import { useOnboardingStore } from "@/stores/onboarding-store";
@@ -38,13 +37,13 @@ export function OnboardingLayout({
   currentStep,
   onNext,
   onPrevious,
-  isNextDisabled = false,
-  isPreviousDisabled = false,
+  isNextDisabled: _isNextDisabled = false,
+  isPreviousDisabled: _isPreviousDisabled = false,
 }: OnboardingLayoutProps) {
   const router = useRouter();
   const { completedSteps, setCurrentStep } = useOnboardingStore();
 
-  const handleNext = () => {
+  const _handleNext = () => {
     if (onNext) {
       onNext();
     } else if (currentStep < ONBOARDING_STEPS.length) {
@@ -54,7 +53,7 @@ export function OnboardingLayout({
     }
   };
 
-  const handlePrevious = () => {
+  const _handlePrevious = () => {
     if (onPrevious) {
       onPrevious();
     } else if (currentStep > 1) {

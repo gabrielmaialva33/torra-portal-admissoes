@@ -16,48 +16,29 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="relative flex items-center justify-center min-h-[calc(100vh-200px)] px-8">
-        {/* Background Decorative Lines */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Left dashed curved line */}
-          <svg
-            className="absolute left-0 top-[20%] w-[45%]"
-            viewBox="0 0 600 300"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M50 250C150 200 250 150 350 120C450 90 550 50 600 10"
-              stroke="#FFCCB6"
-              strokeWidth="2"
-              strokeDasharray="10 10"
-              strokeLinecap="round"
-              opacity="0.5"
-            />
-          </svg>
+        {/* Central Content with decorative background */}
+        <div className="relative flex flex-col items-center text-center max-w-[720px]">
+          {/* Rocket Icon with Circle and decorative arc */}
+          <div className="mb-10 relative">
+            {/* Decorative dashed arc behind the rocket */}
+            <svg
+              className="absolute -top-[30px] left-1/2 -translate-x-1/2 w-[300px] h-[160px] pointer-events-none"
+              viewBox="0 0 300 160"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M 30 130 Q 150 20 270 130"
+                stroke="#FFCCB6"
+                strokeWidth="2"
+                strokeDasharray="8 6"
+                strokeLinecap="round"
+                fill="none"
+                opacity="0.6"
+              />
+            </svg>
 
-          {/* Right dashed curved line */}
-          <svg
-            className="absolute right-0 top-[25%] w-[45%]"
-            viewBox="0 0 600 300"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M550 250C450 200 350 150 250 120C150 90 50 50 0 10"
-              stroke="#FFCCB6"
-              strokeWidth="2"
-              strokeDasharray="10 10"
-              strokeLinecap="round"
-              opacity="0.5"
-            />
-          </svg>
-        </div>
-
-        {/* Central Content */}
-        <div className="relative z-10 flex flex-col items-center text-center max-w-[720px]">
-          {/* Rocket Icon with Circle */}
-          <div className="mb-10">
-            <div className="relative w-[100px] h-[100px]">
+            <div className="relative w-[100px] h-[100px] z-10">
               {/* Orange ring */}
               <div className="absolute inset-0 rounded-full border-[5px] border-torra-orange"></div>
               {/* Light orange background circle */}

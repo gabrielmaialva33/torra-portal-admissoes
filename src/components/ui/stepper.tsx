@@ -51,6 +51,7 @@ export function Stepper({
             )}
           >
             <button
+              type="button"
               onClick={() => canAccess && onStepClick?.(step.id)}
               disabled={!canAccess}
               className={cn(

@@ -1,7 +1,7 @@
 "use client";
 
 import { FileText, Upload, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface DocumentUploadProps {
@@ -24,6 +24,7 @@ export function DocumentUpload({
   const [file, setFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -85,45 +86,48 @@ export function DocumentUpload({
   return (
     <div className={cn("w-full", className)}>
       {!file ? (
-        <div
-          className={cn(
-            "relative border-2 border-dashed rounded-lg p-6 transition-colors",
-            dragActive
-              ? "border-primary bg-primary/5"
-              : "border-gray-300 hover:border-gray-400",
-            error && "border-red-500",
-          )}
-          role="button"
-          tabIndex={0}
-          aria-label={`Área para enviar ${title}. Clique ou arraste e solte um arquivo`}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
+        <>
           <input
+            ref={inputRef}
             type="file"
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            className="sr-only"
             onChange={handleChange}
             accept={accept}
           />
-          <div className="flex flex-col items-center justify-center space-y-3">
-            <div className="p-3 bg-gray-100 rounded-full">
-              <Upload className="w-6 h-6 text-gray-600" />
-            </div>
-            <div className="text-center">
-              <p className="text-sm font-medium text-gray-700">
-                Clique aqui para anexar seu {title}
+          <button
+            type="button"
+            className={cn(
+              "relative border-2 border-dashed rounded-lg p-6 transition-colors",
+              dragActive
+                ? "border-primary bg-primary/5"
+                : "border-gray-300 hover:border-gray-400",
+              error && "border-red-500",
+            )}
+            aria-label={`Área para enviar ${title}. Clique ou arraste e solte um arquivo`}
+            onClick={() => inputRef.current?.click()}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+          >
+            <div className="flex flex-col items-center justify-center space-y-3">
+              <div className="p-3 bg-gray-100 rounded-full">
+                <Upload className="w-6 h-6 text-gray-600" />
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-medium text-gray-700">
+                  Clique aqui para anexar seu {title}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  ou arraste e solte o arquivo
+                </p>
+              </div>
+              <p className="text-xs text-gray-400">
+                PDF, JPG, PNG até {maxSize / (1024 * 1024)}MB
               </p>
-              <p className="text-xs text-gray-500 mt-1">
-                ou arraste e solte o arquivo
-              </p>
             </div>
-            <p className="text-xs text-gray-400">
-              PDF, JPG, PNG até {maxSize / (1024 * 1024)}MB
-            </p>
-          </div>
-        </div>
+          </button>
+        </>
       ) : (
         <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
           <div className="flex items-center justify-between">

@@ -22,6 +22,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           {/* Info Button */}
           <button
+            type="button"
             className="relative w-8 h-8 rounded-full bg-[#37375B] flex items-center justify-center hover:opacity-90 transition-opacity"
             aria-label="Informações"
           >
@@ -33,7 +34,10 @@ export function Header() {
             <span className="text-[#5F5F5F] text-[15px] font-normal">
               Olá, Lorem Ipsum
             </span>
-            <button className="text-[#FF5101] text-[15px] font-semibold hover:underline">
+            <button
+              type="button"
+              className="text-[#FF5101] text-[15px] font-semibold hover:underline"
+            >
               Sair
             </button>
             <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-b from-orange-100 to-orange-200">

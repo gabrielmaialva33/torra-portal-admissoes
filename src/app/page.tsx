@@ -16,28 +16,28 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="relative flex items-center justify-center min-h-[calc(100vh-200px)] px-8">
-        {/* Central Content with decorative background */}
+        {/* Central Content */}
         <div className="relative flex flex-col items-center text-center max-w-[720px]">
           {/* Rocket Icon with Circle and decorative arc */}
           <div className="mb-10 relative">
-            {/* Decorative dashed arc behind the rocket */}
+            {/* Decorative dashed arc behind the rocket icon */}
             <svg
-              className="absolute -top-[30px] left-1/2 -translate-x-1/2 w-[300px] h-[160px] pointer-events-none"
-              viewBox="0 0 300 160"
+              className="absolute -inset-x-[150px] -inset-y-[50px] w-[400px] h-[200px] pointer-events-none"
+              viewBox="0 0 400 200"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>Decorative arc</title>
               <path
-                d="M 30 130 Q 150 20 270 130"
+                d="M 40 170 Q 200 30 360 170"
                 stroke="#FFCCB6"
                 strokeWidth="2"
-                strokeDasharray="8 6"
+                strokeDasharray="10 7"
                 strokeLinecap="round"
                 fill="none"
-                opacity="0.6"
+                opacity="0.5"
               />
             </svg>
-
             <div className="relative w-[100px] h-[100px] z-10">
               {/* Orange ring */}
               <div className="absolute inset-0 rounded-full border-[5px] border-torra-orange"></div>

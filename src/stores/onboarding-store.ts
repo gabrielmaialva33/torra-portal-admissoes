@@ -110,7 +110,10 @@ interface OnboardingState {
 
   // Actions
   setCurrentStep: (step: number) => void;
-  updateFormData: (step: keyof OnboardingState["formData"], data: any) => void;
+  updateFormData: <K extends keyof OnboardingState["formData"]>(
+    step: K,
+    data: OnboardingState["formData"][K],
+  ) => void;
   addDependent: (dependent: Dependent) => void;
   removeDependent: (id: string) => void;
   addDocument: (document: OnboardingDocument) => void;
@@ -144,11 +147,14 @@ export const useOnboardingStore = create<OnboardingState>()(
 
       setCurrentStep: (step) => set({ currentStep: step }),
 
-      updateFormData: (stepKey, data) =>
+      updateFormData: <K extends keyof OnboardingState["formData"]>(
+        stepKey: K,
+        data: OnboardingState["formData"][K],
+      ) =>
         set((state) => ({
           formData: {
             ...state.formData,
-            [stepKey]: data,
+            [stepKey]: data as OnboardingState["formData"][K],
           },
         })),
 

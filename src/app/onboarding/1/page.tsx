@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Header } from "@/components/ui/header";

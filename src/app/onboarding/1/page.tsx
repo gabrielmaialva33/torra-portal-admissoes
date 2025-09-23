@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Header } from "@/components/ui/header";
+import { useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Header } from "@/components/ui/header";
 import { Stepper } from "@/components/ui/stepper";
 
 export default function OnboardingStep1() {

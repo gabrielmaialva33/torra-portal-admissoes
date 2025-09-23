@@ -75,7 +75,9 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
 
         {/* Step Info */}
         <div className="text-center mt-5">
-          <p className="text-[10px] text-[#5F5F5F] leading-[14px]">Passo {currentStep}</p>
+          <p className="text-[10px] text-[#5F5F5F] leading-[14px]">
+            Passo {currentStep}
+          </p>
           <p className="text-[14px] text-[#5F5F5F] leading-[16px]">
             {stepTitles[currentStep - 1]}
           </p>

@@ -11,13 +11,13 @@ const stepTitles = [
   "Dados Gerais",
   "Dependentes",
   "Endereço",
+  "Dados Contratuais",
   "Contatos de Emergência",
   "Dados Bancários",
   "Benefícios",
   "Documentação",
   "Experiência Profissional",
   "Formação Acadêmica",
-  "Revisão",
 ];
 
 export function Stepper({ currentStep, totalSteps }: StepperProps) {

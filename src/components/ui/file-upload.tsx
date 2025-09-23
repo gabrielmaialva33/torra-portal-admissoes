@@ -227,7 +227,7 @@ export function FileUpload({
       if (file) {
         const syntheticEvent = {
           target: { files: [file] },
-        } as React.ChangeEvent<HTMLInputElement>;
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
         handleFileSelect(syntheticEvent);
       }
     };

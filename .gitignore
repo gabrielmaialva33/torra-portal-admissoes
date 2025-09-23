@@ -44,3 +44,7 @@ pnpm-workspace.yaml
 tmp
 .claude
 .playwright-mcp
+
+# Keep npm/pnpm config for CI/CD
+!.npmrc
+!.pnpmfile.cjs

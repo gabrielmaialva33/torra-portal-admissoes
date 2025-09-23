@@ -14,10 +14,10 @@ const stepTitles = [
   "Dados Contratuais",
   "PCD",
   "Vale Transporte",
+  "Dados de Estrangeiro",
   "Contatos de Emergência",
   "Dados Bancários",
   "Benefícios",
-  "Documentação",
 ];
 
 export function Stepper({ currentStep, totalSteps }: StepperProps) {

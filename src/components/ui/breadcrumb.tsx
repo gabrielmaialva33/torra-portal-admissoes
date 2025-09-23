@@ -1,6 +1,6 @@
 "use client";
 
-import { Home } from "lucide-react";
+import { ChevronRight, Home } from "lucide-react";
 
 interface BreadcrumbProps {
   currentPage?: string;
@@ -8,15 +8,23 @@ interface BreadcrumbProps {
 
 export function Breadcrumb({ currentPage = "Admissão" }: BreadcrumbProps) {
   return (
-    <div className="w-full">
-      <div className="bg-white px-8 py-2">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Home className="w-4 h-4" />
-          <span className="text-gray-400">/</span>
-          <span>{currentPage}</span>
+    <div className="w-full relative bg-neutral-01">
+      {/* Breadcrumb Content */}
+      <div className="px-8 py-[10px]">
+        <div className="flex items-center gap-[6px]">
+          <Home className="w-[14px] h-[14px] text-neutral-05" strokeWidth={2} />
+          <ChevronRight
+            className="w-[14px] h-[14px] text-neutral-04"
+            strokeWidth={2}
+          />
+          <span className="text-sm text-neutral-05 font-semibold">
+            {currentPage}
+          </span>
         </div>
       </div>
-      <div className="h-[1px] bg-primary" />
+
+      {/* Orange Line Below */}
+      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-torra-orange" />
     </div>
   );
 }

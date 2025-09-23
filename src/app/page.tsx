@@ -1,211 +1,112 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, CheckCircle, FileText, Clock, Shield } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { useOnboardingStore } from "@/stores/onboarding-store";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Header } from "@/components/ui/header";
 
 export default function HomePage() {
-  const { currentStep, completedSteps, resetOnboarding } = useOnboardingStore();
-  const hasStarted = currentStep > 1 || completedSteps.length > 0;
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
+    <div className="min-h-screen bg-neutral-bg">
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-primary">Portal Torra</h1>
-              <p className="text-muted-foreground">Sistema de Admissão</p>
-            </div>
-            <Badge variant="secondary" className="text-sm">
-              Admissão
-            </Badge>
-          </div>
-        </div>
-      </header>
+      <Header />
+
+      {/* Breadcrumb */}
+      <Breadcrumb currentPage="Admissão" />
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12">
-        <div className="mx-auto max-w-4xl space-y-8">
-          {/* Welcome Card */}
-          <Card className="border-primary/20">
-            <CardHeader className="text-center">
-              <CardTitle className="text-4xl">Bem vindo(a)!</CardTitle>
-              <CardTitle className="text-2xl mt-2">
-                É muito bom ter você com a gente.
-              </CardTitle>
-              <CardDescription className="text-lg mt-4">
-                Parabéns pela sua seleção para a vaga! 🎉
-              </CardDescription>
-              <CardDescription className="text-base mt-2 max-w-2xl">
-                Para darmos os próximos passos e formalizar sua chegada ao nosso
-                time, pedimos a gentileza de preencher seus dados pessoais no
-                formulário abaixo. Para facilitar, já separe seus documentos,
-                ok?
-              </CardDescription>
-              <CardDescription className="text-base mt-2">
-                Estamos muito felizes em ter você a bordo!
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center space-y-6">
-              {hasStarted ? (
-                <div className="text-center space-y-4">
-                  <p className="text-lg">
-                    Você tem um processo de admissão em andamento.
-                  </p>
-                  <div className="flex gap-4 justify-center">
-                    <Link href={`/onboarding/${currentStep}`}>
-                      <Button size="lg">
-                        Continuar do Passo {currentStep}
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => {
-                        if (
-                          confirm(
-                            "Tem certeza que deseja recomeçar? Todo o progresso será perdido.",
-                          )
-                        ) {
-                          resetOnboarding();
-                        }
-                      }}
-                    >
-                      Recomeçar
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Link href="/onboarding/1">
-                  <Button size="lg" className="text-lg px-8">
-                    Começar
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              )}
-            </CardContent>
-          </Card>
+      <main className="relative flex items-center justify-center min-h-[calc(100vh-200px)] px-8">
+        {/* Background Decorative Lines */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Left dashed curved line */}
+          <svg
+            className="absolute left-0 top-[20%] w-[45%]"
+            viewBox="0 0 600 300"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M50 250C150 200 250 150 350 120C450 90 550 50 600 10"
+              stroke="#FFCCB6"
+              strokeWidth="2"
+              strokeDasharray="10 10"
+              strokeLinecap="round"
+              opacity="0.5"
+            />
+          </svg>
 
-          {/* Features Grid */}
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-8 w-8 text-primary" />
-                  <div>
-                    <CardTitle>Processo Simples</CardTitle>
-                    <CardDescription>
-                      10 passos fáceis para completar sua admissão
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
+          {/* Right dashed curved line */}
+          <svg
+            className="absolute right-0 top-[25%] w-[45%]"
+            viewBox="0 0 600 300"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M550 250C450 200 350 150 250 120C150 90 50 50 0 10"
+              stroke="#FFCCB6"
+              strokeWidth="2"
+              strokeDasharray="10 10"
+              strokeLinecap="round"
+              opacity="0.5"
+            />
+          </svg>
+        </div>
 
-            <Card>
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <FileText className="h-8 w-8 text-primary" />
-                  <div>
-                    <CardTitle>Upload de Documentos</CardTitle>
-                    <CardDescription>
-                      Envie todos os documentos necessários com segurança
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <Clock className="h-8 w-8 text-primary" />
-                  <div>
-                    <CardTitle>Salve o Progresso</CardTitle>
-                    <CardDescription>
-                      Continue de onde parou a qualquer momento
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <Shield className="h-8 w-8 text-primary" />
-                  <div>
-                    <CardTitle>Seguro e Privado</CardTitle>
-                    <CardDescription>
-                      Seus dados são criptografados e protegidos
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
+        {/* Central Content */}
+        <div className="relative z-10 flex flex-col items-center text-center max-w-[720px]">
+          {/* Rocket Icon with Circle */}
+          <div className="mb-10">
+            <div className="relative w-[100px] h-[100px]">
+              {/* Orange ring */}
+              <div className="absolute inset-0 rounded-full border-[5px] border-torra-orange"></div>
+              {/* Light orange background circle */}
+              <div className="absolute inset-[5px] rounded-full bg-[#FBE2D7]"></div>
+              {/* Rocket icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Image
+                  src="/images/figma/icon-rocket.svg"
+                  alt="Rocket"
+                  width={42}
+                  height={42}
+                  className="relative z-10"
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Steps Overview */}
-          <Card>
-            <CardHeader>
-              <CardTitle>O que esperar</CardTitle>
-              <CardDescription>
-                O processo de admissão consiste nas seguintes etapas:
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-2 md:grid-cols-2">
-                {[
-                  "Dados Gerais",
-                  "Dependentes",
-                  "Endereço",
-                  "Dados Contratuais",
-                  "Dados PCD",
-                  "Vale Transporte",
-                  "Dados Estrangeiro",
-                  "Dados Aprendiz",
-                  "Dados Bancários",
-                  "Finalização",
-                ].map((step, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <Badge
-                      variant="outline"
-                      className="w-8 h-8 rounded-full p-0 flex items-center justify-center"
-                    >
-                      {index + 1}
-                    </Badge>
-                    <span className="text-sm">{step}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          {/* Title */}
+          <h1 className="text-[32px] leading-[40px] font-bold text-torra-dark-blue mb-6">
+            Bem vindo(a)!
+            <br />É muito bom ter você com a gente.
+          </h1>
+
+          {/* Description */}
+          <div className="mb-10 max-w-[600px]">
+            <p className="text-base text-neutral-05 leading-[26px] mb-4">
+              <span className="font-semibold">
+                Parabéns pela sua seleção para a vaga! 🎉
+              </span>
+            </p>
+            <p className="text-base text-neutral-05 leading-[26px] mb-4">
+              Para darmos os próximos passos e formalizar sua chegada ao nosso
+              time, pedimos a gentileza de preencher seus dados pessoais no
+              formulário abaixo. Para facilitar, já separe seus documentos, ok?
+            </p>
+            <p className="text-base text-neutral-05 leading-[26px]">
+              Estamos muito felizes em ter você a bordo!
+            </p>
+          </div>
+
+          {/* Start Button */}
+          <Link
+            href="/onboarding/1"
+            className="inline-flex items-center justify-center bg-torra-orange text-neutral-01 hover:bg-torra-orange/90 px-8 py-4 text-base font-medium rounded-sm transition-colors min-w-[160px]"
+          >
+            Começar
+          </Link>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t mt-auto">
-        <div className="container mx-auto px-4 py-6">
-          <div className="text-center text-sm text-muted-foreground">
-            © 2025 Torra. Todos os direitos reservados. |
-            <span className="ml-1">
-              Precisa de ajuda? Entre em contato com o RH em rh@torra.com.br
-            </span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

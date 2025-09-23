@@ -1,11 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Calendar, Camera } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useOnboardingStore } from "@/stores/onboarding-store";
-import { personalDataSchema } from "@/lib/validations/onboarding";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { DocumentUpload } from "@/components/ui/document-upload";
 import {
   Form,
   FormControl,
@@ -16,7 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -24,8 +24,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Camera, Calendar } from "lucide-react";
-import { DocumentUpload } from "@/components/ui/document-upload";
+import { personalDataSchema } from "@/lib/validations/onboarding";
+import { useOnboardingStore } from "@/stores/onboarding-store";
 
 type PersonalDataFormValues = z.infer<typeof personalDataSchema>;
 
@@ -384,19 +384,19 @@ export function PersonalDataForm() {
               </div>
 
               {/* Buttons */}
-              <div className="flex justify-end gap-4 pt-6">
+              <div className="flex justify-end gap-3 pt-6">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={form.handleSubmit(onSave)}
-                  className="bg-[#37375B] text-white hover:bg-[#37375B]/90 px-8 py-2"
+                  className="bg-torra-dark-blue text-neutral-01 hover:bg-torra-dark-blue/90 border-0 px-6 py-4 text-sm font-normal h-auto rounded-sm"
                 >
                   Salvar
                 </Button>
                 <Button
                   type="submit"
-                  disabled
-                  className="bg-gray-400 text-white hover:bg-gray-500 px-8 py-2"
+                  disabled={!form.formState.isValid}
+                  className="bg-torra-orange text-neutral-01 hover:bg-torra-orange/90 disabled:bg-neutral-04 disabled:opacity-100 px-6 py-4 text-sm font-normal h-auto rounded-sm"
                 >
                   Próximo
                 </Button>

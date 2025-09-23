@@ -1,7 +1,7 @@
 "use client";
 
+import { FileText, Upload, X } from "lucide-react";
 import { useState } from "react";
-import { Upload, FileText, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface DocumentUploadProps {

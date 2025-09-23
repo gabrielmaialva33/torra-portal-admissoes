@@ -1,10 +1,11 @@
 "use client";
 
-import { useOnboardingStore } from "@/stores/onboarding-store";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Header } from "@/components/ui/header";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/ui/header";
+import { StepIndicator } from "@/components/ui/step-indicator";
+import { useOnboardingStore } from "@/stores/onboarding-store";
 
 const ONBOARDING_STEPS = [
   { id: 1, title: "Dados Gerais", description: "Informações básicas" },
@@ -63,8 +64,6 @@ export function OnboardingLayout({
     }
   };
 
-  const currentStepData = ONBOARDING_STEPS[currentStep - 1];
-
   return (
     <div className="min-h-screen bg-[#F8F8F8]">
       {/* Header */}
@@ -74,49 +73,11 @@ export function OnboardingLayout({
       <Breadcrumb currentPage="Admissão" />
 
       {/* Step Indicator */}
-      <div className="bg-[#F8F8F8] py-6">
-        <div className="container mx-auto px-8">
-          <div className="flex flex-col items-center">
-            {/* Steps Bar */}
-            <div className="flex items-center gap-2">
-              {ONBOARDING_STEPS.map((step, index) => (
-                <div key={step.id} className="flex items-center">
-                  <div
-                    className={`w-8 h-8 rounded flex items-center justify-center text-xs font-semibold transition-all
-                      ${
-                        currentStep === step.id
-                          ? "bg-primary text-white ring-4 ring-primary/20"
-                          : completedSteps.includes(step.id)
-                            ? "bg-green-500 text-white"
-                            : "bg-white border border-gray-300 text-gray-400"
-                      }
-                    `}
-                  >
-                    {completedSteps.includes(step.id) ? "✓" : ""}
-                  </div>
-                  {index < ONBOARDING_STEPS.length - 1 && (
-                    <div
-                      className={`w-16 h-0.5 ${
-                        completedSteps.includes(step.id)
-                          ? "bg-green-500"
-                          : "bg-gray-300"
-                      }`}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Step Title */}
-            <div className="mt-4 text-center">
-              <p className="text-xs text-gray-500">Passo {currentStep}</p>
-              <h2 className="text-sm font-medium text-gray-700 mt-1">
-                {currentStepData?.title}
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
+      <StepIndicator
+        currentStep={currentStep}
+        completedSteps={completedSteps}
+        totalSteps={ONBOARDING_STEPS.length}
+      />
 
       {/* Main Content */}
       <main className="container mx-auto px-8 pb-8">

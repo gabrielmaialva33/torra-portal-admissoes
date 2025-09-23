@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 interface StepperProps {
   currentStep: number;
   totalSteps: number;
@@ -30,20 +32,17 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
               const isPast = stepNumber < currentStep;
 
               return (
-                <div key={stepNumber} className="flex items-center gap-2">
-                  {/* Wrapper for active step border */}
-                  {isActive ? (
-                    <div className="p-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)]">
-                      <div className="w-[30px] h-[30px] rounded-[4px] bg-[#FF5101] flex items-center justify-center">
-                        <div className="w-[10px] h-[10px] rounded-[2px] bg-white" />
-                      </div>
-                    </div>
-                  ) : (
+                <React.Fragment key={stepNumber}>
+                  {/* Step Box with border for active state */}
+                  <div className="relative">
+                    {isActive && (
+                      <div className="absolute -inset-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)]" />
+                    )}
                     <div
                       className={`
-                        w-[30px] h-[30px] rounded-[4px] flex items-center justify-center
+                        relative w-[30px] h-[30px] rounded-[4px] flex items-center justify-center
                         ${
-                          isPast
+                          isActive || isPast
                             ? "bg-[#FF5101]"
                             : "border border-[#D6D6D6] bg-white"
                         }
@@ -52,11 +51,11 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
                       <div
                         className={`
                           w-[10px] h-[10px] rounded-[2px]
-                          ${isPast ? "bg-white" : "bg-[#D6D6D6]"}
+                          ${isActive || isPast ? "bg-white" : "bg-[#D6D6D6]"}
                         `}
                       />
                     </div>
-                  )}
+                  </div>
 
                   {/* Connecting Line */}
                   {stepNumber < totalSteps && (
@@ -73,7 +72,7 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
                       )}
                     </div>
                   )}
-                </div>
+                </React.Fragment>
               );
             })}
           </div>

@@ -146,10 +146,11 @@ export default function OnboardingStep1() {
             {/* Line 1 - Nome Completo e Nome Social */}
             <div className="flex gap-10 mb-6">
               <div className="flex-1">
-                <label className="block text-[#5F5F5F] text-base mb-2">
+                <label htmlFor="nomeCompleto" className="block text-[#5F5F5F] text-base mb-2">
                   Nome completo*
                 </label>
                 <input
+                  id="nomeCompleto"
                   type="text"
                   name="nomeCompleto"
                   value={formData.nomeCompleto}
@@ -160,10 +161,11 @@ export default function OnboardingStep1() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-[#5F5F5F] text-base mb-2">
+                <label htmlFor="nomeSocial" className="block text-[#5F5F5F] text-base mb-2">
                   Nome social
                 </label>
                 <input
+                  id="nomeSocial"
                   type="text"
                   name="nomeSocial"
                   value={formData.nomeSocial}
@@ -177,10 +179,11 @@ export default function OnboardingStep1() {
             {/* Line 2 - Data de Nascimento e Celular */}
             <div className="flex gap-10 mb-6">
               <div className="flex-1">
-                <label className="block text-[#5F5F5F] text-base mb-2">
+                <label htmlFor="dataNascimento" className="block text-[#5F5F5F] text-base mb-2">
                   Data de nascimento*
                 </label>
                 <input
+                  id="dataNascimento"
                   type="date"
                   name="dataNascimento"
                   value={formData.dataNascimento}
@@ -190,10 +193,11 @@ export default function OnboardingStep1() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-[#5F5F5F] text-base mb-2">
+                <label htmlFor="celular" className="block text-[#5F5F5F] text-base mb-2">
                   Número de celular com DDD*
                 </label>
                 <input
+                  id="celular"
                   type="tel"
                   name="celular"
                   value={maskPhone(formData.celular)}
@@ -220,10 +224,11 @@ export default function OnboardingStep1() {
             {/* Line 3 - Nome do Pai e Nome da Mãe */}
             <div className="flex gap-10 mb-6">
               <div className="flex-1">
-                <label className="block text-[#5F5F5F] text-base mb-2">
+                <label htmlFor="nomePai" className="block text-[#5F5F5F] text-base mb-2">
                   Nome do pai
                 </label>
                 <input
+                  id="nomePai"
                   type="text"
                   name="nomePai"
                   value={formData.nomePai}
@@ -233,10 +238,11 @@ export default function OnboardingStep1() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-[#5F5F5F] text-base mb-2">
+                <label htmlFor="nomeMae" className="block text-[#5F5F5F] text-base mb-2">
                   Nome da mãe
                 </label>
                 <input
+                  id="nomeMae"
                   type="text"
                   name="nomeMae"
                   value={formData.nomeMae}
@@ -252,10 +258,11 @@ export default function OnboardingStep1() {
         {/* Line 4 - Número do RG e Data de Emissão */}
         <div className="flex gap-10 mb-6">
           <div className="flex-1 max-w-[552px]">
-            <label className="block text-[#5F5F5F] text-base mb-2">
+            <label htmlFor="numeroRG" className="block text-[#5F5F5F] text-base mb-2">
               Número do RG*
             </label>
             <input
+              id="numeroRG"
               type="text"
               name="numeroRG"
               value={formData.numeroRG}
@@ -266,10 +273,11 @@ export default function OnboardingStep1() {
             />
           </div>
           <div className="flex-1 max-w-[552px]">
-            <label className="block text-[#5F5F5F] text-base mb-2">
+            <label htmlFor="dataEmissaoRG" className="block text-[#5F5F5F] text-base mb-2">
               Data de emissão*
             </label>
             <input
+              id="dataEmissaoRG"
               type="date"
               name="dataEmissaoRG"
               value={formData.dataEmissaoRG}
@@ -283,10 +291,11 @@ export default function OnboardingStep1() {
         {/* Line 5 - Órgão Emissor e CPF */}
         <div className="flex gap-10 mb-6">
           <div className="flex-1 max-w-[552px]">
-            <label className="block text-[#5F5F5F] text-base mb-2">
+            <label htmlFor="orgaoEmissor" className="block text-[#5F5F5F] text-base mb-2">
               Órgão emissor*
             </label>
             <input
+              id="orgaoEmissor"
               type="text"
               name="orgaoEmissor"
               value={formData.orgaoEmissor}
@@ -297,8 +306,9 @@ export default function OnboardingStep1() {
             />
           </div>
           <div className="flex-1 max-w-[552px]">
-            <label className="block text-[#5F5F5F] text-base mb-2">CPF*</label>
+            <label htmlFor="cpf" className="block text-[#5F5F5F] text-base mb-2">CPF*</label>
             <input
+              id="cpf"
               type="text"
               name="cpf"
               value={maskCPF(formData.cpf)}
@@ -321,11 +331,12 @@ export default function OnboardingStep1() {
         {/* Line 6 - Estado Civil e Grau de Escolaridade */}
         <div className="flex gap-10 mb-10">
           <div className="flex-1 max-w-[552px]">
-            <label className="block text-[#5F5F5F] text-base mb-2">
+            <label htmlFor="estadoCivil" className="block text-[#5F5F5F] text-base mb-2">
               Estado civil
             </label>
             <div className="relative">
               <select
+                id="estadoCivil"
                 name="estadoCivil"
                 value={formData.estadoCivil}
                 onChange={handleInputChange}
@@ -339,6 +350,7 @@ export default function OnboardingStep1() {
                 <option value="uniao_estavel">União Estável</option>
               </select>
               <svg
+                aria-label="Dropdown arrow"
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-3 text-[#AAAAAA] pointer-events-none"
                 fill="none"
                 viewBox="0 0 12 7"
@@ -354,11 +366,12 @@ export default function OnboardingStep1() {
             </div>
           </div>
           <div className="flex-1 max-w-[552px]">
-            <label className="block text-[#5F5F5F] text-base mb-2">
+            <label htmlFor="grauEscolaridade" className="block text-[#5F5F5F] text-base mb-2">
               Grau de escolaridade
             </label>
             <div className="relative">
               <select
+                id="grauEscolaridade"
                 name="grauEscolaridade"
                 value={formData.grauEscolaridade}
                 onChange={handleInputChange}
@@ -384,6 +397,7 @@ export default function OnboardingStep1() {
                 <option value="pos_graduacao">Pós-Graduação</option>
               </select>
               <svg
+                aria-label="Dropdown arrow"
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-3 text-[#AAAAAA] pointer-events-none"
                 fill="none"
                 viewBox="0 0 12 7"
@@ -412,11 +426,13 @@ export default function OnboardingStep1() {
           <div className="grid grid-cols-1 gap-4 max-w-[1144px] mx-auto">
             {/* RG Upload */}
             <button
+              type="button"
               onClick={() => handleFileUpload("rg")}
               className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
+                  aria-label="Document icon"
                   width="20"
                   height="24"
                   viewBox="0 0 20 24"
@@ -469,11 +485,13 @@ export default function OnboardingStep1() {
 
             {/* CPF Upload */}
             <button
+              type="button"
               onClick={() => handleFileUpload("cpf")}
               className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
+                  aria-label="Document icon"
                   width="20"
                   height="24"
                   viewBox="0 0 20 24"
@@ -526,11 +544,13 @@ export default function OnboardingStep1() {
 
             {/* Certidão de Casamento Upload */}
             <button
+              type="button"
               onClick={() => handleFileUpload("certidaoCasamento")}
               className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
+                  aria-label="Document icon"
                   width="20"
                   height="24"
                   viewBox="0 0 20 24"
@@ -583,11 +603,13 @@ export default function OnboardingStep1() {
 
             {/* Reservista Upload */}
             <button
+              type="button"
               onClick={() => handleFileUpload("reservista")}
               className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
+                  aria-label="Document icon"
                   width="20"
                   height="24"
                   viewBox="0 0 20 24"
@@ -640,11 +662,13 @@ export default function OnboardingStep1() {
 
             {/* Diploma Upload */}
             <button
+              type="button"
               onClick={() => handleFileUpload("diploma")}
               className="flex items-center gap-2 py-2 px-2 border border-[#E0E0E0] rounded-lg hover:border-torra-orange transition-all duration-200 bg-white min-h-[56px] hover:shadow-sm active:scale-[0.98]"
             >
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center flex-shrink-0">
                 <svg
+                  aria-label="Document icon"
                   width="20"
                   height="24"
                   viewBox="0 0 20 24"
@@ -699,7 +723,7 @@ export default function OnboardingStep1() {
 
         {/* Action Buttons */}
         <div className="flex gap-3 justify-end mb-10">
-          <button className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]">
+          <button type="button" className="px-6 py-4 bg-[#37375B] text-white text-sm rounded hover:bg-[#2a2a4a] transition-all duration-200 min-w-[107px] hover:shadow-lg active:scale-[0.98]">
             Salvar
           </button>
           <Link

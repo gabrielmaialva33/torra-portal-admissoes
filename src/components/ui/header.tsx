@@ -26,7 +26,17 @@ export function Header() {
             className="relative w-8 h-8 rounded-full bg-[#37375B] flex items-center justify-center hover:opacity-90 transition-opacity"
             aria-label="Informações"
           >
-            <span className="text-neutral-01 text-sm font-medium">i</span>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-3.5 h-3.5"
+            >
+              <circle cx="7" cy="3" r="1" fill="white"/>
+              <rect x="6" y="5" width="2" height="6" rx="0.5" fill="white"/>
+            </svg>
           </button>
 
           {/* User Section */}

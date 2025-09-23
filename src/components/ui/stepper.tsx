@@ -64,9 +64,11 @@ export function Stepper({ currentStep, totalSteps }: StepperProps) {
                       <p className="text-[10px] text-[#5F5F5F] leading-[14px]">
                         Passo {stepNumber}
                       </p>
-                      <p className="text-[12px] text-[#5F5F5F] leading-[14px] break-words">
-                        {stepTitles[stepNumber - 1]}
-                      </p>
+                      {isActive && (
+                        <p className="text-[12px] text-[#5F5F5F] leading-[14px] break-words">
+                          {stepTitles[stepNumber - 1]}
+                        </p>
+                      )}
                     </div>
                   </div>
 

@@ -15,11 +15,10 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment, canceling in-progress runs to prevent queue buildup
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   # Build job
@@ -63,10 +62,13 @@ jobs:
       - name: Build with Next.js
         run: pnpm build
 
-      - name: Add .nojekyll file
+      - name: Add .nojekyll file and verify output
         run: |
           touch ./out/.nojekyll
+          echo "Build output directory contents:"
           ls -la ./out
+          echo "Total size:"
+          du -sh ./out
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -37,17 +37,6 @@ export default function OnboardingStep3() {
     console.log("Saving address data:", formData);
   };
 
-  const validateForm = () => {
-    return !!(
-      formData.cep.trim() &&
-      formData.endereco.trim() &&
-      formData.numero.trim() &&
-      formData.bairro.trim() &&
-      formData.cidade.trim() &&
-      formData.comprovante
-    );
-  };
-
   const canProceed = true; // Temporarily enabled for dev
 
   return (

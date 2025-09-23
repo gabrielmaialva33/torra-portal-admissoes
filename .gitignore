@@ -40,11 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-pnpm-workspace.yaml
 tmp
 .claude
 .playwright-mcp
-
-# Keep npm/pnpm config for CI/CD
-!.npmrc
-!.pnpmfile.cjs

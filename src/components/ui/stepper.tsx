@@ -1,129 +1,92 @@
-import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-interface Step {
-  id: number;
-  title: string;
-  description?: string;
-}
+"use client";
 
 interface StepperProps {
-  steps: Step[];
   currentStep: number;
-  completedSteps: number[];
-  onStepClick?: (step: number) => void;
-  orientation?: "horizontal" | "vertical";
+  totalSteps: number;
 }
 
-export function Stepper({
-  steps,
-  currentStep,
-  completedSteps,
-  onStepClick,
-  orientation = "horizontal",
-}: StepperProps) {
-  const isStepComplete = (stepId: number) => completedSteps.includes(stepId);
-  const isStepCurrent = (stepId: number) => currentStep === stepId;
-  const canAccessStep = (stepId: number) => {
-    if (stepId === 1) return true;
-    return completedSteps.includes(stepId - 1);
-  };
+const stepTitles = [
+  "Dados Gerais",
+  "Endereço",
+  "Contatos de Emergência",
+  "Dados Bancários",
+  "Dependentes",
+  "Benefícios",
+  "Documentação",
+  "Experiência Profissional",
+  "Formação Acadêmica",
+  "Revisão",
+];
 
+export function Stepper({ currentStep, totalSteps }: StepperProps) {
   return (
-    <div
-      className={cn(
-        "flex",
-        orientation === "horizontal" ? "flex-row" : "flex-col",
-      )}
-    >
-      {steps.map((step, index) => {
-        const isComplete = isStepComplete(step.id);
-        const isCurrent = isStepCurrent(step.id);
-        const canAccess = canAccessStep(step.id);
-        const isLast = index === steps.length - 1;
+    <div className="bg-[#F8F8F8] py-7">
+      <div className="max-w-[948px] mx-auto">
+        <div className="flex items-center justify-center">
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalSteps }, (_, index) => {
+              const stepNumber = index + 1;
+              const isActive = stepNumber === currentStep;
+              const isPast = stepNumber < currentStep;
 
-        return (
-          <div
-            key={step.id}
-            className={cn(
-              "flex items-center",
-              orientation === "horizontal" ? "flex-1" : "w-full",
-            )}
-          >
-            <button
-              type="button"
-              onClick={() => canAccess && onStepClick?.(step.id)}
-              disabled={!canAccess}
-              className={cn(
-                "relative flex items-center",
-                canAccess ? "cursor-pointer" : "cursor-not-allowed",
-              )}
-            >
-              <div
-                className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all",
-                  isComplete
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : isCurrent
-                      ? "border-primary bg-background text-primary"
-                      : canAccess
-                        ? "border-muted-foreground bg-background text-muted-foreground"
-                        : "border-muted bg-muted text-muted-foreground",
-                )}
-              >
-                {isComplete ? (
-                  <Check className="h-5 w-5" />
-                ) : (
-                  <span className="text-sm font-medium">{step.id}</span>
-                )}
-              </div>
-
-              <div
-                className={cn(
-                  "ml-3",
-                  orientation === "horizontal" ? "hidden sm:block" : "",
-                )}
-              >
-                <p
-                  className={cn(
-                    "text-sm font-medium",
-                    isCurrent
-                      ? "text-foreground"
-                      : canAccess
-                        ? "text-muted-foreground"
-                        : "text-muted-foreground/50",
+              return (
+                <div key={stepNumber} className="flex items-center gap-2">
+                  {/* Wrapper for active step border */}
+                  {isActive ? (
+                    <div className="p-[5px] rounded-[4px] bg-[rgba(255,81,1,0.2)]">
+                      <div className="w-[30px] h-[30px] rounded-[4px] bg-[#FF5101] flex items-center justify-center">
+                        <div className="w-[10px] h-[10px] rounded-[2px] bg-white" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className={`
+                        w-[30px] h-[30px] rounded-[4px] flex items-center justify-center
+                        ${
+                          isPast
+                            ? "bg-[#FF5101]"
+                            : "border border-[#D6D6D6] bg-white"
+                        }
+                      `}
+                    >
+                      <div
+                        className={`
+                          w-[10px] h-[10px] rounded-[2px]
+                          ${isPast ? "bg-white" : "bg-[#D6D6D6]"}
+                        `}
+                      />
+                    </div>
                   )}
-                >
-                  {step.title}
-                </p>
-                {step.description && (
-                  <p className="text-xs text-muted-foreground">
-                    {step.description}
-                  </p>
-                )}
-              </div>
-            </button>
 
-            {!isLast && (
-              <div
-                className={cn(
-                  "flex-1",
-                  orientation === "horizontal"
-                    ? "mx-4 h-0.5"
-                    : "mx-auto my-2 w-0.5 h-8",
-                )}
-              >
-                <div
-                  className={cn(
-                    "h-full w-full transition-all",
-                    isComplete ? "bg-primary" : "bg-muted",
+                  {/* Connecting Line */}
+                  {stepNumber < totalSteps && (
+                    <div className="w-[60px] h-[2px]">
+                      {isPast ? (
+                        <div className="w-full h-full bg-[#FF5101]" />
+                      ) : stepNumber === currentStep ? (
+                        <div className="flex">
+                          <div className="w-[30px] h-full bg-[#FF5101]" />
+                          <div className="w-[30px] h-full bg-[#D6D6D6]" />
+                        </div>
+                      ) : (
+                        <div className="w-full h-full bg-[#D6D6D6]" />
+                      )}
+                    </div>
                   )}
-                />
-              </div>
-            )}
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+
+        {/* Step Info */}
+        <div className="text-center mt-5">
+          <p className="text-[10px] text-[#5F5F5F] leading-[14px]">Passo {currentStep}</p>
+          <p className="text-[14px] text-[#5F5F5F] leading-[16px]">
+            {stepTitles[currentStep - 1]}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

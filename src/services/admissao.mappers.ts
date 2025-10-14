@@ -277,12 +277,20 @@ export function mapDtoToApprenticeData(dto: DadosAprendizDto): ApprenticeData {
  * Map BankData (Zustand) to DadosBancariosDto (API)
  */
 export function mapBankDataToDto(data: Partial<BankData>): DadosBancariosDto {
+  // Convert account type from English to Portuguese
+  let tipoConta: "corrente" | "poupanca" = "corrente";
+  if (data.accountType === "savings") {
+    tipoConta = "poupanca";
+  } else if (data.accountType === "checking" || data.accountType === "corrente") {
+    tipoConta = "corrente";
+  }
+
   return {
     nomeBanco: data.bankName || "",
     codigoBanco: data.bankCode || "",
     agencia: data.agency || "",
     numeroConta: data.accountNumber || "",
-    tipoConta: data.accountType || "corrente",
+    tipoConta,
     chavePix: data.pixKey,
   };
 }
@@ -291,12 +299,15 @@ export function mapBankDataToDto(data: Partial<BankData>): DadosBancariosDto {
  * Map DadosBancariosDto (API) to BankData (Zustand)
  */
 export function mapDtoToBankData(dto: DadosBancariosDto): BankData {
+  // Convert account type from Portuguese to English
+  const accountType: "checking" | "savings" = dto.tipoConta === "poupanca" ? "savings" : "checking";
+
   return {
     bankName: dto.nomeBanco,
     bankCode: dto.codigoBanco,
     agency: dto.agencia,
     accountNumber: dto.numeroConta,
-    accountType: dto.tipoConta,
+    accountType,
     pixKey: dto.chavePix,
   };
 }

@@ -1,0 +1,57 @@
+name: Deploy Frontend to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to VPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Next.js (Static Export)
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_API_URL: https://torra-admissoes.mahina.cloud
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 72.60.9.175 >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            ./out/ \
+            root@72.60.9.175:/var/www/torra-portal-admissoes/
+
+      - name: Verify Deployment
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@72.60.9.175 "ls -la /var/www/torra-portal-admissoes/ | head -10"
+
+      - name: Clear Cloudflare Cache (optional)
+        if: success()
+        run: echo "✅ Deployment completed successfully!"

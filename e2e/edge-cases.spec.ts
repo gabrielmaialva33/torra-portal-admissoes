@@ -117,7 +117,9 @@ test.describe("Edge Cases: Browser Navigation", () => {
     await expect(nomeSocialInput).toHaveValue("Partially Filled");
   });
 
-  test("should handle direct URL access to completed step", async ({ page }) => {
+  test("should handle direct URL access to completed step", async ({
+    page,
+  }) => {
     await storage.setOnboardingState({
       currentStep: 5,
       completedSteps: [1, 2, 3],
@@ -133,7 +135,9 @@ test.describe("Edge Cases: Browser Navigation", () => {
     await expect(page).toHaveURL(/\/onboarding\/3/);
   });
 
-  test("should prevent direct URL access to incomplete step", async ({ page }) => {
+  test("should prevent direct URL access to incomplete step", async ({
+    page,
+  }) => {
     await storage.setOnboardingState({
       currentStep: 2,
       completedSteps: [1],
@@ -147,7 +151,10 @@ test.describe("Edge Cases: Browser Navigation", () => {
 
     // Should redirect or show error
     const currentUrl = page.url();
-    const hasError = await page.locator('text=/não permitido|acesso negado/i').isVisible().catch(() => false);
+    const hasError = await page
+      .locator("text=/não permitido|acesso negado/i")
+      .isVisible()
+      .catch(() => false);
 
     expect(!currentUrl.includes("/onboarding/5") || hasError).toBeTruthy();
   });
@@ -217,8 +224,6 @@ test.describe("Edge Cases: Concurrent Sessions", () => {
 });
 
 test.describe("Edge Cases: Mobile Responsiveness", () => {
-  test.use({ ...devices["iPhone 12"] });
-
   test("should display mobile layout correctly", async ({ page }) => {
     const nav = new NavigationHelper(page);
     await nav.goToStep(1);
@@ -232,7 +237,9 @@ test.describe("Edge Cases: Mobile Responsiveness", () => {
     await expect(form).toBeVisible();
 
     // Check if mobile menu exists
-    const mobileMenu = page.locator('[data-testid="mobile-menu"], .hamburger-menu');
+    const mobileMenu = page.locator(
+      '[data-testid="mobile-menu"], .hamburger-menu'
+    );
     if (await mobileMenu.isVisible()) {
       await mobileMenu.click();
     }
@@ -358,7 +365,7 @@ test.describe("Edge Cases: Accessibility (Keyboard Navigation)", () => {
 
   test("should have proper ARIA labels", async ({ page }) => {
     // Check required fields have proper labels
-    const requiredInputs = page.locator('input[required]');
+    const requiredInputs = page.locator("input[required]");
     const count = await requiredInputs.count();
 
     for (let i = 0; i < count; i++) {
@@ -370,18 +377,22 @@ test.describe("Edge Cases: Accessibility (Keyboard Navigation)", () => {
       // Should have either aria-label or associated label
       if (id) {
         const label = page.locator(`label[for="${id}"]`);
-        const hasLabel = await label.count() > 0;
+        const hasLabel = (await label.count()) > 0;
         expect(ariaLabel || ariaLabelledBy || hasLabel).toBeTruthy();
       }
     }
   });
 
-  test("should announce validation errors to screen readers", async ({ page }) => {
+  test("should announce validation errors to screen readers", async ({
+    page,
+  }) => {
     // Try to submit without filling required fields
     await nav.clickNextButton();
 
     // Check for aria-live regions
-    const liveRegions = page.locator('[aria-live="polite"], [aria-live="assertive"], [role="alert"]');
+    const liveRegions = page.locator(
+      '[aria-live="polite"], [aria-live="assertive"], [role="alert"]'
+    );
     const count = await liveRegions.count();
 
     // Should have error announcements

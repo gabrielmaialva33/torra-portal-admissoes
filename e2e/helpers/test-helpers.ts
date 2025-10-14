@@ -52,7 +52,7 @@ export class NavigationHelper {
  * Form Filling Helpers
  */
 export class FormHelper {
-  constructor(private page: Page) {}
+  constructor(protected page: Page) {}
 
   async fillInput(label: string, value: string): Promise<void> {
     const input = this.page.getByLabel(label, { exact: false });

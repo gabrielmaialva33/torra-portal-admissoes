@@ -4,16 +4,13 @@
  * Tests API calls, error handling, retry logic, and network failures.
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { mockApiResponses, personalDataTestData } from "./fixtures/test-data";
 import {
-  personalDataTestData,
-  mockApiResponses,
-} from "./fixtures/test-data";
-import {
-  NavigationHelper,
-  PersonalDataFormHelper,
   APIMockHelper,
   LocalStorageHelper,
+  NavigationHelper,
+  PersonalDataFormHelper,
   WaitHelper,
 } from "./helpers/test-helpers";
 
@@ -59,18 +56,24 @@ test.describe("API Integration Tests", () => {
     await personalForm.fillPersonalData(personalDataTestData.valid);
 
     // Mock 400 error
-    await api.mockStepSubmission(1, {
-      success: false,
-      message: "Dados inválidos",
-      errors: ["CPF já cadastrado no sistema"],
-      statusCode: 400,
-    }, 400);
+    await api.mockStepSubmission(
+      1,
+      {
+        success: false,
+        message: "Dados inválidos",
+        errors: ["CPF já cadastrado no sistema"],
+        statusCode: 400,
+      },
+      400,
+    );
 
     await nav.clickNextButton();
     await page.waitForTimeout(1000);
 
     // Should show error message
-    const errorMessage = page.locator('text=/erro|dados inválidos|cpf já cadastrado/i');
+    const errorMessage = page.locator(
+      "text=/erro|dados inválidos|cpf já cadastrado/i",
+    );
     await expect(errorMessage).toBeVisible({ timeout: 3000 });
 
     // Should stay on same step
@@ -83,20 +86,28 @@ test.describe("API Integration Tests", () => {
     await personalForm.fillPersonalData(personalDataTestData.valid);
 
     // Mock 401 error
-    await api.mockStepSubmission(1, {
-      success: false,
-      message: "Não autorizado",
-      statusCode: 401,
-    }, 401);
+    await api.mockStepSubmission(
+      1,
+      {
+        success: false,
+        message: "Não autorizado",
+        statusCode: 401,
+      },
+      401,
+    );
 
     await nav.clickNextButton();
     await page.waitForTimeout(1000);
 
     // Should show authentication error
-    const authError = page.locator('text=/não autorizado|sessão expirada|faça login/i');
-    await expect(authError).toBeVisible({ timeout: 3000 }).catch(() => {
-      // Might redirect to login page instead
-    });
+    const authError = page.locator(
+      "text=/não autorizado|sessão expirada|faça login/i",
+    );
+    await expect(authError)
+      .toBeVisible({ timeout: 3000 })
+      .catch(() => {
+        // Might redirect to login page instead
+      });
   });
 
   test("should handle 500 Internal Server Error", async ({ page }) => {
@@ -111,7 +122,9 @@ test.describe("API Integration Tests", () => {
     await page.waitForTimeout(1000);
 
     // Should show server error message
-    const serverError = page.locator('text=/erro no servidor|erro interno|tente novamente/i');
+    const serverError = page.locator(
+      "text=/erro no servidor|erro interno|tente novamente/i",
+    );
     await expect(serverError).toBeVisible({ timeout: 3000 });
 
     // Should stay on same step
@@ -130,7 +143,9 @@ test.describe("API Integration Tests", () => {
     await page.waitForTimeout(2000);
 
     // Should show connection error
-    const networkError = page.locator('text=/erro de conexão|sem conexão|verifique sua internet/i');
+    const networkError = page.locator(
+      "text=/erro de conexão|sem conexão|verifique sua internet/i",
+    );
     await expect(networkError).toBeVisible({ timeout: 5000 });
   });
 
@@ -168,7 +183,9 @@ test.describe("API Integration Tests", () => {
     await nav.clickNextButton();
 
     // Look for retry button
-    const retryButton = page.getByRole("button", { name: /tentar novamente|retry/i });
+    const retryButton = page.getByRole("button", {
+      name: /tentar novamente|retry/i,
+    });
     if (await retryButton.isVisible({ timeout: 3000 })) {
       await retryButton.click();
       await page.waitForTimeout(1000);
@@ -193,10 +210,12 @@ test.describe("API Integration Tests", () => {
     await page.waitForTimeout(1000);
 
     // Should handle invalid response gracefully
-    const errorMessage = page.locator('text=/erro|resposta inválida/i');
-    await expect(errorMessage).toBeVisible({ timeout: 3000 }).catch(() => {
-      // Might show generic error
-    });
+    const errorMessage = page.locator("text=/erro|resposta inválida/i");
+    await expect(errorMessage)
+      .toBeVisible({ timeout: 3000 })
+      .catch(() => {
+        // Might show generic error
+      });
   });
 
   test("should send correct request payload", async ({ page }) => {
@@ -222,7 +241,9 @@ test.describe("API Integration Tests", () => {
 
     // Verify payload structure
     expect(capturedPayload).toBeDefined();
-    expect(capturedPayload.nomeCompleto).toBe(personalDataTestData.valid.nomeCompleto);
+    expect(capturedPayload.nomeCompleto).toBe(
+      personalDataTestData.valid.nomeCompleto,
+    );
     expect(capturedPayload.cpf).toBeDefined();
     expect(capturedPayload.email).toBe(personalDataTestData.valid.email);
   });
@@ -330,10 +351,14 @@ test.describe("API Integration Tests", () => {
     await nav.clickNextButton();
 
     // Should show loading indicator
-    const loadingIndicator = page.locator('[role="status"], .loading, .spinner');
-    await expect(loadingIndicator).toBeVisible({ timeout: 1000 }).catch(() => {
-      // Loading indicator might not be visible yet
-    });
+    const loadingIndicator = page.locator(
+      '[role="status"], .loading, .spinner',
+    );
+    await expect(loadingIndicator)
+      .toBeVisible({ timeout: 1000 })
+      .catch(() => {
+        // Loading indicator might not be visible yet
+      });
 
     // Wait for response
     await page.waitForTimeout(4000);
@@ -374,17 +399,23 @@ test.describe("API Integration Tests", () => {
     await personalForm.fillPersonalData(personalDataTestData.valid);
 
     // Mock 429 Too Many Requests
-    await api.mockStepSubmission(1, {
-      success: false,
-      message: "Muitas requisições. Tente novamente em alguns instantes.",
-      statusCode: 429,
-    }, 429);
+    await api.mockStepSubmission(
+      1,
+      {
+        success: false,
+        message: "Muitas requisições. Tente novamente em alguns instantes.",
+        statusCode: 429,
+      },
+      429,
+    );
 
     await nav.clickNextButton();
     await page.waitForTimeout(1000);
 
     // Should show rate limit message
-    const rateLimitMsg = page.locator('text=/muitas requisições|aguarde|rate limit/i');
+    const rateLimitMsg = page.locator(
+      "text=/muitas requisições|aguarde|rate limit/i",
+    );
     await expect(rateLimitMsg).toBeVisible({ timeout: 3000 });
   });
 
@@ -406,8 +437,10 @@ test.describe("API Integration Tests", () => {
     await page.waitForTimeout(1000);
 
     // Verify error was logged (if logging is implemented)
-    const hasErrorLog = consoleLogs.some((log) =>
-      log.toLowerCase().includes("error") || log.toLowerCase().includes("erro")
+    const hasErrorLog = consoleLogs.some(
+      (log) =>
+        log.toLowerCase().includes("error") ||
+        log.toLowerCase().includes("erro"),
     );
 
     // Note: This depends on implementation

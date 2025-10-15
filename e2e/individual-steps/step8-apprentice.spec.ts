@@ -2,9 +2,9 @@
  * E2E Test: Step 8 - Apprentice Data
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { apprenticeDataTestData } from "../fixtures/test-data";
-import { NavigationHelper, FormHelper } from "../helpers/test-helpers";
+import { FormHelper, NavigationHelper } from "../helpers/test-helpers";
 
 test.describe("Step 8: Apprentice Data", () => {
   let nav: NavigationHelper;
@@ -24,8 +24,13 @@ test.describe("Step 8: Apprentice Data", () => {
 
   test("should validate institution name", async ({ page }) => {
     await form.clickCheckbox(/aprendiz/i);
-    await form.fillInputByName("instituicaoEnsino", apprenticeDataTestData.apprentice.instituicaoEnsino);
+    await form.fillInputByName(
+      "instituicaoEnsino",
+      apprenticeDataTestData.apprentice.instituicaoEnsino,
+    );
     const input = page.locator('[name="instituicaoEnsino"]');
-    await expect(input).toHaveValue(apprenticeDataTestData.apprentice.instituicaoEnsino);
+    await expect(input).toHaveValue(
+      apprenticeDataTestData.apprentice.instituicaoEnsino,
+    );
   });
 });

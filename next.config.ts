@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   // Environment variables validation
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://torra-admissoes.mahina.cloud',
+    NEXT_PUBLIC_API_URL:
+      process.env.NEXT_PUBLIC_API_URL || "https://torra-admissoes.mahina.cloud",
   },
   // Disable experimental features that might cause issues
   experimental: {

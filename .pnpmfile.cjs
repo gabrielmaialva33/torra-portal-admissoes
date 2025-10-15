@@ -1,6 +1,6 @@
 function readPackage(pkg) {
   // Approve builds for Tailwind CSS and Sharp
-  if (pkg.name === '@tailwindcss/oxide' || pkg.name === 'sharp') {
+  if (pkg.name === "@tailwindcss/oxide" || pkg.name === "sharp") {
     pkg.scripts = pkg.scripts || {};
   }
   return pkg;
@@ -8,6 +8,6 @@ function readPackage(pkg) {
 
 module.exports = {
   hooks: {
-    readPackage
-  }
-}
+    readPackage,
+  },
+};

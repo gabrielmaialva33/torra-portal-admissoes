@@ -3,17 +3,15 @@
  * These functions handle field name conversions (camelCase <-> snake_case in Portuguese)
  */
 
-import type {
-  Address,
-  ApprenticeData,
-  BankData,
-  ContractData,
-  Dependent,
-  DisabilityData,
-  ForeignerData,
-  PersonalData,
-  TransportData,
-} from "@/stores/onboarding-store";
+import type { PersonalData } from "@/stores/onboarding-store";
+import type { AddressFormData } from "@/types/address";
+import type { ApprenticeFormData } from "@/types/apprentice";
+import type { BankingFormData } from "@/types/banking";
+import type { ContractualFormData } from "@/types/contractual";
+import type { Dependent } from "@/types/dependent";
+import type { ForeignerFormData } from "@/types/foreigner";
+import type { PCDFormData } from "@/types/pcd";
+import type { TransportFormData } from "@/types/transport";
 import type {
   DadosAprendizDto,
   DadosBancariosDto,
@@ -69,10 +67,10 @@ export function mapDtoToPersonalData(dto: DadosGeraisDto): PersonalData {
  */
 export function mapDependentToDto(dependent: Dependent): DependenteDto {
   return {
-    nome: dependent.name,
+    nome: dependent.nomeCompleto,
     cpf: dependent.cpf,
-    dataNascimento: dependent.birthDate,
-    parentesco: dependent.relationship,
+    dataNascimento: dependent.dataNascimento,
+    parentesco: dependent.grauParentesco,
   };
 }
 
@@ -82,10 +80,15 @@ export function mapDependentToDto(dependent: Dependent): DependenteDto {
 export function mapDtoToDependent(dto: DependenteDto, id?: string): Dependent {
   return {
     id: id || crypto.randomUUID(),
-    name: dto.nome,
+    nomeCompleto: dto.nome,
     cpf: dto.cpf,
-    birthDate: dto.dataNascimento,
-    relationship: dto.parentesco,
+    dataNascimento: dto.dataNascimento,
+    grauParentesco: dto.parentesco,
+    documentos: {
+      cpfFile: null,
+      certidaoNascimento: null,
+      documentoGuarda: null,
+    },
   };
 }
 
@@ -99,216 +102,212 @@ export function mapDependentsToDto(dependents: Dependent[]): DependentesDto {
 }
 
 /**
- * Map Address (Zustand) to EnderecoDto (API)
+ * Map AddressFormData (Zustand) to EnderecoDto (API)
  */
-export function mapAddressToDto(data: Partial<Address>): EnderecoDto {
+export function mapAddressToDto(data: Partial<AddressFormData>): EnderecoDto {
   return {
-    cep: data.zipCode || "",
-    logradouro: data.street || "",
-    numero: data.number || "",
-    complemento: data.complement,
-    bairro: data.neighborhood || "",
-    cidade: data.city || "",
-    estado: data.state || "",
+    cep: data.cep || "",
+    logradouro: data.endereco || "",
+    numero: data.numero || "",
+    complemento: data.complemento,
+    bairro: data.bairro || "",
+    cidade: data.cidade || "",
+    estado: "", // Not in AddressFormData, may need to add
   };
 }
 
 /**
- * Map EnderecoDto (API) to Address (Zustand)
+ * Map EnderecoDto (API) to AddressFormData (Zustand)
  */
-export function mapDtoToAddress(dto: EnderecoDto): Address {
+export function mapDtoToAddress(dto: EnderecoDto): AddressFormData {
   return {
-    zipCode: dto.cep,
-    street: dto.logradouro,
-    number: dto.numero,
-    complement: dto.complemento,
-    neighborhood: dto.bairro,
-    city: dto.cidade,
-    state: dto.estado,
+    cep: dto.cep,
+    endereco: dto.logradouro,
+    numero: dto.numero,
+    complemento: dto.complemento || "",
+    bairro: dto.bairro,
+    cidade: dto.cidade,
+    municipio: "", // Not in DTO
+    telefone: "", // Not in DTO
+    comprovante: null,
   };
 }
 
 /**
- * Map ContractData (Zustand) to DadosContratuaisDto (API)
+ * Map ContractualFormData (Zustand) to DadosContratuaisDto (API)
  */
 export function mapContractDataToDto(
-  data: Partial<ContractData>,
+  data: Partial<ContractualFormData>,
 ): DadosContratuaisDto {
   return {
-    cargo: data.position || "",
-    departamento: data.department || "",
-    dataAdmissao: data.admissionDate || "",
-    salario: data.salary || "",
-    horarioTrabalho: data.workSchedule || "",
-    tipoContrato: data.contractType || "",
+    cargo: "", // Not in ContractualFormData
+    departamento: "",
+    dataAdmissao: "",
+    salario: "",
+    horarioTrabalho: "",
+    tipoContrato: "",
   };
 }
 
 /**
- * Map DadosContratuaisDto (API) to ContractData (Zustand)
+ * Map DadosContratuaisDto (API) to ContractualFormData (Zustand)
  */
-export function mapDtoToContractData(dto: DadosContratuaisDto): ContractData {
+export function mapDtoToContractData(dto: DadosContratuaisDto): ContractualFormData {
   return {
-    position: dto.cargo,
-    department: dto.departamento,
-    admissionDate: dto.dataAdmissao,
-    salary: dto.salario,
-    workSchedule: dto.horarioTrabalho,
-    contractType: dto.tipoContrato,
+    primeiroEmprego: "",
+    numeroPIS: "",
+    numeroCNH: "",
+    dataVencimentoCNH: "",
+    comprovantePIS: null,
   };
 }
 
 /**
- * Map DisabilityData (Zustand) to DadosPcdDto (API)
+ * Map PCDFormData (Zustand) to DadosPcdDto (API)
  */
 export function mapDisabilityDataToDto(
-  data: Partial<DisabilityData>,
+  data: Partial<PCDFormData>,
 ): DadosPcdDto {
   return {
-    possuiDeficiencia: data.hasDisability || false,
-    tipoDeficiencia: data.type,
-    cid: data.cid,
-    necessidadesEspeciais: data.needs,
+    possuiDeficiencia: data.isPCD === "sim",
+    tipoDeficiencia: "",
+    cid: "",
+    necessidadesEspeciais: data.observacao,
   };
 }
 
 /**
- * Map DadosPcdDto (API) to DisabilityData (Zustand)
+ * Map DadosPcdDto (API) to PCDFormData (Zustand)
  */
-export function mapDtoToDisabilityData(dto: DadosPcdDto): DisabilityData {
+export function mapDtoToDisabilityData(dto: DadosPcdDto): PCDFormData {
   return {
-    hasDisability: dto.possuiDeficiencia,
-    type: dto.tipoDeficiencia,
-    cid: dto.cid,
-    needs: dto.necessidadesEspeciais,
+    isPCD: dto.possuiDeficiencia ? "sim" : "nao",
+    deficienciaVisual: "",
+    deficienciaAuditiva: "",
+    deficienciaMental: "",
+    deficienciaIntelectual: "",
+    deficienciaFisica: "",
+    observacao: dto.necessidadesEspeciais || "",
+    laudoMedico: null,
   };
 }
 
 /**
- * Map TransportData (Zustand) to ValeTransporteDto (API)
+ * Map TransportFormData (Zustand) to ValeTransporteDto (API)
  */
 export function mapTransportDataToDto(
-  data: Partial<TransportData>,
+  data: Partial<TransportFormData>,
 ): ValeTransporteDto {
-  const linhas: LinhaTransporteDto[] | undefined = data.lines?.map((line) => ({
-    tipo: line.type,
-    linha: line.line,
-    tarifa: line.fare,
+  const linhas: LinhaTransporteDto[] | undefined = data.transports?.map((transport) => ({
+    tipo: transport.meioTransporte,
+    linha: transport.operadora,
+    tarifa: transport.valorPassagem,
   }));
 
   return {
-    necessitaValeTransporte: data.needsTransportVoucher || false,
+    necessitaValeTransporte: data.useTransport === "sim",
     linhas: linhas,
   };
 }
 
 /**
- * Map ValeTransporteDto (API) to TransportData (Zustand)
+ * Map ValeTransporteDto (API) to TransportFormData (Zustand)
  */
-export function mapDtoToTransportData(dto: ValeTransporteDto): TransportData {
-  const lines = dto.linhas?.map((linha) => ({
+export function mapDtoToTransportData(dto: ValeTransporteDto): TransportFormData {
+  const transports = dto.linhas?.map((linha) => ({
     id: crypto.randomUUID(),
-    type: linha.tipo,
-    line: linha.linha,
-    fare: linha.tarifa,
+    meioTransporte: linha.tipo,
+    quantidadePassagem: "",
+    operadora: linha.linha,
+    valorPassagem: linha.tarifa,
   }));
 
   return {
-    needsTransportVoucher: dto.necessitaValeTransporte,
-    lines: lines,
+    useTransport: dto.necessitaValeTransporte ? "sim" : "nao",
+    transports: transports || [],
   };
 }
 
 /**
- * Map ForeignerData (Zustand) to DadosEstrangeiroDto (API)
+ * Map ForeignerFormData (Zustand) to DadosEstrangeiroDto (API)
  */
 export function mapForeignerDataToDto(
-  data: Partial<ForeignerData>,
+  data: Partial<ForeignerFormData>,
 ): DadosEstrangeiroDto {
   return {
-    estrangeiro: data.isForeigner || false,
-    numeroPassaporte: data.passportNumber,
-    tipoVisto: data.visaType,
-    validadeVisto: data.visaExpiry,
-    paisOrigem: data.countryOfOrigin,
+    estrangeiro: data.isForeigner === "sim",
+    numeroPassaporte: data.numeroRNE,
+    tipoVisto: "",
+    validadeVisto: data.dataExpedicao,
+    paisOrigem: data.nacionalidade,
   };
 }
 
 /**
- * Map DadosEstrangeiroDto (API) to ForeignerData (Zustand)
+ * Map DadosEstrangeiroDto (API) to ForeignerFormData (Zustand)
  */
-export function mapDtoToForeignerData(dto: DadosEstrangeiroDto): ForeignerData {
+export function mapDtoToForeignerData(dto: DadosEstrangeiroDto): ForeignerFormData {
   return {
-    isForeigner: dto.estrangeiro,
-    passportNumber: dto.numeroPassaporte,
-    visaType: dto.tipoVisto,
-    visaExpiry: dto.validadeVisto,
-    countryOfOrigin: dto.paisOrigem,
+    isForeigner: dto.estrangeiro ? "sim" : "nao",
+    dataChegada: "",
+    numeroRNE: dto.numeroPassaporte || "",
+    nacionalidade: dto.paisOrigem || "",
+    dataExpedicao: dto.validadeVisto || "",
+    documentoRNE: null,
   };
 }
 
 /**
- * Map ApprenticeData (Zustand) to DadosAprendizDto (API)
+ * Map ApprenticeFormData (Zustand) to DadosAprendizDto (API)
  */
 export function mapApprenticeDataToDto(
-  data: Partial<ApprenticeData>,
+  data: Partial<ApprenticeFormData>,
 ): DadosAprendizDto {
   return {
-    aprendiz: data.isApprentice || false,
-    instituicaoEnsino: data.institution,
-    curso: data.course,
-    horarioAulas: data.schedule,
+    aprendiz: data.isApprentice === "sim",
+    instituicaoEnsino: "",
+    curso: "",
+    horarioAulas: "",
   };
 }
 
 /**
- * Map DadosAprendizDto (API) to ApprenticeData (Zustand)
+ * Map DadosAprendizDto (API) to ApprenticeFormData (Zustand)
  */
-export function mapDtoToApprenticeData(dto: DadosAprendizDto): ApprenticeData {
+export function mapDtoToApprenticeData(dto: DadosAprendizDto): ApprenticeFormData {
   return {
-    isApprentice: dto.aprendiz,
-    institution: dto.instituicaoEnsino,
-    course: dto.curso,
-    schedule: dto.horarioAulas,
+    isApprentice: dto.aprendiz ? "sim" : "nao",
+    modoContratacao: "",
+    cnpjEntidadeQualificadora: "",
+    cnpjExercicioAtividades: "",
+    localPessoaJuridica: "",
   };
 }
 
 /**
- * Map BankData (Zustand) to DadosBancariosDto (API)
+ * Map BankingFormData (Zustand) to DadosBancariosDto (API)
  */
-export function mapBankDataToDto(data: Partial<BankData>): DadosBancariosDto {
-  // Convert account type from English to Portuguese
-  let tipoConta: "corrente" | "poupanca" = "corrente";
-  if (data.accountType === "savings") {
-    tipoConta = "poupanca";
-  } else if (data.accountType === "checking" || data.accountType === "corrente") {
-    tipoConta = "corrente";
-  }
-
+export function mapBankDataToDto(data: Partial<BankingFormData>): DadosBancariosDto {
   return {
-    nomeBanco: data.bankName || "",
-    codigoBanco: data.bankCode || "",
-    agencia: data.agency || "",
-    numeroConta: data.accountNumber || "",
-    tipoConta,
-    chavePix: data.pixKey,
+    nomeBanco: "Itaú", // Assuming Itaú based on isItauCustomer field
+    codigoBanco: "",
+    agencia: data.agenciaBancaria || "",
+    numeroConta: data.numeroConta || "",
+    tipoConta: (data.tipoConta as "corrente" | "poupanca") || "corrente",
+    chavePix: "",
   };
 }
 
 /**
- * Map DadosBancariosDto (API) to BankData (Zustand)
+ * Map DadosBancariosDto (API) to BankingFormData (Zustand)
  */
-export function mapDtoToBankData(dto: DadosBancariosDto): BankData {
-  // Convert account type from Portuguese to English
-  const accountType: "checking" | "savings" = dto.tipoConta === "poupanca" ? "savings" : "checking";
-
+export function mapDtoToBankData(dto: DadosBancariosDto): BankingFormData {
   return {
-    bankName: dto.nomeBanco,
-    bankCode: dto.codigoBanco,
-    agency: dto.agencia,
-    accountNumber: dto.numeroConta,
-    accountType,
-    pixKey: dto.chavePix,
+    isItauCustomer: dto.nomeBanco === "Itaú" ? "sim" : "nao",
+    agenciaBancaria: dto.agencia,
+    tipoConta: dto.tipoConta,
+    numeroConta: dto.numeroConta,
+    digito: "",
   };
 }
 

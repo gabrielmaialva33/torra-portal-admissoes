@@ -5,21 +5,21 @@
  * including CPF, RG, phone number validation, and document uploads.
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import {
-  personalDataTestData,
-  generateValidCPF,
-  generateValidRG,
-  generateValidPhone,
   createMockFile,
+  generateValidCPF,
+  generateValidPhone,
+  generateValidRG,
+  personalDataTestData,
 } from "../fixtures/test-data";
 import {
-  NavigationHelper,
-  PersonalDataFormHelper,
-  FormHelper,
-  LocalStorageHelper,
   APIMockHelper,
   DocumentUploadHelper,
+  FormHelper,
+  LocalStorageHelper,
+  NavigationHelper,
+  PersonalDataFormHelper,
 } from "../helpers/test-helpers";
 
 test.describe("Step 1: Personal Data Form", () => {
@@ -94,11 +94,13 @@ test.describe("Step 1: Personal Data Form", () => {
     await nav.clickNextButton();
 
     // Should show CPF validation error
-    const cpfError = page.locator('text=/cpf inválido|cpf não é válido/i');
-    await expect(cpfError).toBeVisible({ timeout: 3000 }).catch(() => {
-      // Some forms only validate on blur or submit
-      console.log("CPF validation might occur on blur or submit");
-    });
+    const cpfError = page.locator("text=/cpf inválido|cpf não é válido/i");
+    await expect(cpfError)
+      .toBeVisible({ timeout: 3000 })
+      .catch(() => {
+        // Some forms only validate on blur or submit
+        console.log("CPF validation might occur on blur or submit");
+      });
   });
 
   test("should validate and format phone number", async ({ page }) => {
@@ -117,7 +119,10 @@ test.describe("Step 1: Personal Data Form", () => {
   });
 
   test("should validate birth date is not in the future", async ({ page }) => {
-    await form.fillInputByName("dataNascimento", personalDataTestData.invalid.birthDateFuture);
+    await form.fillInputByName(
+      "dataNascimento",
+      personalDataTestData.invalid.birthDateFuture,
+    );
 
     // Fill other required fields
     await personalForm.fillPersonalData({
@@ -129,15 +134,22 @@ test.describe("Step 1: Personal Data Form", () => {
     await nav.clickNextButton();
 
     // Should show date validation error
-    const dateError = page.locator('text=/data inválida|data não pode ser futura/i');
+    const dateError = page.locator(
+      "text=/data inválida|data não pode ser futura/i",
+    );
     const stillOnStep1 = await page.url().includes("/onboarding/1");
 
     // Either show error or prevent navigation
-    expect(await dateError.isVisible().catch(() => false) || stillOnStep1).toBeTruthy();
+    expect(
+      (await dateError.isVisible().catch(() => false)) || stillOnStep1,
+    ).toBeTruthy();
   });
 
   test("should validate birth date is not too old", async ({ page }) => {
-    await form.fillInputByName("dataNascimento", personalDataTestData.invalid.birthDateTooOld);
+    await form.fillInputByName(
+      "dataNascimento",
+      personalDataTestData.invalid.birthDateTooOld,
+    );
 
     // Fill other required fields
     await personalForm.fillPersonalData({
@@ -149,14 +161,19 @@ test.describe("Step 1: Personal Data Form", () => {
     await nav.clickNextButton();
 
     // Should show date validation error or prevent submission
-    const dateError = page.locator('text=/data inválida|idade inválida/i');
+    const dateError = page.locator("text=/data inválida|idade inválida/i");
     const stillOnStep1 = await page.url().includes("/onboarding/1");
 
-    expect(await dateError.isVisible().catch(() => false) || stillOnStep1).toBeTruthy();
+    expect(
+      (await dateError.isVisible().catch(() => false)) || stillOnStep1,
+    ).toBeTruthy();
   });
 
   test("should validate email format", async ({ page }) => {
-    await form.fillInputByName("email", personalDataTestData.invalid.emailInvalid);
+    await form.fillInputByName(
+      "email",
+      personalDataTestData.invalid.emailInvalid,
+    );
 
     // Try to proceed (fill other fields first)
     await personalForm.fillPersonalData({
@@ -167,20 +184,34 @@ test.describe("Step 1: Personal Data Form", () => {
     await nav.clickNextButton();
 
     // Should show email validation error
-    const emailError = page.locator('text=/email inválido|e-mail inválido/i');
-    await expect(emailError).toBeVisible({ timeout: 2000 }).catch(() => {
-      // Email validation might happen on blur
-    });
+    const emailError = page.locator("text=/email inválido|e-mail inválido/i");
+    await expect(emailError)
+      .toBeVisible({ timeout: 2000 })
+      .catch(() => {
+        // Email validation might happen on blur
+      });
   });
 
   test("should allow optional fields to be empty", async ({ page }) => {
     // Fill only required fields
-    await form.fillInputByName("nomeCompleto", personalDataTestData.valid.nomeCompleto);
-    await form.fillInputByName("dataNascimento", personalDataTestData.valid.dataNascimento);
+    await form.fillInputByName(
+      "nomeCompleto",
+      personalDataTestData.valid.nomeCompleto,
+    );
+    await form.fillInputByName(
+      "dataNascimento",
+      personalDataTestData.valid.dataNascimento,
+    );
     await form.fillInputByName("celular", personalDataTestData.valid.celular);
     await form.fillInputByName("numeroRG", personalDataTestData.valid.numeroRG);
-    await form.fillInputByName("dataEmissaoRG", personalDataTestData.valid.dataEmissaoRG);
-    await form.fillInputByName("orgaoEmissor", personalDataTestData.valid.orgaoEmissor);
+    await form.fillInputByName(
+      "dataEmissaoRG",
+      personalDataTestData.valid.dataEmissaoRG,
+    );
+    await form.fillInputByName(
+      "orgaoEmissor",
+      personalDataTestData.valid.orgaoEmissor,
+    );
     await form.fillInputByName("cpf", personalDataTestData.valid.cpf);
 
     // Leave optional fields empty (nomeSocial, nomePai, nomeMae, estadoCivil, grauEscolaridade)
@@ -208,8 +239,12 @@ test.describe("Step 1: Personal Data Form", () => {
 
     // Verify data saved to localStorage
     const state = await storage.getOnboardingState();
-    expect(state.state.formData.personalData.nomeCompleto).toBe(personalDataTestData.valid.nomeCompleto);
-    expect(state.state.formData.personalData.cpf).toBe(personalDataTestData.valid.cpf);
+    expect(state.state.formData.personalData.nomeCompleto).toBe(
+      personalDataTestData.valid.nomeCompleto,
+    );
+    expect(state.state.formData.personalData.cpf).toBe(
+      personalDataTestData.valid.cpf,
+    );
   });
 
   test("should persist data after page reload", async ({ page }) => {
@@ -227,7 +262,9 @@ test.describe("Step 1: Personal Data Form", () => {
     const nomeInput = page.locator('[name="nomeCompleto"]');
 
     await expect(cpfInput).toHaveValue(personalDataTestData.valid.cpf);
-    await expect(nomeInput).toHaveValue(personalDataTestData.valid.nomeCompleto);
+    await expect(nomeInput).toHaveValue(
+      personalDataTestData.valid.nomeCompleto,
+    );
   });
 
   test("should submit and proceed to step 2", async ({ page }) => {
@@ -263,18 +300,22 @@ test.describe("Step 1: Personal Data Form", () => {
     await personalForm.fillPersonalData(personalDataTestData.valid);
 
     // Mock API error
-    await api.mockStepSubmission(1, {
-      success: false,
-      message: "Erro ao salvar dados",
-      errors: ["CPF já cadastrado"],
-    }, 400);
+    await api.mockStepSubmission(
+      1,
+      {
+        success: false,
+        message: "Erro ao salvar dados",
+        errors: ["CPF já cadastrado"],
+      },
+      400,
+    );
 
     // Try to submit
     await nav.clickNextButton();
     await page.waitForTimeout(1000);
 
     // Should show error message
-    const errorMessage = page.locator('text=/erro|falha|não foi possível/i');
+    const errorMessage = page.locator("text=/erro|falha|não foi possível/i");
     await expect(errorMessage).toBeVisible({ timeout: 3000 });
 
     // Should stay on step 1
@@ -304,7 +345,9 @@ test.describe("Step 1: Personal Data Form", () => {
     }
   });
 
-  test("should validate RG emission date is not in the future", async ({ page }) => {
+  test("should validate RG emission date is not in the future", async ({
+    page,
+  }) => {
     const futureDate = "2030-01-01";
     await form.fillInputByName("dataEmissaoRG", futureDate);
 
@@ -318,14 +361,24 @@ test.describe("Step 1: Personal Data Form", () => {
     await nav.clickNextButton();
 
     // Should show validation error or prevent submission
-    const dateError = page.locator('text=/data inválida|data de emissão inválida/i');
+    const dateError = page.locator(
+      "text=/data inválida|data de emissão inválida/i",
+    );
     const stillOnStep1 = await page.url().includes("/onboarding/1");
 
-    expect(await dateError.isVisible().catch(() => false) || stillOnStep1).toBeTruthy();
+    expect(
+      (await dateError.isVisible().catch(() => false)) || stillOnStep1,
+    ).toBeTruthy();
   });
 
   test("should allow all valid marital status options", async ({ page }) => {
-    const validOptions = ["solteiro", "casado", "divorciado", "viuvo", "uniao_estavel"];
+    const validOptions = [
+      "solteiro",
+      "casado",
+      "divorciado",
+      "viuvo",
+      "uniao_estavel",
+    ];
 
     for (const option of validOptions) {
       await form.selectOption(/estado civil/i, option);
@@ -359,7 +412,9 @@ test.describe("Step 1: Personal Data Form", () => {
     const testImagePath = "/tmp/test-profile-photo.jpg";
 
     // Try to upload photo (if photo upload is available)
-    const photoButton = page.locator('button[aria-label*="Enviar ou alterar foto"], button:has-text("Foto")');
+    const photoButton = page.locator(
+      'button[aria-label*="Enviar ou alterar foto"], button:has-text("Foto")',
+    );
 
     if (await photoButton.isVisible()) {
       // Upload photo functionality exists
@@ -379,7 +434,9 @@ test.describe("Step 1: Personal Data Form", () => {
     await form.fillInputByName("nomeCompleto", longName);
 
     // Check if character count is displayed (if implemented)
-    const charCount = page.locator('[data-testid="char-count"], .character-count');
+    const charCount = page.locator(
+      '[data-testid="char-count"], .character-count',
+    );
     if (await charCount.isVisible()) {
       await expect(charCount).toContainText("200");
     }
@@ -397,7 +454,11 @@ test.describe("Step 1: Personal Data Form", () => {
   test("should validate minimum age requirement", async ({ page }) => {
     // Try to enter birth date for someone too young (e.g., 14 years old)
     const today = new Date();
-    const fourteenYearsAgo = new Date(today.getFullYear() - 14, today.getMonth(), today.getDate());
+    const fourteenYearsAgo = new Date(
+      today.getFullYear() - 14,
+      today.getMonth(),
+      today.getDate(),
+    );
     const birthDate = fourteenYearsAgo.toISOString().split("T")[0];
 
     await form.fillInputByName("dataNascimento", birthDate);
@@ -412,10 +473,12 @@ test.describe("Step 1: Personal Data Form", () => {
     await nav.clickNextButton();
 
     // Should show age validation error or prevent submission
-    const ageError = page.locator('text=/idade mínima|menor de idade/i');
+    const ageError = page.locator("text=/idade mínima|menor de idade/i");
     const stillOnStep1 = await page.url().includes("/onboarding/1");
 
-    expect(await ageError.isVisible().catch(() => false) || stillOnStep1).toBeTruthy();
+    expect(
+      (await ageError.isVisible().catch(() => false)) || stillOnStep1,
+    ).toBeTruthy();
   });
 });
 
@@ -432,10 +495,12 @@ test.describe("Step 1: Document Upload Section", () => {
 
   test("should display document upload section", async ({ page }) => {
     // Scroll to document section
-    await page.locator('text=/faça o upload dos documentos/i').scrollIntoViewIfNeeded();
+    await page
+      .locator("text=/faça o upload dos documentos/i")
+      .scrollIntoViewIfNeeded();
 
     // Verify upload fields are visible
-    const uploadSection = page.locator('text=/RG|CPF|Certidão/i').first();
+    const uploadSection = page.locator("text=/RG|CPF|Certidão/i").first();
     await expect(uploadSection).toBeVisible();
   });
 

@@ -2,9 +2,14 @@
  * E2E Test: Step 3 - Address Form with CEP Lookup
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { addressTestData, mockApiResponses } from "../fixtures/test-data";
-import { NavigationHelper, AddressFormHelper, LocalStorageHelper, APIMockHelper } from "../helpers/test-helpers";
+import {
+  AddressFormHelper,
+  APIMockHelper,
+  LocalStorageHelper,
+  NavigationHelper,
+} from "../helpers/test-helpers";
 
 test.describe("Step 3: Address Form", () => {
   let nav: NavigationHelper;
@@ -29,8 +34,11 @@ test.describe("Step 3: Address Form", () => {
   });
 
   test("should auto-fill address from CEP", async ({ page }) => {
-    await api.mockCEPValidation(addressTestData.valid.cep, mockApiResponses.cepValidation);
-    
+    await api.mockCEPValidation(
+      addressTestData.valid.cep,
+      mockApiResponses.cepValidation,
+    );
+
     await page.locator('[name="cep"]').fill(addressTestData.valid.cep);
     await page.waitForTimeout(1000);
 
@@ -46,21 +54,29 @@ test.describe("Step 3: Address Form", () => {
     await page.locator('[name="cep"]').fill("00000-000");
     await nav.clickNextButton();
 
-    const cepError = page.locator('text=/cep inválido/i');
-    await expect(cepError).toBeVisible({ timeout: 2000 }).catch(() => {});
+    const cepError = page.locator("text=/cep inválido/i");
+    await expect(cepError)
+      .toBeVisible({ timeout: 2000 })
+      .catch(() => {});
   });
 
   test("should allow manual address entry", async ({ page }) => {
     await addressForm.fillAddress(addressTestData.validWithoutComplement);
 
     const logradouroInput = page.locator('[name="logradouro"]');
-    await expect(logradouroInput).toHaveValue(addressTestData.validWithoutComplement.logradouro);
+    await expect(logradouroInput).toHaveValue(
+      addressTestData.validWithoutComplement.logradouro,
+    );
   });
 
   test("should save and proceed to step 4", async ({ page }) => {
     await addressForm.fillAddress(addressTestData.valid);
 
-    await api.mockStepSubmission(3, { success: true, data: {}, message: "Success" });
+    await api.mockStepSubmission(3, {
+      success: true,
+      data: {},
+      message: "Success",
+    });
     await nav.clickNextButton();
     await page.waitForTimeout(1000);
 

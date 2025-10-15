@@ -2,9 +2,13 @@
  * E2E Test: Step 10 - Document Upload
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { documentTestData, mockApiResponses } from "../fixtures/test-data";
-import { NavigationHelper, DocumentUploadHelper, APIMockHelper } from "../helpers/test-helpers";
+import {
+  APIMockHelper,
+  DocumentUploadHelper,
+  NavigationHelper,
+} from "../helpers/test-helpers";
 
 test.describe("Step 10: Document Upload", () => {
   let nav: NavigationHelper;
@@ -32,7 +36,7 @@ test.describe("Step 10: Document Upload", () => {
 
   test("should upload document successfully", async ({ page }) => {
     await api.mockDocumentUpload(mockApiResponses.documentUploadSuccess);
-    
+
     // Mock file upload would go here
     // In real test, would use actual file path
   });

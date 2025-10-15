@@ -2,9 +2,9 @@
  * E2E Test: Step 7 - Foreigner Data
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { foreignerDataTestData } from "../fixtures/test-data";
-import { NavigationHelper, FormHelper } from "../helpers/test-helpers";
+import { FormHelper, NavigationHelper } from "../helpers/test-helpers";
 
 test.describe("Step 7: Foreigner Data", () => {
   let nav: NavigationHelper;
@@ -29,8 +29,13 @@ test.describe("Step 7: Foreigner Data", () => {
 
   test("should validate passport number format", async ({ page }) => {
     await form.clickCheckbox(/estrangeiro/i);
-    await form.fillInputByName("numeroPassaporte", foreignerDataTestData.foreigner.numeroPassaporte);
+    await form.fillInputByName(
+      "numeroPassaporte",
+      foreignerDataTestData.foreigner.numeroPassaporte,
+    );
     const input = page.locator('[name="numeroPassaporte"]');
-    await expect(input).toHaveValue(foreignerDataTestData.foreigner.numeroPassaporte);
+    await expect(input).toHaveValue(
+      foreignerDataTestData.foreigner.numeroPassaporte,
+    );
   });
 });

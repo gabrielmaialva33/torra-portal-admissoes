@@ -57,7 +57,9 @@ export function generateValidRG(): string {
 export function generateValidPhone(): string {
   const ddd = Math.floor(Math.random() * 89) + 11; // DDD from 11 to 99
   const prefix = 9; // Mobile numbers start with 9
-  const number = Math.floor(Math.random() * 100000000).toString().padStart(8, "0");
+  const number = Math.floor(Math.random() * 100000000)
+    .toString()
+    .padStart(8, "0");
   return `(${ddd}) ${prefix}${number.slice(0, 4)}-${number.slice(4)}`;
 }
 
@@ -66,7 +68,9 @@ export function generateValidPhone(): string {
  * @returns CEP string in format XXXXX-XXX
  */
 export function generateValidCEP(): string {
-  const cep = Math.floor(Math.random() * 99999999).toString().padStart(8, "0");
+  const cep = Math.floor(Math.random() * 99999999)
+    .toString()
+    .padStart(8, "0");
   return `${cep.slice(0, 5)}-${cep.slice(5)}`;
 }
 
@@ -74,8 +78,26 @@ export function generateValidCEP(): string {
  * Generates a random Brazilian name
  */
 export function generateRandomName(): string {
-  const firstNames = ["João", "Maria", "Pedro", "Ana", "Carlos", "Julia", "Lucas", "Mariana"];
-  const lastNames = ["Silva", "Santos", "Oliveira", "Souza", "Costa", "Ferreira", "Rodrigues", "Almeida"];
+  const firstNames = [
+    "João",
+    "Maria",
+    "Pedro",
+    "Ana",
+    "Carlos",
+    "Julia",
+    "Lucas",
+    "Mariana",
+  ];
+  const lastNames = [
+    "Silva",
+    "Santos",
+    "Oliveira",
+    "Souza",
+    "Costa",
+    "Ferreira",
+    "Rodrigues",
+    "Almeida",
+  ];
   return `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
 }
 
@@ -398,11 +420,7 @@ export const mockApiResponses = {
 /**
  * Helper function to create a mock File object for testing
  */
-export function createMockFile(
-  name: string,
-  type: string,
-  size: number
-): File {
+export function createMockFile(name: string, type: string, size: number): File {
   const content = "a".repeat(size);
   const blob = new Blob([content], { type });
   return new File([blob], name, { type });

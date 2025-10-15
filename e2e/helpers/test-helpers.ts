@@ -42,7 +42,9 @@ export class NavigationHelper {
     // Verify stepper shows correct step
     const stepper = this.page.locator('[data-testid="stepper"]');
     if (await stepper.isVisible()) {
-      const currentStepIndicator = stepper.locator(`[data-step="${stepNumber}"][data-current="true"]`);
+      const currentStepIndicator = stepper.locator(
+        `[data-step="${stepNumber}"][data-current="true"]`,
+      );
       await expect(currentStepIndicator).toBeVisible();
     }
   }
@@ -66,7 +68,10 @@ export class FormHelper {
     await input.fill(value);
   }
 
-  async fillInputByPlaceholder(placeholder: string, value: string): Promise<void> {
+  async fillInputByPlaceholder(
+    placeholder: string,
+    value: string,
+  ): Promise<void> {
     const input = this.page.getByPlaceholder(placeholder);
     await input.clear();
     await input.fill(value);
@@ -126,7 +131,8 @@ export class PersonalDataFormHelper extends FormHelper {
     grauEscolaridade?: string;
   }): Promise<void> {
     await this.fillInputByName("nomeCompleto", data.nomeCompleto);
-    if (data.nomeSocial) await this.fillInputByName("nomeSocial", data.nomeSocial);
+    if (data.nomeSocial)
+      await this.fillInputByName("nomeSocial", data.nomeSocial);
     await this.fillInputByName("dataNascimento", data.dataNascimento);
     await this.fillInputByName("celular", data.celular);
     if (data.nomePai) await this.fillInputByName("nomePai", data.nomePai);
@@ -135,8 +141,10 @@ export class PersonalDataFormHelper extends FormHelper {
     await this.fillInputByName("dataEmissaoRG", data.dataEmissaoRG);
     await this.fillInputByName("orgaoEmissor", data.orgaoEmissor);
     await this.fillInputByName("cpf", data.cpf);
-    if (data.estadoCivil) await this.fillInputByName("estadoCivil", data.estadoCivil);
-    if (data.grauEscolaridade) await this.fillInputByName("grauEscolaridade", data.grauEscolaridade);
+    if (data.estadoCivil)
+      await this.fillInputByName("estadoCivil", data.estadoCivil);
+    if (data.grauEscolaridade)
+      await this.fillInputByName("grauEscolaridade", data.grauEscolaridade);
   }
 }
 
@@ -158,7 +166,8 @@ export class AddressFormHelper extends FormHelper {
     await this.page.waitForTimeout(1000);
     await this.fillInputByName("logradouro", data.logradouro);
     await this.fillInputByName("numero", data.numero);
-    if (data.complemento) await this.fillInputByName("complemento", data.complemento);
+    if (data.complemento)
+      await this.fillInputByName("complemento", data.complemento);
     await this.fillInputByName("bairro", data.bairro);
     await this.fillInputByName("cidade", data.cidade);
     await this.fillInputByName("estado", data.estado);
@@ -202,7 +211,11 @@ export class APIMockHelper {
     });
   }
 
-  async mockStepSubmission(stepNumber: number, response: any, status = 200): Promise<void> {
+  async mockStepSubmission(
+    stepNumber: number,
+    response: any,
+    status = 200,
+  ): Promise<void> {
     const patterns = [
       "**/api/admissao/dados-gerais",
       "**/api/admissao/dependentes",
@@ -216,7 +229,10 @@ export class APIMockHelper {
     ];
 
     await this.page.route(patterns[stepNumber - 1], async (route: Route) => {
-      if (route.request().method() === "POST" || route.request().method() === "PUT") {
+      if (
+        route.request().method() === "POST" ||
+        route.request().method() === "PUT"
+      ) {
         await route.fulfill({
           status,
           contentType: "application/json",
@@ -284,22 +300,40 @@ export class LocalStorageHelper {
   constructor(private page: Page) {}
 
   async setOnboardingState(state: any): Promise<void> {
-    await this.page.evaluate((stateData) => {
-      localStorage.setItem("torra-onboarding", JSON.stringify({ state: stateData }));
-    }, state);
+    try {
+      await this.page.evaluate((stateData) => {
+        localStorage.setItem(
+          "torra-onboarding",
+          JSON.stringify({ state: stateData }),
+        );
+      }, state);
+    } catch (error) {
+      // Ignore localStorage errors in secure contexts
+      console.warn("Could not set localStorage:", error);
+    }
   }
 
   async getOnboardingState(): Promise<any> {
-    return await this.page.evaluate(() => {
-      const data = localStorage.getItem("torra-onboarding");
-      return data ? JSON.parse(data) : null;
-    });
+    try {
+      return await this.page.evaluate(() => {
+        const data = localStorage.getItem("torra-onboarding");
+        return data ? JSON.parse(data) : null;
+      });
+    } catch (error) {
+      // Return null if localStorage is not accessible
+      return null;
+    }
   }
 
   async clearOnboardingState(): Promise<void> {
-    await this.page.evaluate(() => {
-      localStorage.removeItem("torra-onboarding");
-    });
+    try {
+      await this.page.evaluate(() => {
+        localStorage.removeItem("torra-onboarding");
+      });
+    } catch (error) {
+      // Ignore localStorage errors in secure contexts
+      console.warn("Could not clear localStorage:", error);
+    }
   }
 
   async verifyStepCompleted(stepNumber: number): Promise<void> {
@@ -320,7 +354,9 @@ export class AssertionHelper {
   constructor(private page: Page) {}
 
   async verifyToastMessage(message: string): Promise<void> {
-    const toast = this.page.locator('[role="status"], [role="alert"]', { hasText: message });
+    const toast = this.page.locator('[role="status"], [role="alert"]', {
+      hasText: message,
+    });
     await expect(toast).toBeVisible();
   }
 
@@ -334,13 +370,18 @@ export class AssertionHelper {
     await expect(success).toBeVisible();
   }
 
-  async verifyProgressIndicator(currentStep: number, totalSteps: number): Promise<void> {
+  async verifyProgressIndicator(
+    currentStep: number,
+    totalSteps: number,
+  ): Promise<void> {
     const progress = this.page.locator('[data-testid="progress-indicator"]');
     await expect(progress).toContainText(`${currentStep}/${totalSteps}`);
   }
 
   async verifyStepCompleteIndicator(stepNumber: number): Promise<void> {
-    const stepIndicator = this.page.locator(`[data-step="${stepNumber}"][data-completed="true"]`);
+    const stepIndicator = this.page.locator(
+      `[data-step="${stepNumber}"][data-completed="true"]`,
+    );
     await expect(stepIndicator).toBeVisible();
   }
 
@@ -369,7 +410,10 @@ export class VisualHelper {
     });
   }
 
-  async compareStepScreenshot(stepNumber: number, name?: string): Promise<void> {
+  async compareStepScreenshot(
+    stepNumber: number,
+    name?: string,
+  ): Promise<void> {
     const screenshotName = name || `step-${stepNumber}`;
     await expect(this.page).toHaveScreenshot(`${screenshotName}.png`, {
       fullPage: true,
@@ -392,7 +436,7 @@ export class WaitHelper {
   async waitForAPIResponse(url: string, timeout = 10000): Promise<void> {
     await this.page.waitForResponse(
       (response) => response.url().includes(url) && response.status() === 200,
-      { timeout }
+      { timeout },
     );
   }
 
@@ -452,7 +496,9 @@ export class DocumentUploadHelper {
   constructor(private page: Page) {}
 
   async uploadDocument(documentType: string, filePath: string): Promise<void> {
-    const uploadButton = this.page.locator(`[data-document-type="${documentType}"]`);
+    const uploadButton = this.page.locator(
+      `[data-document-type="${documentType}"]`,
+    );
     const fileInput = uploadButton.locator('input[type="file"]');
     await fileInput.setInputFiles(filePath);
   }
@@ -465,7 +511,9 @@ export class DocumentUploadHelper {
   }
 
   async deleteDocument(documentName: string): Promise<void> {
-    const deleteButton = this.page.locator(`[data-document="${documentName}"] button[aria-label*="delete"]`);
+    const deleteButton = this.page.locator(
+      `[data-document="${documentName}"] button[aria-label*="delete"]`,
+    );
     await deleteButton.click();
   }
 
@@ -489,18 +537,26 @@ export class DependentHelper {
     dataNascimento: string;
     parentesco: string;
   }): Promise<void> {
-    await this.page.getByRole("button", { name: /adicionar dependente/i }).click();
+    await this.page
+      .getByRole("button", { name: /adicionar dependente/i })
+      .click();
 
     await this.page.locator('[name="nome"]').fill(data.nome);
     await this.page.locator('[name="cpf"]').fill(data.cpf);
-    await this.page.locator('[name="dataNascimento"]').fill(data.dataNascimento);
-    await this.page.locator('[name="parentesco"]').selectOption(data.parentesco);
+    await this.page
+      .locator('[name="dataNascimento"]')
+      .fill(data.dataNascimento);
+    await this.page
+      .locator('[name="parentesco"]')
+      .selectOption(data.parentesco);
 
     await this.page.getByRole("button", { name: /salvar dependente/i }).click();
   }
 
   async removeDependent(index: number): Promise<void> {
-    const removeButtons = this.page.locator('[aria-label*="remover dependente"]');
+    const removeButtons = this.page.locator(
+      '[aria-label*="remover dependente"]',
+    );
     await removeButtons.nth(index).click();
   }
 

@@ -5,16 +5,16 @@
  * mobile responsiveness, and accessibility.
  */
 
-import { test, expect, devices } from "@playwright/test";
+import { devices, expect, test } from "@playwright/test";
 import {
-  personalDataTestData,
   completeOnboardingData,
+  personalDataTestData,
 } from "./fixtures/test-data";
 import {
+  KeyboardHelper,
+  LocalStorageHelper,
   NavigationHelper,
   PersonalDataFormHelper,
-  LocalStorageHelper,
-  KeyboardHelper,
 } from "./helpers/test-helpers";
 
 test.describe("Edge Cases: Browser Navigation", () => {
@@ -238,7 +238,7 @@ test.describe("Edge Cases: Mobile Responsiveness", () => {
 
     // Check if mobile menu exists
     const mobileMenu = page.locator(
-      '[data-testid="mobile-menu"], .hamburger-menu'
+      '[data-testid="mobile-menu"], .hamburger-menu',
     );
     if (await mobileMenu.isVisible()) {
       await mobileMenu.click();
@@ -391,7 +391,7 @@ test.describe("Edge Cases: Accessibility (Keyboard Navigation)", () => {
 
     // Check for aria-live regions
     const liveRegions = page.locator(
-      '[aria-live="polite"], [aria-live="assertive"], [role="alert"]'
+      '[aria-live="polite"], [aria-live="assertive"], [role="alert"]',
     );
     const count = await liveRegions.count();
 

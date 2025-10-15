@@ -5,29 +5,29 @@
  * including navigation, data persistence, and progress tracking.
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import {
-  completeOnboardingData,
-  personalDataTestData,
-  dependentsTestData,
   addressTestData,
-  contractDataTestData,
-  disabilityDataTestData,
-  transportDataTestData,
-  foreignerDataTestData,
   apprenticeDataTestData,
   bankDataTestData,
+  completeOnboardingData,
+  contractDataTestData,
+  dependentsTestData,
+  disabilityDataTestData,
+  foreignerDataTestData,
   mockApiResponses,
+  personalDataTestData,
+  transportDataTestData,
 } from "./fixtures/test-data";
 import {
-  NavigationHelper,
-  FormHelper,
-  APIMockHelper,
-  LocalStorageHelper,
-  AssertionHelper,
-  PersonalDataFormHelper,
   AddressFormHelper,
+  APIMockHelper,
+  AssertionHelper,
   DependentHelper,
+  FormHelper,
+  LocalStorageHelper,
+  NavigationHelper,
+  PersonalDataFormHelper,
   TransportHelper,
 } from "./helpers/test-helpers";
 
@@ -87,7 +87,10 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
 
     // Step 3: Address
     const addressForm = new AddressFormHelper(page);
-    await api.mockCEPValidation(addressTestData.valid.cep, mockApiResponses.cepValidation);
+    await api.mockCEPValidation(
+      addressTestData.valid.cep,
+      mockApiResponses.cepValidation,
+    );
     await addressForm.fillAddress(addressTestData.valid);
 
     await api.mockStepSubmission(3, mockApiResponses.submitSuccess);
@@ -98,11 +101,23 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
 
     // Step 4: Contract Data
     await form.fillInputByName("cargo", contractDataTestData.valid.cargo);
-    await form.fillInputByName("departamento", contractDataTestData.valid.departamento);
-    await form.fillInputByName("dataAdmissao", contractDataTestData.valid.dataAdmissao);
+    await form.fillInputByName(
+      "departamento",
+      contractDataTestData.valid.departamento,
+    );
+    await form.fillInputByName(
+      "dataAdmissao",
+      contractDataTestData.valid.dataAdmissao,
+    );
     await form.fillInputByName("salario", contractDataTestData.valid.salario);
-    await form.fillInputByName("horarioTrabalho", contractDataTestData.valid.horarioTrabalho);
-    await form.fillInputByName("tipoContrato", contractDataTestData.valid.tipoContrato);
+    await form.fillInputByName(
+      "horarioTrabalho",
+      contractDataTestData.valid.horarioTrabalho,
+    );
+    await form.fillInputByName(
+      "tipoContrato",
+      contractDataTestData.valid.tipoContrato,
+    );
 
     await api.mockStepSubmission(4, mockApiResponses.submitSuccess);
     await nav.clickNextButton();
@@ -124,8 +139,12 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
     await form.clickCheckbox(/necessita vale transporte/i);
 
     // Add transport lines
-    await transportHelper.addTransportLine(transportDataTestData.withTransport.linhas[0]);
-    await transportHelper.addTransportLine(transportDataTestData.withTransport.linhas[1]);
+    await transportHelper.addTransportLine(
+      transportDataTestData.withTransport.linhas[0],
+    );
+    await transportHelper.addTransportLine(
+      transportDataTestData.withTransport.linhas[1],
+    );
     await transportHelper.verifyTransportLineCount(2);
 
     await api.mockStepSubmission(6, mockApiResponses.submitSuccess);
@@ -154,9 +173,15 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
 
     // Step 9: Bank Data
     await form.fillInputByName("nomeBanco", bankDataTestData.valid.nomeBanco);
-    await form.fillInputByName("codigoBanco", bankDataTestData.valid.codigoBanco);
+    await form.fillInputByName(
+      "codigoBanco",
+      bankDataTestData.valid.codigoBanco,
+    );
     await form.fillInputByName("agencia", bankDataTestData.valid.agencia);
-    await form.fillInputByName("numeroConta", bankDataTestData.valid.numeroConta);
+    await form.fillInputByName(
+      "numeroConta",
+      bankDataTestData.valid.numeroConta,
+    );
     await form.selectOption(/tipo de conta/i, bankDataTestData.valid.tipoConta);
     await form.fillInputByName("chavePix", bankDataTestData.valid.chavePix);
 
@@ -213,8 +238,12 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
 
     // Verify data persisted
     const state = await storage.getOnboardingState();
-    expect(state.state.formData.personalData.cpf).toBe(personalDataTestData.valid.cpf);
-    expect(state.state.formData.personalData.email).toBe(personalDataTestData.valid.email);
+    expect(state.state.formData.personalData.cpf).toBe(
+      personalDataTestData.valid.cpf,
+    );
+    expect(state.state.formData.personalData.email).toBe(
+      personalDataTestData.valid.email,
+    );
 
     // Verify form fields still contain data
     const cpfInput = page.locator('[name="cpf"]');
@@ -261,9 +290,14 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
 
     // Should either redirect to step 1 or show access denied
     const currentUrl = page.url();
-    const hasAccessDenied = await page.locator('text=/acesso negado|não pode acessar/i').isVisible().catch(() => false);
+    const hasAccessDenied = await page
+      .locator("text=/acesso negado|não pode acessar/i")
+      .isVisible()
+      .catch(() => false);
 
-    expect(currentUrl.includes("/onboarding/1") || hasAccessDenied).toBeTruthy();
+    expect(
+      currentUrl.includes("/onboarding/1") || hasAccessDenied,
+    ).toBeTruthy();
   });
 
   test("should allow navigation back to previous steps", async ({ page }) => {
@@ -308,7 +342,9 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
     // Initially, conditional fields should not be visible
     await expect(page.locator('[name="tipoDeficiencia"]')).not.toBeVisible();
     await expect(page.locator('[name="cid"]')).not.toBeVisible();
-    await expect(page.locator('[name="necessidadesEspeciais"]')).not.toBeVisible();
+    await expect(
+      page.locator('[name="necessidadesEspeciais"]'),
+    ).not.toBeVisible();
 
     // Check "possui deficiência"
     await form.clickCheckbox(/possui deficiência/i);
@@ -335,7 +371,10 @@ test.describe("Complete Onboarding Flow - Happy Path", () => {
     await nav.goToStep(3);
 
     const addressForm = new AddressFormHelper(page);
-    await api.mockCEPValidation(addressTestData.valid.cep, mockApiResponses.cepValidation);
+    await api.mockCEPValidation(
+      addressTestData.valid.cep,
+      mockApiResponses.cepValidation,
+    );
     await addressForm.fillAddress(addressTestData.valid);
 
     // Save without proceeding to next step
@@ -385,17 +424,22 @@ test.describe("Onboarding Flow - Data Validation", () => {
     await form.waitForFormValidation();
 
     // Should show CPF validation error
-    const cpfError = page.locator('text=/cpf inválido|formato inválido/i');
-    await expect(cpfError).toBeVisible({ timeout: 2000 }).catch(() => {
-      // Some forms validate on submit, not on blur
-    });
+    const cpfError = page.locator("text=/cpf inválido|formato inválido/i");
+    await expect(cpfError)
+      .toBeVisible({ timeout: 2000 })
+      .catch(() => {
+        // Some forms validate on submit, not on blur
+      });
   });
 
   test("should validate phone number format", async ({ page }) => {
     await nav.goToStep(1);
 
     // Enter invalid phone
-    await form.fillInputByName("celular", personalDataTestData.invalid.phoneInvalid);
+    await form.fillInputByName(
+      "celular",
+      personalDataTestData.invalid.phoneInvalid,
+    );
     await form.waitForFormValidation();
 
     // Should show phone validation error or automatically format
@@ -410,26 +454,38 @@ test.describe("Onboarding Flow - Data Validation", () => {
     await nav.goToStep(1);
 
     // Enter invalid email
-    await form.fillInputByName("email", personalDataTestData.invalid.emailInvalid);
+    await form.fillInputByName(
+      "email",
+      personalDataTestData.invalid.emailInvalid,
+    );
     await form.waitForFormValidation();
 
-    const emailError = page.locator('text=/email inválido|e-mail inválido/i');
-    await expect(emailError).toBeVisible({ timeout: 2000 }).catch(() => {
-      // Some forms validate on submit
-    });
+    const emailError = page.locator("text=/email inválido|e-mail inválido/i");
+    await expect(emailError)
+      .toBeVisible({ timeout: 2000 })
+      .catch(() => {
+        // Some forms validate on submit
+      });
   });
 
   test("should validate date fields", async ({ page }) => {
     await nav.goToStep(1);
 
     // Try to enter future birth date
-    await form.fillInputByName("dataNascimento", personalDataTestData.invalid.birthDateFuture);
+    await form.fillInputByName(
+      "dataNascimento",
+      personalDataTestData.invalid.birthDateFuture,
+    );
     await form.waitForFormValidation();
 
     // Should show date validation error
-    const dateError = page.locator('text=/data inválida|data de nascimento inválida/i');
-    await expect(dateError).toBeVisible({ timeout: 2000 }).catch(() => {
-      // Some validations happen on submit
-    });
+    const dateError = page.locator(
+      "text=/data inválida|data de nascimento inválida/i",
+    );
+    await expect(dateError)
+      .toBeVisible({ timeout: 2000 })
+      .catch(() => {
+        // Some validations happen on submit
+      });
   });
 });

@@ -1,6 +1,15 @@
 import { notFound } from "next/navigation";
 import { OnboardingLayout } from "@/components/forms/onboarding-layout";
+import { AddressStepForm } from "@/components/forms/steps/address-step-form";
+import { ApprenticeStepForm } from "@/components/forms/steps/apprentice-step-form";
+import { BankingStepForm } from "@/components/forms/steps/banking-step-form";
+import { ContractualStepForm } from "@/components/forms/steps/contractual-step-form";
+import { DependentsStepForm } from "@/components/forms/steps/dependents-step-form";
+import { ForeignerStepForm } from "@/components/forms/steps/foreigner-step-form";
+import { PCDStepForm } from "@/components/forms/steps/pcd-step-form";
 import { PersonalDataForm } from "@/components/forms/steps/personal-data-form";
+import { ReviewSubmitForm } from "@/components/forms/steps/review-submit-form";
+import { TransportStepForm } from "@/components/forms/steps/transport-step-form";
 
 const TOTAL_STEPS = 10;
 
@@ -28,23 +37,23 @@ export default async function OnboardingStepPage({
       case 1:
         return <PersonalDataForm />;
       case 2:
-        return <div>Dependents Form (Coming soon)</div>;
+        return <DependentsStepForm />;
       case 3:
-        return <div>Address Form (Coming soon)</div>;
+        return <AddressStepForm />;
       case 4:
-        return <div>Contract Data Form (Coming soon)</div>;
+        return <ContractualStepForm />;
       case 5:
-        return <div>Disability Data Form (Coming soon)</div>;
+        return <PCDStepForm />;
       case 6:
-        return <div>Transport Voucher Form (Coming soon)</div>;
+        return <TransportStepForm />;
       case 7:
-        return <div>Foreigner Data Form (Coming soon)</div>;
+        return <ForeignerStepForm />;
       case 8:
-        return <div>Apprentice Data Form (Coming soon)</div>;
+        return <ApprenticeStepForm />;
       case 9:
-        return <div>Bank Data Form (Coming soon)</div>;
+        return <BankingStepForm />;
       case 10:
-        return <div>Review & Submit (Coming soon)</div>;
+        return <ReviewSubmitForm />;
       default:
         return null;
     }

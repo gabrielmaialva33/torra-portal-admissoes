@@ -1,5 +1,13 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import type { AddressFormData } from "@/types/address";
+import type { ApprenticeFormData } from "@/types/apprentice";
+import type { BankingFormData } from "@/types/banking";
+import type { ContractualFormData } from "@/types/contractual";
+import type { Dependent } from "@/types/dependent";
+import type { ForeignerFormData } from "@/types/foreigner";
+import type { PCDFormData } from "@/types/pcd";
+import type { TransportFormData } from "@/types/transport";
 
 export interface PersonalData {
   fullName: string;
@@ -11,74 +19,6 @@ export interface PersonalData {
   maritalStatus: string;
   gender: string;
   nationality: string;
-}
-
-export interface Dependent {
-  id: string;
-  name: string;
-  cpf: string;
-  birthDate: string;
-  relationship: string;
-}
-
-export interface Address {
-  zipCode: string;
-  street: string;
-  number: string;
-  complement?: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-}
-
-export interface ContractData {
-  position: string;
-  department: string;
-  admissionDate: string;
-  salary: string;
-  workSchedule: string;
-  contractType: string;
-}
-
-export interface DisabilityData {
-  hasDisability: boolean;
-  type?: string;
-  cid?: string;
-  needs?: string;
-}
-
-export interface TransportData {
-  needsTransportVoucher: boolean;
-  lines?: Array<{
-    id: string;
-    type: string;
-    line: string;
-    fare: string;
-  }>;
-}
-
-export interface ForeignerData {
-  isForeigner: boolean;
-  passportNumber?: string;
-  visaType?: string;
-  visaExpiry?: string;
-  countryOfOrigin?: string;
-}
-
-export interface ApprenticeData {
-  isApprentice: boolean;
-  institution?: string;
-  course?: string;
-  schedule?: string;
-}
-
-export interface BankData {
-  bankName: string;
-  bankCode: string;
-  agency: string;
-  accountNumber: string;
-  accountType: "checking" | "savings";
-  pixKey?: string;
 }
 
 export interface OnboardingDocument {
@@ -98,13 +38,13 @@ interface OnboardingState {
   formData: {
     personalData: Partial<PersonalData>;
     dependents: Dependent[];
-    address: Partial<Address>;
-    contractData: Partial<ContractData>;
-    disabilityData: Partial<DisabilityData>;
-    transportData: Partial<TransportData>;
-    foreignerData: Partial<ForeignerData>;
-    apprenticeData: Partial<ApprenticeData>;
-    bankData: Partial<BankData>;
+    address: Partial<AddressFormData>;
+    contractual: Partial<ContractualFormData>;
+    pcd: Partial<PCDFormData>;
+    transport: Partial<TransportFormData>;
+    foreigner: Partial<ForeignerFormData>;
+    apprentice: Partial<ApprenticeFormData>;
+    banking: Partial<BankingFormData>;
   };
   documents: OnboardingDocument[];
 
@@ -130,12 +70,12 @@ const initialState = {
     personalData: {},
     dependents: [],
     address: {},
-    contractData: {},
-    disabilityData: { hasDisability: false },
-    transportData: { needsTransportVoucher: false },
-    foreignerData: { isForeigner: false },
-    apprenticeData: { isApprentice: false },
-    bankData: {},
+    contractual: {},
+    pcd: {},
+    transport: {},
+    foreigner: {},
+    apprentice: {},
+    banking: {},
   },
   documents: [],
 };

@@ -61,13 +61,13 @@ export default function OnboardingStep1() {
       <Stepper currentStep={1} totalSteps={10} />
 
       {/* Main Content */}
-      <main className="w-full max-w-[1144px] mx-auto px-8 mt-6">
+      <main className="w-full max-w-[1144px] mx-auto px-4 sm:px-6 md:px-8 mt-6">
         {/* Form Section */}
-        <div className="flex gap-10">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10">
           {/* Left side - Photo */}
-          <div className="flex flex-col items-center gap-3 w-[256px] flex-shrink-0">
+          <div className="flex flex-col items-center gap-3 w-full md:w-[256px] mx-auto md:mx-0 md:flex-shrink-0">
             <div className="relative">
-              <div className="w-[232px] h-[232px] rounded-full bg-[#999999] flex items-center justify-center overflow-hidden">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-[232px] md:h-[232px] rounded-full bg-[#999999] flex items-center justify-center overflow-hidden">
                 {uploadedFiles.foto ? (
                   <Image
                     src={URL.createObjectURL(uploadedFiles.foto)}
@@ -146,9 +146,9 @@ export default function OnboardingStep1() {
           </div>
 
           {/* Right side - Form Fields */}
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             {/* Line 1 - Nome Completo e Nome Social */}
-            <div className="flex gap-10 mb-6">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
               <div className="flex-1">
                 <label
                   htmlFor="nomeCompleto"
@@ -187,7 +187,7 @@ export default function OnboardingStep1() {
             </div>
 
             {/* Line 2 - Data de Nascimento e Celular */}
-            <div className="flex gap-10 mb-6">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
               <div className="flex-1">
                 <label
                   htmlFor="dataNascimento"
@@ -238,7 +238,7 @@ export default function OnboardingStep1() {
             </div>
 
             {/* Line 3 - Nome do Pai e Nome da Mãe */}
-            <div className="flex gap-10 mb-6">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
               <div className="flex-1">
                 <label
                   htmlFor="nomePai"
@@ -278,8 +278,8 @@ export default function OnboardingStep1() {
         </div>
 
         {/* Line 4 - Número do RG e Data de Emissão */}
-        <div className="flex gap-10 mb-6">
-          <div className="flex-1 max-w-[552px]">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
+          <div className="flex-1 md:max-w-[552px]">
             <label
               htmlFor="numeroRG"
               className="block text-neutral-05 text-base mb-2"
@@ -297,7 +297,7 @@ export default function OnboardingStep1() {
               required
             />
           </div>
-          <div className="flex-1 max-w-[552px]">
+          <div className="flex-1 md:max-w-[552px]">
             <label
               htmlFor="dataEmissaoRG"
               className="block text-neutral-05 text-base mb-2"
@@ -317,8 +317,8 @@ export default function OnboardingStep1() {
         </div>
 
         {/* Line 5 - Órgão Emissor e CPF */}
-        <div className="flex gap-10 mb-6">
-          <div className="flex-1 max-w-[552px]">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
+          <div className="flex-1 md:max-w-[552px]">
             <label
               htmlFor="orgaoEmissor"
               className="block text-neutral-05 text-base mb-2"
@@ -336,7 +336,7 @@ export default function OnboardingStep1() {
               required
             />
           </div>
-          <div className="flex-1 max-w-[552px]">
+          <div className="flex-1 md:max-w-[552px]">
             <label
               htmlFor="cpf"
               className="block text-neutral-05 text-base mb-2"
@@ -365,8 +365,8 @@ export default function OnboardingStep1() {
         </div>
 
         {/* Line 6 - Estado Civil e Grau de Escolaridade */}
-        <div className="flex gap-10 mb-10">
-          <div className="flex-1 max-w-[552px]">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-10">
+          <div className="flex-1 md:max-w-[552px]">
             <label
               htmlFor="estadoCivil"
               className="block text-neutral-05 text-base mb-2"
@@ -405,7 +405,7 @@ export default function OnboardingStep1() {
               </svg>
             </div>
           </div>
-          <div className="flex-1 max-w-[552px]">
+          <div className="flex-1 md:max-w-[552px]">
             <label
               htmlFor="grauEscolaridade"
               className="block text-neutral-05 text-base mb-2"
@@ -459,7 +459,7 @@ export default function OnboardingStep1() {
         </div>
 
         {/* Divider */}
-        <div className="w-[600px] h-[2px] bg-gray-300 mx-auto mb-10"></div>
+        <div className="w-full max-w-[600px] h-[2px] bg-gray-300 mx-auto mb-10"></div>
 
         {/* Document Upload Section */}
         <div className="mb-10">

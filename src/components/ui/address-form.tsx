@@ -59,7 +59,7 @@ export function AddressForm({ onUpdate, className = "" }: AddressFormProps) {
   return (
     <div className={className}>
       {/* Form Fields - Line 1 */}
-      <div className="flex gap-10 mb-6">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
         <div className="flex-1">
           <label htmlFor="cep" className="block text-[#5F5F5F] text-base mb-2">
             CEP*
@@ -96,7 +96,7 @@ export function AddressForm({ onUpdate, className = "" }: AddressFormProps) {
       </div>
 
       {/* Form Fields - Line 2 */}
-      <div className="flex gap-10 mb-6">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
         <div className="flex-1">
           <label
             htmlFor="numero"
@@ -136,7 +136,7 @@ export function AddressForm({ onUpdate, className = "" }: AddressFormProps) {
       </div>
 
       {/* Form Fields - Line 3 */}
-      <div className="flex gap-10 mb-6">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
         <div className="flex-1">
           <label
             htmlFor="cidade"
@@ -175,7 +175,7 @@ export function AddressForm({ onUpdate, className = "" }: AddressFormProps) {
       </div>
 
       {/* Form Fields - Line 4 */}
-      <div className="flex gap-10">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10">
         <div className="flex-1">
           <label
             htmlFor="municipio"

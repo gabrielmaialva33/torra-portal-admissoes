@@ -49,7 +49,7 @@ export function ContractualForm({
   return (
     <div className={className}>
       {/* Form Fields - Line 1 */}
-      <div className="flex gap-10 mb-6">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10 mb-6">
         <div className="flex-1">
           <label
             htmlFor="primeiroEmprego"
@@ -111,7 +111,7 @@ export function ContractualForm({
       </div>
 
       {/* Form Fields - Line 2 */}
-      <div className="flex gap-10">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10">
         <div className="flex-1">
           <label
             htmlFor="numeroCNH"

@@ -44,14 +44,14 @@ export default function OnboardingStep4() {
       <Stepper currentStep={4} totalSteps={10} />
 
       {/* Main Content */}
-      <main className="w-full max-w-[1144px] mx-auto px-8 mt-6">
+      <main className="w-full max-w-[1144px] mx-auto px-4 sm:px-6 md:px-8 mt-6">
         {/* Form Section */}
         <div className="mb-6">
           <ContractualForm onUpdate={handleFormUpdate} />
         </div>
 
         {/* Divider */}
-        <div className="w-[600px] h-[2px] bg-[#D9D9D9] mx-auto mb-10"></div>
+        <div className="w-full max-w-[600px] h-[2px] bg-[#D9D9D9] mx-auto mb-10"></div>
 
         {/* Upload Section */}
         <div className="mb-10">
